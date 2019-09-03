@@ -1,0 +1,92 @@
+:root {
+  /*root container*/
+  --fullHeight: 98vh;
+  --fullWidth: 100%;
+  --simpleDivHeight: calc(1em + 5px);
+
+  /*pdf container*/
+  --mainHeight: 60%;
+
+  /*card dimensions*/
+  --card_main_dim: 70%
+}
+
+div {
+  border-style: solid;
+  border-width: 1px;
+}
+
+
+/* ----- PDF ------ */
+.mainWindow {
+  height: var(--fullHeight);
+  width: var(--fullWidth);
+  display: flex;
+  flex-direction: row;
+}
+
+
+.pdfContainer {
+  width: 50%;
+  background-color: red;
+}
+
+.pdf_main {
+  height: var(--mainHeight);
+}
+
+.pdf_context {
+  display: flex;
+  background-color: blue;
+  flex-grow: 1;
+  align-self: stretch;
+  /* todo nochmal ueberarbeiten */
+  height: calc(100% - (var(--mainHeight) + var(--simpleDivHeight)));
+}
+
+.pdf_context > * {
+  flex-grow: 1;
+}
+
+
+@media screen and (max-width:768px) {
+  .mainWindow {
+    flex-direction: column;
+  }
+
+  .mainWindow > * {
+    width: 100%;
+    height: 50%;
+    background-color: pink
+  }
+}
+
+
+
+
+/* ----- Editor ------ */
+.editorContainer {
+  flex-grow: 1;
+}
+
+.editorContent {
+  display: flex;
+  flex-direction: column;
+  background-color: yellow;
+}
+
+.editorCardSides {
+  background-color: orange;
+  height: 70%;
+}
+
+.card_tags {
+}
+
+
+@media screen and (max-width:768px) {
+  .editorContent {
+  }
+
+
+}
