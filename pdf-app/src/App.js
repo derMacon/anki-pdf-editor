@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Document, Page } from "react-pdf";
-import pdffile from '../example.pdf';
 
 export default class App extends Component {
   state = { numPages: null, pageNumber: 1 };
@@ -26,7 +25,7 @@ export default class App extends Component {
 
         <div style={{ width: 600 }}>
           <Document
-            file={pdffile}
+            file="/example.pdf"
             onLoadSuccess={this.onDocumentLoadSuccess}
           >
             <Page pageNumber={pageNumber} width={600} />
