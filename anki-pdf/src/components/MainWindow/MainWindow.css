@@ -1,0 +1,23 @@
+.MainComponent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.MainComponent > * {
+  width: calc(100vw / 2);
+  background-color: pink;
+}
+
+@media screen and (max-width:1000px) {
+  .MainComponent {
+    flex-direction: column;
+  }
+
+  .MainComponent > * {
+    width: 100%;
+    height: 50%;
+    background-color: pink
+  }
+}

@@ -1,8 +1,12 @@
 import React from 'react';
 import {PdfReader} from '../PdfReader/PdfReader';
 
-export class MainPdf extends React.Component {
+export class SecPdf extends React.Component {
   render() {
-    return <PdfReader/>;
+    return (
+      <div>
+        <PdfReader/>
+        <PdfReader/>
+      </div>);
   }
 }
