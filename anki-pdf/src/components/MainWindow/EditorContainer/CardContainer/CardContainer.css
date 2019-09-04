@@ -1,0 +1,10 @@
+.CardContainer {
+  height: 80%;
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+}
+
+.CardContainer > * {
+  flex: 1;
+}

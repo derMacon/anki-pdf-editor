@@ -1,0 +1,4 @@
+.EditorContainer {
+  display: flex;
+  flex-direction: column;
+}
