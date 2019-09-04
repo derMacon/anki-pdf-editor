@@ -26,28 +26,37 @@ export default class App extends React.Component {
       }
 
     };
+    this.updateDocument = this.updateDocument.bind(this);
   }
 
   turnNextPage() {
     console.log('next page');
-    const page = this.state.currPage + 1;
-    this.setState({currPage: page});
+    const page = this.state.document.currPage + 1;
+    this.updateDocument(page);
   }
 
   turnPrevPage() {
-    console.log('prev page');
-    const page = this.state.currPage - 1;
+    const page = this.state.document.currPage - 1;
     if (page >= 0) {
-      this.setState({currPage: page});
+      console.log('prev page');
+      this.updateDocument(page);
     }
   }
 
+  updateDocument(pageNum) {
+    const newDoc = this.state.document;
+    newDoc.currPage = pageNum;
+    this.setState({document: newDoc});
+    console.log('hihi');
+  }
+
   render() {
+    console.log('app: ' + this.state.document.currPage);
     return (
       <HotKeys keyMap={this.state.keyMap} handlers={this.state.handlers}>
         <div className="App">
-          <Menu currPage={this.state.document}/>
-          <MainWindow currPage={this.state.document}/>
+          <Menu document={this.state.document}/>
+          <MainWindow document={this.state.document}/>
         </div>
       </HotKeys>
     );
