@@ -4,7 +4,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 export class PdfReader extends Component {
   state = {
-    file: null,
+    file: this.props.document.file,
     numPages: null,
     pageNumber: 1
   };
@@ -22,14 +22,13 @@ export class PdfReader extends Component {
     // loads before render function
     componentWillReceiveProps(props) {
         this.setState({
-          pageNumber: props.document.currPage,
-          file: props.document.file
+          pageNumber: props.document.currPage
         });
     }
 
 
   render() {
-    const { pageNumber, numPages } = this.state;
+    const { file, pageNumber, numPages } = this.state;
 
     return (
       <div>
@@ -40,7 +39,7 @@ export class PdfReader extends Component {
 
         <div style={{ width: 300 }}>
           <Document
-            file="/example.pdf"
+            file={file}
             onLoadSuccess={this.onDocumentLoadSuccess}
           >
             <Page pageNumber={pageNumber} width={600} />
