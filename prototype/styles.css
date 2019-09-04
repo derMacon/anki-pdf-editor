@@ -11,6 +11,12 @@
   --card_main_dim: 70%
 }
 
+/*todo not working*/
+body {
+  min-width: 300px;
+  min-height: 400px;
+}
+
 div {
   border-style: solid;
   border-width: 1px;
@@ -49,7 +55,7 @@ div {
 }
 
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:1500px) {
   .mainWindow {
     flex-direction: column;
   }
@@ -73,6 +79,8 @@ div {
   display: flex;
   flex-direction: column;
   background-color: yellow;
+  /* todo nochmal ueberarbeiten */
+  height: calc(100% - var(--simpleDivHeight));
 }
 
 .editorCardSides {
@@ -80,13 +88,11 @@ div {
   height: 70%;
 }
 
-.card_tags {
+.editorCardSides > * {
+  height: 50%;
 }
 
-
-@media screen and (max-width:768px) {
-  .editorContent {
-  }
-
-
+.card_tags {
+  height: calc(100% - (var(--card_main_dim) + var(--simpleDivHeight)));
+  background-color: grey;
 }
