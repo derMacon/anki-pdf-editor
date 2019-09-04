@@ -7,7 +7,8 @@ export class PdfContainer extends React.Component {
   render() {
     return (
       <div className="PdfContainer">
-        <div>hier kommen die pdf reader hin</div>
+        <MainPdf/>
+        <SecPdf/>
       </div>
     );
   }

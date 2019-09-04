@@ -1,12 +1,11 @@
 import React from 'react';
-import {PdfReader} from '../PdfReader/PdfReader';
+import './SecPdf.css';
 
 export class SecPdf extends React.Component {
   render() {
     return (
-      <div>
-        <PdfReader/>
-        <PdfReader/>
+      <div className="SecPdf">
+      small panes
       </div>);
   }
 }

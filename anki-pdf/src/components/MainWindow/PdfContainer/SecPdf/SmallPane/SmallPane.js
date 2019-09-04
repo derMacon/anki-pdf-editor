@@ -1,11 +1,11 @@
 import React from 'react';
 import {PdfReader} from '../PdfReader/PdfReader';
-import './MainPdf.css';
+import './SmallPane.css';
 
-export class MainPdf extends React.Component {
+export class SmallPane extends React.Component {
   render() {
     return (
-      <div className="MainPdf">
+      <div className="SmallPane">
         <PdfReader/>
       </div>
     );
