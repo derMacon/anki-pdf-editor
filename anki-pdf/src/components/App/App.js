@@ -6,11 +6,11 @@ import './App.css';
 import { HotKeys } from "react-hotkeys";
 
 const keyMap = {
-  MOVE_UP: "up"
+  NEXT_PAGE: "up"
 };
 
 const handlers = {
-  MOVE_UP: event => console.log("Move up hotkey called!")
+  NEXT_PAGE: event => console.log("next")
 };
 
 export default class App extends React.Component {
