@@ -24,7 +24,7 @@ export class PdfReader extends Component {
           <button onClick={this.goToNextPage}>Next</button>
         </nav>
 
-        <div style={{ width: 600 }}>
+        <div style={{ width: 300 }}>
           <Document
             file="/example.pdf"
             onLoadSuccess={this.onDocumentLoadSuccess}

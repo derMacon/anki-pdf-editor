@@ -6,7 +6,7 @@ export class MainPdf extends React.Component {
   render() {
     return (
       <div className="MainPdf">
-        <PdfReader/>
+        <PdfReader height="50"/>
       </div>
     );
   }
