@@ -2,6 +2,7 @@ import React from 'react';
 
 export class Menu extends React.Component {
   render() {
-    return <div>menu</div>;
+    // console.log(this.props.document.currPage);
+    return <div>hi</div>;
   }
 }
