@@ -12,6 +12,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       document: {
+        file: "/example.pdf",
         currPage: 1
       },
 
@@ -26,28 +27,27 @@ export default class App extends React.Component {
       }
 
     };
-    this.updateDocument = this.updateDocument.bind(this);
+    this.updatePageNum = this.updatePageNum.bind(this);
   }
 
   turnNextPage() {
     console.log('next page');
     const page = this.state.document.currPage + 1;
-    this.updateDocument(page);
+    this.updatePageNum(page);
   }
 
   turnPrevPage() {
     const page = this.state.document.currPage - 1;
-    if (page >= 0) {
+    if (page > 0) {
       console.log('prev page');
-      this.updateDocument(page);
+      this.updatePageNum(page);
     }
   }
 
-  updateDocument(pageNum) {
+  updatePageNum(pageNum) {
     const newDoc = this.state.document;
     newDoc.currPage = pageNum;
     this.setState({document: newDoc});
-    console.log('hihi');
   }
 
   render() {

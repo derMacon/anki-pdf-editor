@@ -7,8 +7,8 @@ export class PdfContainer extends React.Component {
   render() {
     return (
       <div className="PdfContainer">
-        <MainPdf/>
-        <SecPdf/>
+        <MainPdf document={this.props.document}/>
+        <SecPdf document={this.props.document}/>
       </div>
     );
   }

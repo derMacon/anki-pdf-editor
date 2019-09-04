@@ -3,7 +3,11 @@ import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export class PdfReader extends Component {
-  state = { numPages: null, pageNumber: 1 };
+  state = {
+    file: null,
+    numPages: null,
+    pageNumber: 1
+  };
 
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
@@ -13,6 +17,16 @@ export class PdfReader extends Component {
     this.setState(state => ({ pageNumber: state.pageNumber - 1 }));
   goToNextPage = () =>
     this.setState(state => ({ pageNumber: state.pageNumber + 1 }));
+
+
+    // loads before render function
+    componentWillReceiveProps(props) {
+        this.setState({
+          pageNumber: props.document.currPage,
+          file: props.document.file
+        });
+    }
+
 
   render() {
     const { pageNumber, numPages } = this.state;

@@ -7,8 +7,8 @@ export class MainWindow extends React.Component {
   render() {
     return (
       <div className="MainWindow">
-        <PdfContainer currPage={this.props.currPage}/>
-        <EditorContainer currPage={this.props.currPage}/>
+        <PdfContainer document={this.props.document}/>
+        <EditorContainer document={this.props.document}/>
       </div>
     );
   }
