@@ -1,7 +1,6 @@
 .App {
-  text-align: center;
-}
-
-.appContainer {
-  
+  height: 100vh;
+  background-color: lightBlue;
+  display: flex;
+  flex-direction: column;
 }

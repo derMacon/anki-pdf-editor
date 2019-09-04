@@ -6,7 +6,7 @@ import './MainWindow.css';
 export class MainWindow extends React.Component {
   render() {
     return (
-      <div className="MainComponent">
+      <div className="MainWindow">
         <PdfContainer/>
         <EditorContainer/>
       </div>
