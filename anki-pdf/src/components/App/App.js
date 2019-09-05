@@ -28,12 +28,15 @@ export default class App extends React.Component {
 
     };
     this.updatePageNum = this.updatePageNum.bind(this);
+    this.setPageCnt = this.setPageCnt.bind(this);
   }
 
   turnNextPage() {
-    console.log('next page');
-    const page = this.state.document.currPage + 1;
-    this.updatePageNum(page);
+    let page = Number(this.state.document.currPage) + 1;
+    if (this.state.document.pageCnt >= page) {
+      console.log('next page ' + page + '/' + this.state.document.pageCnt);
+      this.updatePageNum(page);
+    }
   }
 
   turnPrevPage() {
@@ -50,13 +53,20 @@ export default class App extends React.Component {
     this.setState({document: newDoc});
   }
 
+  setPageCnt(pageCnt) {
+    console.log('pageCnt: ' + pageCnt);
+    const newDoc = this.state.document;
+    newDoc.pageCnt = pageCnt;
+    this.setState({document: newDoc});
+  }
+
   render() {
     console.log('app: ' + this.state.document.currPage);
     return (
       <HotKeys keyMap={this.state.keyMap} handlers={this.state.handlers}>
         <div className="App">
           <Menu document={this.state.document}/>
-          <MainWindow document={this.state.document}/>
+          <MainWindow document={this.state.document} setPageCnt={this.setPageCnt}/>
         </div>
       </HotKeys>
     );

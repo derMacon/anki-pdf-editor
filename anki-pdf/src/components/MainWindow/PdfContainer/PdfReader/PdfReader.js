@@ -11,6 +11,7 @@ export class PdfReader extends Component {
 
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
+    this.props.setPageCnt(numPages);
   };
 
   goToPrevPage = () =>

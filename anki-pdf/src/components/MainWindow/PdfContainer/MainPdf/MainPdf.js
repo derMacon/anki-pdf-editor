@@ -6,7 +6,8 @@ export class MainPdf extends React.Component {
   render() {
     return (
       <div className="MainPdf">
-        <PdfReader document={this.props.document}/>
+        <PdfReader document={this.props.document}
+        setPageCnt={this.props.setPageCnt}/>
       </div>
     );
   }
