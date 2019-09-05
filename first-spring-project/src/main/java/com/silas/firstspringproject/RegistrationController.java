@@ -9,14 +9,15 @@ import java.io.IOException;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/register", produces = APPLICATION_JSON_VALUE)
-    public User register(User user) {
+    public String register(@RequestParam(required=false,name="name") User user) {
         System.out.println("user: ");
         System.out.println(user);
-        return user;
+        return "funzt";
     }
 
     @ExceptionHandler

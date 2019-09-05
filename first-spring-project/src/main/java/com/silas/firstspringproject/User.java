@@ -1,23 +1,23 @@
 package com.silas.firstspringproject;
 
 public class User {
-    private Integer name;
+    private String name;
 
-    public User(Integer name) {
+    public User(String name) {
         this.name = name;
     }
 
-    public void setName(Integer name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Integer getName() {
+    public String getName() {
         return name;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(this.name);
+        return this.name;
     }
 }
 

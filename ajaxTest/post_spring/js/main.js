@@ -1,17 +1,35 @@
-//var container = document.getElementById('info');
-
 var requ = new XMLHttpRequest();
-// requ.open('GET', 'http://localhost:8080/register');
-requ.open('POST', 'http://127.0.0.1:8765', true);
+
+requ.onload = function () {
+	console.log(this.responseText);
+}
+
+requ.open('POST', 'http://localhost:8080/register');
+requ.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+//requ.send("name=silas");
+let input = {
+    "name": "silas"
+};
+input = JSON.stringify(input);
+console.log('before send: ' + input);
+requ.send(input);
+
+
+/*
+requ.open('POST', 'http://localhost:8080/register');
+// requ.open('POST', 'http://127.0.0.1:8765', true);
 requ.onreadystatechange = function() {
-    var output = JSON.parse(requ.responseText);
-    console.log(output);
+	console.log('js ajax');
+	console.log('response: ' + requ.responseText);
+    // var output = JSON.parse(requ.responseText);
+    // console.log(output);
     // console.log(requ.responseText);
 };
 
 var input = {
-    "name": 42
+    "name": "silas"
 };
 
-requ.send(JSON.stringify(input3));
+requ.send(JSON.stringify(input));
 console.log();
+*/
