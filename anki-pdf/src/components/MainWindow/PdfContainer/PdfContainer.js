@@ -7,8 +7,7 @@ export class PdfContainer extends React.Component {
   render() {
     return (
       <div className="PdfContainer">
-        <MainPdf document={this.props.document}
-        setPageCnt={this.props.setPageCnt}/>
+        <MainPdf document={this.props.document}/>
         <SecPdf document={this.props.document}/>
       </div>
     );

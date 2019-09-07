@@ -7,8 +7,7 @@ export class MainWindow extends React.Component {
   render() {
     return (
       <div className="MainWindow">
-        <PdfContainer document={this.props.document}
-        setPageCnt={this.props.setPageCnt}/>
+        <PdfContainer document={this.props.document}/>
         <EditorContainer document={this.props.document}/>
       </div>
     );

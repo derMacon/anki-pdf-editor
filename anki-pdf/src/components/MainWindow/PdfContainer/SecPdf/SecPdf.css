@@ -1,3 +1,8 @@
 .SecPdf {
   height:30%;
+  display: flex;
+}
+
+.SecPdf > * {
+  flex: 1;
 }
