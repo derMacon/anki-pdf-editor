@@ -36,8 +36,9 @@ export class SmallPane extends React.Component {
 
     return (
       <div id={this.props.id} className="SmallPane" onClick={pageTurnFunc}>
-        <img src={arrowIcon} alt="ArrowIcon"/>
-        {this.generateContent()}
+        <div id="imgIcon">
+          {this.generateContent()}
+        </div>
       </div>
     );
 
