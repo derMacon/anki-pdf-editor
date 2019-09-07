@@ -6,8 +6,8 @@ export class CardContainer extends React.Component {
   render() {
     return (
       <div className="CardContainer">
-        <CardSide/>
-        <CardSide/>
+        <CardSide submit={this.props.submitFrontSide}/>
+        <CardSide submit={this.props.submitBackSide}/>
       </div>
     );
   }
