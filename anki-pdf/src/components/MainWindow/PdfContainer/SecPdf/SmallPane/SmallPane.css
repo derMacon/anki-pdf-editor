@@ -1,0 +1,29 @@
+#prevPage {
+}
+
+#nextPage {
+  z-index: 100;
+}
+
+#nextPage > img {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+img {
+  opacity: 0;
+
+  z-index: 1;
+}
+
+img:hover {
+  opacity: 1;
+  position: relative;
+  max-width: 100%;
+  height: 100%;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+}

@@ -3,6 +3,8 @@ import React from 'react';
 import {MockPdfReader} from '../../PdfReader/MockPdfReader';
 import './SmallPane.css';
 
+import arrowIcon from './arrowIcon.png';
+
 export class SmallPane extends React.Component {
 
   generateContent() {
@@ -20,6 +22,7 @@ export class SmallPane extends React.Component {
         pageCnt={doc.pageCnt}
       />
     );
+        // {this.generateContent()}
   }
 
   testCall() {
@@ -32,7 +35,8 @@ export class SmallPane extends React.Component {
       this.props.document.turnNextPage;
 
     return (
-      <div className="SmallPane" onClick={pageTurnFunc}>
+      <div id={this.props.id} className="SmallPane" onClick={pageTurnFunc}>
+        <img src={arrowIcon} alt="ArrowIcon"/>
         {this.generateContent()}
       </div>
     );
