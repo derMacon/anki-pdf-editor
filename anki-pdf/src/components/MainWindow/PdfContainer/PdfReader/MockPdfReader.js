@@ -6,7 +6,7 @@ export class MockPdfReader extends React.Component {
 
   render() {
     return (
-      <div class="MockPdfReader">
+      <div className="MockPdfReader">
         <h3>mock pdf-reader</h3>
         <p>doc: {this.props.file}</p>
         <p>currPage: {this.props.currPage}</p>

@@ -5,7 +5,7 @@ import './SmallPane.css';
 
 export class SmallPane extends React.Component {
 
-  render() {
+  generateContent() {
     const doc = this.props.document;
     const currPage = doc.currPage + this.props.offset;
 
@@ -14,12 +14,26 @@ export class SmallPane extends React.Component {
     }
 
     return (
-      <div className="SmallPane">
-        <MockPdfReader
-          file={this.props.document.file}
-          currPage={currPage}
-          pageCnt={this.props.pageCnt}
-        />
+      <MockPdfReader
+        file={doc.file}
+        currPage={currPage}
+        pageCnt={doc.pageCnt}
+      />
+    );
+  }
+
+  testCall() {
+    console.log('boah2');
+  }
+
+  render() {
+    const pageTurnFunc = this.props.offset < 0 ?
+      this.props.document.turnPrevPage :
+      this.props.document.turnNextPage;
+
+    return (
+      <div className="SmallPane" onClick={pageTurnFunc}>
+        {this.generateContent()}
       </div>
     );
 

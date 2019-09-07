@@ -17,7 +17,10 @@ export default class App extends React.Component {
       document: {
         file: "/example.pdf",
         currPage: 1,
-        pageCnt: undefined
+        pageCnt: undefined,
+        turnNextPage: () => this.turnNextPage(),
+        turnPrevPage: () => this.turnPrevPage(),
+        click: this.handleClick
       },
 
       // Keymap for the keybindings, each keykombination for the shortcuts
@@ -35,10 +38,19 @@ export default class App extends React.Component {
       }
 
     };
-    this.updatePageNum = this.updatePageNum.bind(this);
     this.setPageCnt = this.setPageCnt.bind(this);
+    this.turnNextPage = this.turnNextPage.bind(this);
+    this.turnPrevPage = this.turnPrevPage.bind(this);
+    this.updatePageNum = this.updatePageNum.bind(this);
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick() {
+    console.log('Click happened');
+  }
+
+  // todo not working for some reason
   componentDidMount() {
     this.setPageCnt(5);
   }
@@ -56,6 +68,7 @@ export default class App extends React.Component {
   // increments the currPage count and updates the doc if possible.
   turnNextPage() {
     let page = Number(this.state.document.currPage) + 1;
+    console.log('next page');
     if (this.state.document.pageCnt >= page) {
       console.log('next page ' + page + '/' + this.state.document.pageCnt);
       this.updatePageNum(page);

@@ -1,8 +1,14 @@
 .SecPdf {
+  background-color: orange;
   height:30%;
   display: flex;
 }
 
 .SecPdf > * {
   flex: 1;
+}
+
+
+.testDiv {
+  background-color: blue;
 }
