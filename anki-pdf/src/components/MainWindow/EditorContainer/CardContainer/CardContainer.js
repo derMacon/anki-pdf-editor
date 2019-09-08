@@ -1,13 +1,13 @@
 import React from 'react';
-import {CardSide} from './CardSide/CardSide';
+import {InputField} from '../InputField/InputField';
 import './CardContainer.css';
 
 export class CardContainer extends React.Component {
   render() {
     return (
       <div className="CardContainer">
-        <CardSide submit={this.props.submitFrontSide}/>
-        <CardSide submit={this.props.submitBackSide}/>
+        <InputField submit={this.props.submitFrontSide}/>
+        <InputField submit={this.props.submitBackSide}/>
       </div>
     );
   }

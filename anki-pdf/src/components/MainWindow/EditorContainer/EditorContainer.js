@@ -1,20 +1,20 @@
 import React from 'react';
-import {CardTags} from './CardTags/CardTags';
-import {CardContainer} from './CardContainer/CardContainer';
+import {InputField} from './InputField/InputField';
 import {ApiConnector} from '../../../util/ApiConnector';
 import './EditorContainer.css';
 
 export class EditorContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.state.front;
-    this.state.back;
+    this.state = {
+      front: undefined,
+      back: undefined
+    };
 
     this.submitFrontSide = this.submitFrontSide.bind(this);
     this.submitBackSide = this.submitBackSide.bind(this);
     this.submitTags = this.submitTags.bind(this);
-    this.submitWholeCard = this.submitWholeCard.bind(this);
+    this.submitCard = this.submitCard.bind(this);
   }
 
   submitFrontSide(input) {
@@ -29,19 +29,33 @@ export class EditorContainer extends React.Component {
     this.setState({tags: input})
   }
 
-  submitWholeCard() {
-
+  submitCard() {
+    if (this.state.front !== undefined
+      && this.state.back !== undefined) {
+        ApiConnector.submitCard(this.state);
+    }
+    // todo error handling
   }
 
   render() {
+    const formId = 'editor-form';
     return (
       <div className="EditorContainer">
-        <CardContainer
-          submitFrontSide={this.submitFrontSide}
-          submitBackSide={this.submitBackSide}
-        />
-        <CardTags submitTags={this.submitTags}/>
-        <button onClick={this.submitWholeCard}>submit</button>
+
+        <form id={formId} action='http://localhost:8080/pushCard' method='post'>
+
+          <div className="CardContainer">
+            <input name="front" type="text"></input>
+            <input name="back" type="text"></input>
+          </div>
+          <input name="tags" type="text"></input>
+
+          <div className="btnMenu">
+            <button>todo insert page html</button>
+            <button form={formId} type="submit">submit</button>
+          </div>
+
+        </form>
       </div>
     );
   }
