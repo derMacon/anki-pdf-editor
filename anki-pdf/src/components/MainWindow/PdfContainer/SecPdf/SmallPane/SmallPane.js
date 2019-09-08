@@ -22,7 +22,6 @@ export class SmallPane extends React.Component {
         pageCnt={doc.pageCnt}
       />
     );
-        // {this.generateContent()}
   }
 
   testCall() {

@@ -13,11 +13,31 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class RegistrationController {
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register", produces = APPLICATION_JSON_VALUE)
-    public String register(@RequestParam(required=false,name="name") User user) {
-        System.out.println("user: ");
-        System.out.println(user);
-        return "funzt";
+//    @RequestMapping(method = RequestMethod.POST, value = "/register", produces = APPLICATION_JSON_VALUE)
+//    public User register(@RequestParam(required=false,name="name") User user) {
+//        System.out.println("user: ");
+//        System.out.println(user);
+//        return user;
+//    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/addCard", produces = APPLICATION_JSON_VALUE)
+    public String register(Card card) {
+        System.out.println("card: ");
+        System.out.println(card);
+        return "success";
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/pushData")
+    public User processForm(User card) {
+        System.out.println("card:\n" + card);
+        return card;
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/pushCard")
+    public void processForm(Card card) {
+        System.out.println("card:\n" + card);
     }
 
     @ExceptionHandler

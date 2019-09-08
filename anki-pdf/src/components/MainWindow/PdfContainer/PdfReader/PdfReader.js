@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-
-
 export class PdfReader extends Component {
   constructor(props) {
     super(props);
