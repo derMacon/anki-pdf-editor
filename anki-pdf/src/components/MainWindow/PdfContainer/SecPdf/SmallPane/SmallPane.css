@@ -6,7 +6,10 @@
 }
 
 #imgIcon {
+  /* Not possible to use a transitioning opacity because the underlaying
+    div will also be transparent. -> import transparent image */
   background-image: url('./transparent.png');
+
   background-repeat: no-repeat;
   background-position: center;
   max-width: 100%;
@@ -15,10 +18,13 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+
+  transition: 2s ease-out;
 }
 
 #imgIcon:hover {
   background-image: url('./arrowIcon.png');
+  transition: 2s ease-out;
 }
 
 #nextPage > #imgIcon {

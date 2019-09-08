@@ -2,6 +2,23 @@ textarea {
   width: 100%;
   flex: 1;
   resize: none;
+  margin: 5px;
+  margin-right: 10px;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  -webkit-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  -moz-box-shadow: inset 2px 2px 2px 0px #dddddd;
+  box-shadow: inset 2px 2px 2px 0px #dddddd;
+  height: 200px;
+  margin: 10px;
+  overflow: auto;
+  padding: 7px 10px;
+  font-family: tahoma;
+  font-size: 13px;
+  border: 1px solid #aaa;
 }
 
 .EditorContainer {

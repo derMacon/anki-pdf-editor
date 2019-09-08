@@ -1,5 +1,5 @@
 .SecPdf {
-  background-color: orange;
+  background-color: var(--color-1);
   height:30%;
   display: flex;
 }

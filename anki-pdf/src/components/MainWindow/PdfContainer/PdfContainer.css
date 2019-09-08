@@ -1,5 +1,5 @@
 .PdfContainer {
-  background-color: lightYellow;
+  background-color: var(--color-4);
 }
 
 .PdfContainer > * {
