@@ -70,26 +70,48 @@ export class EditorContainer extends React.Component {
     }
   }
 
+  insertAtCaret(text) {
+    text = text || '';
+    if (document.selection) {
+      // IE
+      this.focus();
+      var sel = document.selection.createRange();
+      sel.text = text;
+    } else if (this.selectionStart || this.selectionStart === 0) {
+      // Others
+      var startPos = this.selectionStart;
+      var endPos = this.selectionEnd;
+      this.value = this.value.substring(0, startPos) +
+        text +
+        this.value.substring(endPos, this.value.length);
+      this.selectionStart = startPos + text.length;
+      this.selectionEnd = startPos + text.length;
+    } else {
+      this.value += text;
+    }
+  }
+
   render() {
     return (
-      <div className="EditorContainer">
+      <form onSubmit={this.handleSubmit}>
 
-        <form onSubmit={this.handleSubmit}>
-
-          <div className="CardContainer">
-            <input ref={this.frontRef} name="front" type="text" placeholder="front Side"></input>
-            <input ref={this.backRef} name="front" type="text" placeholder="back Side"></input>
+        <div className="EditorContainer">
+          <div className="frontSide">
+            <textarea id="front" ref={this.frontRef} name="front" type="text" placeholder="front Side"></textarea>
           </div>
-          <input ref={this.tagsRef} name="front" type="text" placeholder="tags"></input>
 
-          <div className="btnMenu">
+          <div className="backSide">
+            <textarea ref={this.backRef} name="front" type="text" placeholder="back Side"></textarea>
+          </div>
+
+          <div className="footerMenu">
+            <textarea ref={this.tagsRef} name="front" type="text" placeholder="tags"></textarea>
             <button>todo insert page html</button>
             <input type="submit" value="Submit"/>
           </div>
+        </div>
 
-        </form>
-
-      </div>
+      </form>
     );
   }
 }
