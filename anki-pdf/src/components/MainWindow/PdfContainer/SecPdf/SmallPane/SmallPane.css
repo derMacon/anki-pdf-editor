@@ -6,9 +6,8 @@
 }
 
 #imgIcon {
-  /* Not possible to use a transitioning opacity because the underlaying
-    div will also be transparent. -> import transparent image */
-  background-image: url('./transparent.png');
+  /* todo check if needed */
+  background-image: url('./arrowIcon.png');
 
   background-repeat: no-repeat;
   background-position: center;
@@ -19,12 +18,20 @@
   margin-left: auto;
   margin-right: auto;
 
-  transition: 2s ease-out;
+  background-size: 0;
+  transition: background 0.1s step-end;
 }
 
 #imgIcon:hover {
+  /*
   background-image: url('./arrowIcon.png');
-  transition: 2s ease-out;
+  background-size: 20px 20px;
+  transition: background 0.1s step-end;*/
+
+
+  -moz-box-shadow:    inset 0 0 20px var(--color-2);
+  -webkit-box-shadow: inset 0 0 20px var(--color-2);
+  box-shadow:         inset 0 0 20px var(--color-2);
 }
 
 #nextPage > #imgIcon {

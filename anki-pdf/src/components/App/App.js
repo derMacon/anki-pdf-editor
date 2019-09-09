@@ -15,6 +15,7 @@ export default class App extends React.Component {
       // doc obj will be distributed throughout whole component structure
       // contains the file, currPage and maxPage number.
       document: {
+        projectName: 'exampleStack',
         file: "/example.pdf",
         currPage: 1,
         pageCnt: undefined,

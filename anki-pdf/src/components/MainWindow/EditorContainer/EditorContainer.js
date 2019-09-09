@@ -40,7 +40,6 @@ export class EditorContainer extends React.Component {
 
       this.frontRef.current.value = '';
       this.backRef.current.value = '';
-      this.tagsRef.current.value = '';
     }
   }
 

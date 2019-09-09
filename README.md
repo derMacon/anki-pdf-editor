@@ -14,14 +14,12 @@ Two main projects:
 ## Todo - Front-end
 ### Near-term
 * implement page insert at cursor pos
-* fix hover arrows
 * implement menu
 * fix responsive css
 
 ### Long-term
 * implement pdf display
 * implement pdf search
-* style whole page 
 * make components resizable
 
 ### Todo - Back-end
