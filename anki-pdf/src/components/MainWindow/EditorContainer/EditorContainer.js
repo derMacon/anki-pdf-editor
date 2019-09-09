@@ -46,7 +46,6 @@ export class EditorContainer extends React.Component {
 
   insertAtCaret(text) {
     // todo
-    // this.frontRef.current
     console.log(text)
   }
 
@@ -65,7 +64,10 @@ export class EditorContainer extends React.Component {
 
           <div className="footerMenu">
             <textarea ref={this.tagsRef} name="front" type="text" placeholder="tags"></textarea>
-            <button onClick={this.insertAtCaret('hi')}>Insert page</button>
+          </div>
+
+          <div className="btnMenu">
+            <button type="button" onClick={this.insertAtCaret('hi')}>Insert page</button>
             <input type="submit" value="Submit"/>
           </div>
         </div>

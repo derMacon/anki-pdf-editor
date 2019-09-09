@@ -44,7 +44,4 @@ textarea {
   height: 15%;
   display: flex;
   flex-direction: column;
-  /*position: fixed;
-  bottom: 0;
-  width: 100%;*/
 }
