@@ -9,7 +9,7 @@ To install the Hotykey-Lib in local npm use `npm install react-hotkeys --save`, 
 ## Project structure
 Two main projects: 
 * `anki-pdf`: Front-end react project displaying the editor components. Server runs on `http://localhost:3000/`.
-* `anki-api-connector`: Spring boot rest api as the backend for the webapp. Server runs on `http://localhost:8080/`.
+* `anki-api-connector`: Spring boot rest api as the back-end for the webapp. Server runs on `http://localhost:8080/`.
 
 ## Todo - Front-end
 ### near-term
