@@ -1,4 +1,4 @@
-const url = './example.pdf';
+const url = 'http://localhost:8080/test.html';
 
 let pdfDoc = null,
   pageNum = 1,
