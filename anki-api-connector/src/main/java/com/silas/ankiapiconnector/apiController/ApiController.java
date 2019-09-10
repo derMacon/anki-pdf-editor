@@ -29,7 +29,7 @@ public class ApiController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @RequestMapping(method = RequestMethod.POST, value = "/retrievePdf", produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/retrievePdf", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> retrievePdf() {
 
         // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
