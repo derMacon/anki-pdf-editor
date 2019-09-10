@@ -5,6 +5,9 @@ This webapp displays a pdf-reader containing an editor to create digital index c
 ## npm installation
 To install the Hotykey-Lib in local npm use `npm install react-hotkeys --save`, for the react-pdf package `npm install react-pdf`.
 
+// Helmet: `npm install --save react-helmet`
+Webpacks: `npm install --save-dev webpack`
+
 
 ## Project structure
 Two main projects: 

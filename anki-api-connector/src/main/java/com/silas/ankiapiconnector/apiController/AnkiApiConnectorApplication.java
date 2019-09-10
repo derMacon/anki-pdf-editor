@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AnkiApiConnectorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AnkiApiConnectorApplication.class, args);
+	    SpringApplication.run(AnkiApiConnectorApplication.class, args);
 	}
 
 }

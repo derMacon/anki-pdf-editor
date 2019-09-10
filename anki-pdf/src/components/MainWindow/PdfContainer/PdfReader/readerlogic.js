@@ -1,4 +1,7 @@
-// const url = 'https://cors-anywhere.herokuapp.com/http://www.orimi.com/pdf-test.pdf';
+
+console.log('import correct');
+
+/*
 const url = 'http://localhost:8080/retrievePdf?name=example';
 
 let pdfDoc = null,
@@ -41,8 +44,11 @@ const renderPage = num => {
 // Get document
 pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
   pdfDoc = pdfDoc_
+  console.log('doc');
+  console.log(pdfDoc);
 
   // document.querySelector('#page-count').textContent = pdfDoc.numPages;
 
   renderPage(pageNum);
 });
+*/

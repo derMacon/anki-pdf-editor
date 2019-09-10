@@ -19,27 +19,39 @@
   margin-right: auto;
 
   background-size: 0;
-  transition: background 0.1s step-end;
+
+  transition: 3s ease-out;
+
+
 }
 
 #imgIcon:hover {
-  /*
-  background-image: url('./arrowIcon.png');
-  background-size: 20px 20px;
-  transition: background 0.1s step-end;*/
-
-
   -moz-box-shadow:    inset 0 0 20px var(--color-2);
   -webkit-box-shadow: inset 0 0 20px var(--color-2);
   box-shadow:         inset 0 0 20px var(--color-2);
+
 }
 
-#nextPage > #imgIcon {
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+iframe {
+  visibility: visible;
+  opacity: 1;
+  display: block;
 }
 
-#nextPage > #imgIcon > * {
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+#imgIcon:hover iframe{
+  opacity: 0;
+  transition: all linear;
+  display: none;
+}
+
+
+
+
+.testtest {
+  width: 100%;
+  height: 100%;
+}
+
+.SmallPane button {
+  position: absolute;
 }

@@ -16,7 +16,7 @@ export default class App extends React.Component {
       // contains the file, currPage and maxPage number.
       document: {
         projectName: 'exampleStack',
-        file: "/example.pdf",
+        file: 'http://localhost:8080/retrievePdf?name=example',
         currPage: 1,
         pageCnt: undefined,
         turnNextPage: () => this.turnNextPage(),
