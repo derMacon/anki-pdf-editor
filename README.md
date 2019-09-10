@@ -21,6 +21,7 @@ Two main projects:
 * implement pdf display
 * implement pdf search
 * make components resizable
+* fix: when error alert -> tags-field loses value
 
 ### Todo - Back-end
 * plan the whole thing

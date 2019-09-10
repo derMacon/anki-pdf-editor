@@ -35,7 +35,8 @@ export class EditorContainer extends React.Component {
         tags: tagsForm
       }
 
-      ApiConnector.submitCard(cardObj);
+      //ApiConnector.submitCard(cardObj);
+      ApiConnector.retrievePdf(cardObj);
       event.preventDefault();
 
       this.frontRef.current.value = '';

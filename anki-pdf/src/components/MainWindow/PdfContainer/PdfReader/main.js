@@ -1,5 +1,4 @@
-// const url = 'https://cors-anywhere.herokuapp.com/http://www.orimi.com/pdf-test.pdf';
-const url = 'http://localhost:8080/retrievePdf';
+const url = './example.pdf';
 
 let pdfDoc = null,
   pageNum = 1,
