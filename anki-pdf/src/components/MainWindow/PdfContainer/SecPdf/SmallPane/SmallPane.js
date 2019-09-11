@@ -31,8 +31,8 @@ export class SmallPane extends React.Component {
       this.props.document.turnNextPage;
 
     return (
-      <div id={this.props.id} className="SmallPane" onClick={pageTurnFunc}>
-        <button>Turn to _____ page</button>
+      <div id={this.props.id} className="SmallPane">
+        <button onClick={pageTurnFunc}>Turn to _____ page</button>
         {this.generateContent()}
       </div>
     );

@@ -15,9 +15,11 @@ export class MainPdf extends React.Component {
 
     const doc = this.props.document;
 
+    console.log('api; ' + this.props.ApiConnector.getCurrPage_url());
+
     return (
       <div className="MainPdf">
-        <Reader/>
+        <Reader pageUrl={this.props.ApiConnector.getCurrPage_url()}/>
       </div>
     );
   }

@@ -7,10 +7,6 @@ public interface ApiConnection {
 
     String addCard(Card card);
 
-    ResponseEntity<byte[]> getCurrentPage();
-    ResponseEntity<byte[]> getNextPage();
-    ResponseEntity<byte[]> getPrevPage();
-
     void turnNextPage();
     void turnPrevPage();
 

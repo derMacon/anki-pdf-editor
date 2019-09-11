@@ -25,10 +25,6 @@ public class ApiController implements ApiConnection {
 
     private Document doc;
 
-    public ApiController() {
-        this.doc = new PdfDoc();
-    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/addCard", produces = APPLICATION_JSON_VALUE)
     public String addCard(Card card) {
         System.out.println("card: ");
@@ -95,35 +91,29 @@ public class ApiController implements ApiConnection {
 
     }
 
-
     @Override
-    public ResponseEntity<byte[]> getCurrentPage() {
-        return this.servePdfFile(this.doc.getCurrentPage());
-    }
-
-    @Override
-    public ResponseEntity<byte[]> getNextPage() {
-        return this.servePdfFile(this.doc.getNextPage());
-    }
-
-    @Override
-    public ResponseEntity<byte[]> getPrevPage() {
-        return this.servePdfFile(this.doc.getPrevPage());
-    }
-
-    @Override
+    @RequestMapping(method = RequestMethod.POST, value = "/turnNextPage")
     public void turnNextPage() {
-        this.doc.turnNextPage();
+        assert doc != null;
+        doc.turnNextPage();
     }
 
     @Override
     public void turnPrevPage() {
-        this.doc.turnPrevPage();
+        assert doc != null;
+        doc.turnPrevPage();
     }
 
     @Override
     public String openNewDocument(String path) {
-        return null;
+        String message = "success";
+        try {
+            this.doc = new PdfDoc(path);
+        } catch (IOException e) {
+            message = "file non existent";
+            e.printStackTrace();
+        }
+        return message;
     }
 
     @Override
