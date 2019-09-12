@@ -15,7 +15,7 @@ Two main projects:
 * `anki-api-connector`: Spring boot rest api as the back-end for the webapp. Server runs on `http://localhost:8080/`.
 
 ## Screenshot
-
+![alt](./prototype/screenshots/1.png)
 
 ## Todo - Front-end
 ### near-term
@@ -27,6 +27,3 @@ Two main projects:
 * implement pdf search
 * make components resizable
 * frame to big for window
-
-### Todo - Back-end
-* plan the whole thing
