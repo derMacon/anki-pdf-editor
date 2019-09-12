@@ -116,6 +116,12 @@ public class ApiController implements ApiConnection {
         return this.doc.getNextPage_url();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/getCurrPage")
+    public String getCurrPage() {
+        assert doc != null;
+        return this.doc.getCurrPage_url();
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/getPrevPage")
     public String getPrevPage() {
         assert doc != null;

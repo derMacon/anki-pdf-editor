@@ -20,6 +20,7 @@ public class PdfDoc implements Document {
     private static final String URL_RES_TEMP_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/pdf/";
 
     private static final String OUT_OF_BOUND = "outOfBound";
+    private static final String OUT_OF_BOUND_URL = URL_RES_TEMP_PAGES + "outOfBound.pdf";
 
     private static final String CURR_PAGE = URL_RES_TEMP_PAGES + "currentPage.pdf";
     private static final String NEXT_PAGE = URL_RES_TEMP_PAGES + "nextPage.pdf";
@@ -73,9 +74,10 @@ public class PdfDoc implements Document {
 
     private void savePage(int idx, String name) throws IOException {
         if (idx < 0) {
-            Files.copy(Paths.get(OUT_OF_BOUND), Paths.get(name), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(Paths.get(OUT_OF_BOUND_URL), Paths.get(name), StandardCopyOption.REPLACE_EXISTING);
         } else if (idx >= pageCnt) {
-            Files.copy(Paths.get(OUT_OF_BOUND), Paths.get(name), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("oob: " + OUT_OF_BOUND_URL);
+            Files.copy(Paths.get(OUT_OF_BOUND_URL), Paths.get(name), StandardCopyOption.REPLACE_EXISTING);
         } else {
             pages.get(idx).save(name);
         }
@@ -86,15 +88,13 @@ public class PdfDoc implements Document {
         if (currPageIdx + 1 < pageCnt) {
             currPageIdx++;
         }
-        savePagesInScope();
     }
 
     @Override
     public void turnPrevPage() {
-        if (currPageIdx >= 0) {
+        if (currPageIdx > 0) {
             currPageIdx--;
         }
-        savePagesInScope();
     }
 
     @Override
@@ -103,14 +103,24 @@ public class PdfDoc implements Document {
     }
 
     @Override
-    public String getNextPage_url() {
+    public String getCurrPage_url() {
         return API_ENDPOINT + RES_LOCATION + getCurrentPageNum() + ".pdf";
     }
 
     @Override
+    public String getNextPage_url() {
+        int nextPageNum = getCurrentPageNum() + 1;
+        String fileName = nextPageNum <= this.pageCnt
+                ? String.valueOf(nextPageNum)
+                : OUT_OF_BOUND;
+        return API_ENDPOINT + RES_LOCATION + fileName + ".pdf";
+    }
+
+    @Override
     public String getPrevPage_url() {
-        String fileName = currPageIdx - 1 >= 0
-                ? String.valueOf(getCurrentPageNum())
+        int prevPageNum = getCurrentPageNum() - 1;
+        String fileName = prevPageNum > 0
+                ? String.valueOf(prevPageNum)
                 : OUT_OF_BOUND;
         return API_ENDPOINT + RES_LOCATION + fileName + ".pdf";
     }
