@@ -29,13 +29,19 @@ function requestPost(postSyntax, url) {
 }
 
 function requestGet(url) {
+    // var xmlHttp = new XMLHttpRequest();
+    // xmlHttp.onreadystatechange = function() {
+    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+    //         return xmlHttp.responseText;
+    //     }
+    // }
+    // xmlHttp.open("GET", url, true); // true for asynchronous
+    // xmlHttp.send(null);
+
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            console.log(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", url, true); // true for asynchronous
-    xmlHttp.send(null);
+    xmlHttp.open( "GET", url, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
 }
 
 export const ApiConnector = {
@@ -63,6 +69,15 @@ export const ApiConnector = {
   currPage_url: urlCurrPage,
   prevPage_url: urlPrevPage,
   nextPage_url: urlNextPage,
+
+  getNextPage_url() {
+    return requestGet(urlApiServer + 'getNextPage');
+  },
+
+  getPrevPage_url() {
+    console.log('uri: ' + requestGet(urlApiServer + 'getPrevPage'));
+    return requestGet(urlApiServer + 'getPrevPage');
+  },
 
 
 

@@ -19,10 +19,11 @@ export class SmallPane extends React.Component {
 
         // <Reader pageUrl={this.props.pageUrl}/>
   render() {
+    const properties = '?#zoom=85&scrollbar=0&toolbar=0';
     return (
       <div id={this.props.id} className="SmallPane">
         <button onClick={this.resetIframe}>Turn to {this.props.id} page</button>
-        <iframe src={this.props.pageUrl}
+        <iframe src={this.props.pageUrl() + properties}
           width="100%" height="100%">
         </iframe>
       </div>

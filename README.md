@@ -14,6 +14,9 @@ Two main projects:
 * `anki-pdf`: Front-end react project displaying the editor components. Server runs on `http://localhost:3000/`.
 * `anki-api-connector`: Spring boot rest api as the back-end for the webapp. Server runs on `http://localhost:8080/`.
 
+## Screenshot
+
+
 ## Todo - Front-end
 ### near-term
 * implement page insert at cursor pos
@@ -21,10 +24,9 @@ Two main projects:
 * fix responsive css
 
 ### long-term
-* implement pdf display
 * implement pdf search
 * make components resizable
-* fix: when error alert -> tags-field loses value
+* frame to big for window
 
 ### Todo - Back-end
 * plan the whole thing

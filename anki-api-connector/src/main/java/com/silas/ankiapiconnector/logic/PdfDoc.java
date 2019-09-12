@@ -13,12 +13,14 @@ import java.util.List;
 
 public class PdfDoc implements Document {
 
-
+    private static final String API_ENDPOINT = "http://localhost:8080/";
+    private static final String RES_LOCATION = "tempPages/pdf/";
 
     private static final String URL_RESLASTDOC =  System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/lastDocs/";
     private static final String URL_RES_TEMP_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/pdf/";
 
-    private static final String OUT_OF_BOUND = URL_RES_TEMP_PAGES + "outOfBound.pdf";
+    private static final String OUT_OF_BOUND = "outOfBound";
+
     private static final String CURR_PAGE = URL_RES_TEMP_PAGES + "currentPage.pdf";
     private static final String NEXT_PAGE = URL_RES_TEMP_PAGES + "nextPage.pdf";
     private static final String PREV_PAGE = URL_RES_TEMP_PAGES + "previousPage.pdf";
@@ -40,8 +42,10 @@ public class PdfDoc implements Document {
         pages = splitter.split(doc);
 
         this.pageCnt = pages.size();
-//        savePagesInScope();
+        // saveAllPagesAsResources();
+    }
 
+    private void saveAllPagesAsResources() throws IOException {
         Iterator<PDDocument> iterator = pages.listIterator();
 
         //Saving each page as an individual document
@@ -51,8 +55,8 @@ public class PdfDoc implements Document {
             pd.save(URL_RES_TEMP_PAGES + i++ +".pdf");
         }
         System.out.println("Multiple PDF’s created");
-    }
 
+    }
 
     /**
      * https://www.tutorialspoint.com/pdfbox/pdfbox_splitting_a_pdf_document.htm
@@ -96,6 +100,19 @@ public class PdfDoc implements Document {
     @Override
     public Integer getCurrentPageNum() {
         return this.currPageIdx + 1;
+    }
+
+    @Override
+    public String getNextPage_url() {
+        return API_ENDPOINT + RES_LOCATION + getCurrentPageNum() + ".pdf";
+    }
+
+    @Override
+    public String getPrevPage_url() {
+        String fileName = currPageIdx - 1 >= 0
+                ? String.valueOf(getCurrentPageNum())
+                : OUT_OF_BOUND;
+        return API_ENDPOINT + RES_LOCATION + fileName + ".pdf";
     }
 
     @Override

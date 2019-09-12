@@ -110,6 +110,18 @@ public class ApiController implements ApiConnection {
         System.out.println("kommt an" + doc.getCurrentPageNum());
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/getNextPage")
+    public String getNextPage() {
+        assert doc != null;
+        return this.doc.getNextPage_url();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getPrevPage")
+    public String getPrevPage() {
+        assert doc != null;
+        return this.doc.getPrevPage_url();
+    }
+
     @Override
     public void turnPrevPage() {
         assert doc != null;

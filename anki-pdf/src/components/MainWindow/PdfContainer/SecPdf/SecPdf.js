@@ -11,11 +11,11 @@ export class SecPdf extends React.Component {
     return (
       <div className="SecPdf">
         <SmallPane id="previous"
-          pageUrl={api.prevPage_url}
-          pageTurnFunc={api.turnNextPage}
+          pageUrl={api.getPrevPage_url}
+          pageTurnFunc={api.turnPrevPage}
         />
         <SmallPane id="next"
-          pageUrl={api.nextPage_url}
+          pageUrl={api.getNextPage_url}
           pageTurnFunc={api.turnNextPage}
         />
       </div>);

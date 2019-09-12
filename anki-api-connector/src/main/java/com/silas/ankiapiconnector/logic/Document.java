@@ -7,5 +7,7 @@ public interface Document {
     void turnPrevPage();
 
     Integer getCurrentPageNum();
+    String getNextPage_url();
+    String getPrevPage_url();
     Integer getPageCount();
 }
