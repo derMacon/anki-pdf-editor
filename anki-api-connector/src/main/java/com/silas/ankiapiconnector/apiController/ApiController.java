@@ -25,6 +25,17 @@ public class ApiController implements ApiConnection {
 
     private Document doc;
 
+    public ApiController() {
+        try {
+            String url_resLastDoc = "/src/main/resources/META-INF/resources/lastDocs/";
+            String url_resTempPages = "/src/main/resources/META-INF/resources/tempPages/pdf/";
+            String url = System.getProperty("user.dir") + url_resLastDoc + "CVL.pdf";
+            doc = new PdfDoc(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/addCard", produces = APPLICATION_JSON_VALUE)
     public String addCard(Card card) {
         System.out.println("card: ");
@@ -92,10 +103,11 @@ public class ApiController implements ApiConnection {
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.POST, value = "/turnNextPage")
+    @RequestMapping(method = RequestMethod.GET, value = "/turnNextPage")
     public void turnNextPage() {
         assert doc != null;
         doc.turnNextPage();
+        System.out.println("kommt an" + doc.getCurrentPageNum());
     }
 
     @Override

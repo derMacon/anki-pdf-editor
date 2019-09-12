@@ -6,12 +6,15 @@ import {ApiConnector} from '../../../util/ApiConnector';
 
 import './PdfContainer.css';
 
+
+
 export class PdfContainer extends React.Component {
   render() {
+    console.log(ApiConnector)
     return (
       <div className="PdfContainer">
         <MainPdf ApiConnector={ApiConnector}/>
-        <SecPdf document={this.props.document}/>
+        <SecPdf ApiConnector={ApiConnector}/>
       </div>
     );
   }

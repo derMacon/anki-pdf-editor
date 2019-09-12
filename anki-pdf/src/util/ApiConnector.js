@@ -2,6 +2,8 @@ const urlApiServer = 'http://localhost:8080/';
 
 const addCard_endpoint = urlApiServer + 'addCard';
 const retrievePdf_endpoint = urlApiServer + 'retrievePdf';
+const turnCurrPage_endpoint = urlApiServer + 'turnCurrPage';
+const turnPrevPage_endpoint = urlApiServer + 'turnPrevPage';
 const turnNextPage_endpoint = urlApiServer + 'turnNextPage';
 
 const tempDir_urlPrefix = 'tempPages/pdf/';
@@ -26,6 +28,16 @@ function requestPost(postSyntax, url) {
   xhr.send(postSyntax);
 }
 
+function requestGet(url) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", url, true); // true for asynchronous
+    xmlHttp.send(null);
+}
+
 export const ApiConnector = {
   submitCard(cardObj) {
     console.log(`debug:\n
@@ -39,17 +51,20 @@ export const ApiConnector = {
     requestPost(postSyntax, addCard_endpoint);
   },
 
-  getCurrPage_url() {
-    return urlCurrPage;
-  },
 
-  turnNextPage() {
+  turnPrevPage() {
     requestPost('', turnNextPage_endpoint);
   },
 
-  getNextPage_url() {
-    return urlNextPage;
+  turnNextPage() {
+    requestGet(turnNextPage_endpoint);
   },
+
+  currPage_url: urlCurrPage,
+  prevPage_url: urlPrevPage,
+  nextPage_url: urlNextPage,
+
+
 
 
   retrievePdf(name) {

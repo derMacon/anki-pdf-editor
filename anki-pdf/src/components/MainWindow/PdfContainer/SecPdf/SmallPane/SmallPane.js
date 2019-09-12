@@ -6,34 +6,25 @@ import './SmallPane.css';
 import arrowIcon from './arrowIcon.png';
 
 export class SmallPane extends React.Component {
-
-  generateContent() {
-    const doc = this.props.document;
-    const currPage = doc.currPage + this.props.offset;
-
-    if (currPage < 1 || currPage > doc.pageCnt) {
-      return <p>Out of bound (todo red background)</p>
-    }
-
-    return <Reader/>;
+  constructor(props) {
+    super(props);
+    this.state = {random: 0};
+    this.resetIframe = this.resetIframe.bind(this);
   }
 
-  testCall() {
-    console.log('boah2');
+  resetIframe() {
+    this.props.pageTurnFunc();
+    this.setState({random: this.state.random + 1});
   }
-        // <div id="imgIcon">
-        //   {this.generateContent()}
-        // </div>
 
+        // <Reader pageUrl={this.props.pageUrl}/>
   render() {
-    const pageTurnFunc = this.props.offset < 0 ?
-      this.props.document.turnPrevPage :
-      this.props.document.turnNextPage;
-
     return (
       <div id={this.props.id} className="SmallPane">
-        <button onClick={pageTurnFunc}>Turn to _____ page</button>
-        {this.generateContent()}
+        <button onClick={this.resetIframe}>Turn to {this.props.id} page</button>
+        <iframe src={this.props.pageUrl}
+          width="100%" height="100%">
+        </iframe>
       </div>
     );
 
