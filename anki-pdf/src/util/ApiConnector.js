@@ -70,6 +70,11 @@ export const ApiConnector = {
   prevPage_url: urlPrevPage,
   nextPage_url: urlNextPage,
 
+  getCurrPage_url() {
+    console.log('bis hier')
+    return requestGet(urlApiServer + 'getCurrPage');
+  },
+
   getNextPage_url() {
     return requestGet(urlApiServer + 'getNextPage');
   },

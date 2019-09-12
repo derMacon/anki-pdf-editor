@@ -13,12 +13,16 @@ export class SecPdf extends React.Component {
         <SmallPane id="previous"
           pageUrl={api.getPrevPage_url}
           pageTurnFunc={api.turnPrevPage}
+          refreshIframe={this.props.refreshIframe}
         />
         <SmallPane id="next"
           pageUrl={api.getNextPage_url}
           pageTurnFunc={api.turnNextPage}
+          refreshIframe={this.props.refreshIframe}
         />
-      </div>);
+      </div>
+    );
+
   };
 
 }

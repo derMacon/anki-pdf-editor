@@ -6,8 +6,6 @@
 }
 
 #imgIcon {
-  /* todo check if needed */
-  background-image: url('./arrowIcon.png');
 
   background-repeat: no-repeat;
   background-position: center;

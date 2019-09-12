@@ -3,26 +3,24 @@ import React from 'react';
 import {Reader} from '../../PdfReader/Reader';
 import './SmallPane.css';
 
-import arrowIcon from './arrowIcon.png';
 
 export class SmallPane extends React.Component {
+
   constructor(props) {
     super(props);
-    this.state = {random: 0};
-    this.resetIframe = this.resetIframe.bind(this);
   }
 
-  resetIframe() {
-    this.props.pageTurnFunc();
-    this.setState({random: this.state.random + 1});
+  turnPage() {
+    console.log('hierhoasdjfasdf');
+    () => {this.props.pageTurnFunc()};
+    () => {this.props.refreshIframe()};
   }
 
-        // <Reader pageUrl={this.props.pageUrl}/>
   render() {
-    const properties = '?#zoom=85&scrollbar=0&toolbar=0';
+    const properties = '?#zoom=0&scrollbar=0&toolbar=0';
     return (
       <div id={this.props.id} className="SmallPane">
-        <button onClick={this.resetIframe}>Turn to {this.props.id} page</button>
+        <button onClick={() => {this.props.pageTurnFunc(); this.props.refreshIframe()}}>Turn to {this.props.id} page</button>
         <iframe src={this.props.pageUrl() + properties}
           width="100%" height="100%">
         </iframe>
