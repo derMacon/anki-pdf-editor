@@ -29,10 +29,15 @@ export class PdfContainer extends React.Component {
     return (
       <div className="PdfContainer">
         <div className="MainPdf">
-          hi
+          <Reader/>
+        </div>
+        <div>
+          <button>previous page</button>
+          <button>next page</button>
         </div>
         <div className="SecPdf">
-          ho
+            <Reader/>
+            <Reader/>
         </div>
       </div>
     );

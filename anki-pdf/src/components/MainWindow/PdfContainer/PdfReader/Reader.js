@@ -24,7 +24,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 export class Reader extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {width: null}
+    this.state = {width: null, height: null}
   }
 
   componentDidMount () {
@@ -37,14 +37,15 @@ export class Reader extends PureComponent {
   }
 
   setDivSize = () => {
-    this.setState({width: this.pdfWrapper.getBoundingClientRect().width})
+    this.setState({width: this.pdfWrapper.getBoundingClientRect().width});
+    this.setState({height: this.pdfWrapper.getBoundingClientRect().height});
   }
 
   render() {
     return (
       <div id="row" style={{height: "100%", width: "100%", display: "flex", overflow: "hidden"}}>
         <div id="pdfWrapper" style={{width: "100%"}} ref={(ref) => this.pdfWrapper = ref}>
-          <PdfComponent wrapperDivSize={this.state.width} />
+          <PdfComponent wrapperDivWidth={this.state.width} wrapperDivHeight={this.state.height}/>
         </div>
       </div>
     )
@@ -59,7 +60,7 @@ class PdfComponent extends PureComponent {
         <Document
           file={pdf}
         >
-          <Page pageIndex={2} width={this.props.wrapperDivSize} />
+          <Page pageIndex={2} width={this.props.wrapperDivWidth} height={this.props.wrapperDivHeight}/>
         </Document>
       </div>
     )
