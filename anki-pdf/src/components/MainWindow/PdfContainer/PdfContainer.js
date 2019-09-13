@@ -1,6 +1,7 @@
 import React from 'react';
 import {SecPdf} from './SecPdf/SecPdf';
 import {MainPdf} from './MainPdf/MainPdf';
+import {Reader} from './PdfReader/Reader';
 
 import {ApiConnector} from '../../../util/ApiConnector';
 
@@ -20,12 +21,19 @@ export class PdfContainer extends React.Component {
     console.log('refreshed')
   }
 
+        // <MainPdf ApiConnector={ApiConnector}/>
+        // <SecPdf ApiConnector={ApiConnector} refreshIframe={this.refreshIframe}/>
+
   render() {
     console.log(ApiConnector)
     return (
       <div className="PdfContainer">
-        <MainPdf ApiConnector={ApiConnector}/>
-        <SecPdf ApiConnector={ApiConnector} refreshIframe={this.refreshIframe}/>
+        <div className="MainPdf">
+          hi
+        </div>
+        <div className="SecPdf">
+          ho
+        </div>
       </div>
     );
   }

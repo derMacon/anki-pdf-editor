@@ -1,7 +1,3 @@
 .PdfContainer {
   background-color: var(--color-4);
 }
-
-.PdfContainer > * {
-  flex: 1;
-}
