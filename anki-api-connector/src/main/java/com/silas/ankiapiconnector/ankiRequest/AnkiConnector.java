@@ -1,124 +1,92 @@
 package com.silas.ankiapiconnector.ankiRequest;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.coyote.Request;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AnkiConnector {
 
-    public static void main(String[] args) throws IOException {
-        String command = "curl localhost:8765 -X POST -d \"{\\\"action\\\": \\\"deckNames\\\", \\\"version\\\": 6}\"";
+    private HttpURLConnection connection = null;
+    private Gson gson = new Gson();
 
-        requestBealdung();
-
-
+    public AnkiConnector(Integer port) throws IOException {
+        setupConnection(port);
     }
 
-    private static void curlFromBash(String command) {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        // Windows
-        processBuilder.command("bash", "-c", command);
-
-        try {
-
-            Process process = processBuilder.start();
-
-            BufferedReader reader =
-                    new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with error code : " + exitCode);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private void setupConnection(Integer port) throws IOException {
+        URL url = new URL ("http://localhost:" + port);
+        connection = (HttpURLConnection)url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setDoOutput(true);
     }
 
-    private static void iTried() {
-//        String command = "curl localhost:8765 -X POST -d \"{\\\"action\": \\\"deckNames\\\", \\\"version\\\": 6}w\"";
-//        Process process = Runtime.getRuntime().exec(command);
-//        InputStream str = process.getInputStream();
-//        String out = IOUtils.toString(str, StandardCharsets.UTF_8);
-//        System.out.println(out);
+    /**
+     * Usefull resources:
+     * - StackOverflow: https://stackoverflow.com/questions/7181534/http-post-using-json-in-java
+     * @throws IOException
+     */
+    public void request(Request request) throws IOException {
+        String jsonResponse = sendRequest(request);
+        ResponseBody<String> responseObj = getResponseObj(String.class, jsonResponse);
+
+        System.out.println(responseObj);
     }
 
-    private static void requestStackOverflow() {
-        HttpClient httpClient = HttpClientBuilder.create().build(); //Use this instead
 
-        try {
+    private String sendRequest(Request request) throws IOException {
+        String jsonInputString = gson.toJson(request);
 
-            HttpPost request = new HttpPost("http://localhost:8765");
-            StringEntity params =new StringEntity("{\"action\": \"deckNames\", \"version\": \"6\"} ");
-            request.addHeader("content-type", "application/x-www-form-urlencoded");
-            request.setEntity(params);
-            HttpResponse response = httpClient.execute(request);
-
-            //handle response here...
-            System.out.println('a');
-        }catch (Exception ex) {
-
-            //handle exception here
-
-        } finally {
-            //Deprecated
-            //httpClient.getConnectionManager().shutdown();
-        }
-    }
-
-    private static void requestBealdung() throws IOException {
-        URL url = new URL ("http://localhost:8765");
-        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-
-        con.setRequestMethod("POST");
-
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-
-        con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
-        String jsonInputString = "{\"action\": \"deckNames\", \"version\": 6}";
-
-        try(OutputStream os = con.getOutputStream()) {
+        try(OutputStream os = this.connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);
         }
 
+        String output = null;
         try(BufferedReader br = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                new InputStreamReader(connection.getInputStream(), "utf-8"))) {
             StringBuilder response = new StringBuilder();
             String responseLine = null;
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
             }
-            System.out.println(response.toString());
+            output = response.toString();
         }
-
+        return output;
     }
 
 
+    private static <T> ResponseBody<T> getResponseObj(Class responseType, String json) {
+        // complete response type containing the error field
+        Type completeResponseType = TypeToken.getParameterized(ResponseBody.class, responseType).getType();
+        return new Gson().fromJson(json, completeResponseType);
+    }
+
+
+
+
+//    private static void curlFromBash(String command) {
+//        ProcessBuilder processBuilder = new ProcessBuilder();
+//        processBuilder.command("bash", "-c", command);
+//        try {
+//            Process process = processBuilder.start();
+//            BufferedReader reader =
+//                    new BufferedReader(new InputStreamReader(process.getInputStream()));
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                System.out.println(line);
+//            }
+//            int exitCode = process.waitFor();
+//            System.out.println("\nExited with error code : " + exitCode);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
