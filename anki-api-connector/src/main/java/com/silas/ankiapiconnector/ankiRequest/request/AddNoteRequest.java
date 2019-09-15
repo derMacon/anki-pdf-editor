@@ -1,21 +1,57 @@
 package com.silas.ankiapiconnector.ankiRequest.request;
 
+import com.silas.ankiapiconnector.ankiRequest.response.AddNoteResponse;
 import com.silas.ankiapiconnector.logic.Card;
+
+import java.lang.reflect.Type;
+import java.util.Arrays;
 
 public class AddNoteRequest extends Request {
 
-    private Object params;
+    private static Type RESPONSE_TYPE = AddNoteResponse.class;
 
-    public AddNoteRequest(String action, Integer version, Object params) {
-        super(action, version);
-        this.params = params;
+    // template has placeholders for:
+    // version, deckName, Front, Back, tags
+    private static String JSON_TEMPLATE = "{\n" +
+            "\"action\": \"addNotes\",\n" +
+            "\"version\": %s,\n" +
+            "\"params\": {\n" +
+            "  \"notes\": [ \n" +
+            "    {\n" +
+            "      \"deckName\": \"%s\",\n" +
+            "      \"modelName\": \"Basic\",\n" +
+            "      \"fields\": {\n" +
+            "        \"Front\": \"%s\",\n" +
+            "        \"Back\": \"%s\"\n" +
+            "      },\n" +
+            "      \"options\": {\n" +
+            "        \"allowDuplicate\": true\n" +
+            "      },\n" +
+            "      \"tags\": %s\n" +
+            "    } \n" +
+            "  ]\n" +
+            "}\n" +
+            "}";
+
+    private Card card;
+
+    public AddNoteRequest(Card card) {
+        this.card = card;
     }
 
-    public Object getParams() {
-        return params;
+    @Override
+    public String toJson() {
+        return String.format(JSON_TEMPLATE,
+                String.valueOf(this.version),
+                card.getDeckName(),
+                card.getFrontSide(),
+                card.getBackSide(),
+                Arrays.toString(card.getTags())
+        );
     }
 
-    public void setParams(Params params) {
-        this.params = params;
+    @Override
+    public Type getResponseType() {
+        return RESPONSE_TYPE;
     }
 }

@@ -3,6 +3,7 @@ package com.silas.ankiapiconnector.ankiRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.silas.ankiapiconnector.ankiRequest.request.Request;
+import com.silas.ankiapiconnector.ankiRequest.response.AddNoteResponse;
 import com.silas.ankiapiconnector.ankiRequest.response.Response;
 
 import java.io.*;
@@ -12,8 +13,14 @@ import java.net.URL;
 
 public class AnkiConnector {
 
+    private static final Integer DEFAULT_PORT = 8765;
+
     private HttpURLConnection connection = null;
     private Gson gson = new Gson();
+
+    public AnkiConnector() throws IOException {
+        this(DEFAULT_PORT);
+    }
 
     public AnkiConnector(Integer port) throws IOException {
         setupConnection(port);
@@ -34,12 +41,8 @@ public class AnkiConnector {
      * @throws IOException
      */
     public Response request(Request request) throws IOException {
-        String jsonResponse = sendRequest(request);
-//        Response responseObj = getResponseObj(String.class, jsonResponse);
-
-//        System.out.println(responseObj);
-//        return responseObj;
-        return null;
+        String jsonResponse = sendRequest(request.toJson());
+        return gson.fromJson(jsonResponse, request.getResponseType());
     }
 
     public String sendRequest(String jsonInputString) throws IOException {
@@ -63,37 +66,6 @@ public class AnkiConnector {
         return output;
 
     }
-
-
-    public String sendRequest(Request request) throws IOException {
-        String jsonInputString = gson.toJson(request);
-
-        try(OutputStream os = this.connection.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-
-        String output = null;
-        try(BufferedReader br = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), "utf-8"))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
-            }
-            output = response.toString();
-        }
-        System.out.println("out: " + output);
-        return output;
-    }
-
-//
-//    private static <T> Response<T> getResponseObj(Class responseType, String json) {
-//        // complete response type containing the error field
-//        Type completeResponseType = TypeToken.getParameterized(Response.class, responseType).getType();
-//        return new Gson().fromJson(json, completeResponseType);
-//    }
-//
 
 
 

@@ -1,24 +1,19 @@
 package com.silas.ankiapiconnector.ankiRequest.request;
 
-public class Request {
-    private String action;
-    private Integer version;
+import java.lang.reflect.Type;
 
-    public Request(String action, Integer version) {
-        this.action = action;
-        this.version = version;
+public abstract class Request {
+
+    private static final Integer DEFAULT_VERSION = 6;
+
+    protected Integer version;
+
+    public Request() {
+        this.version = DEFAULT_VERSION;
     }
 
-    public String getAction() {
-        return action;
-    }
+    public abstract String toJson();
 
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
+    public abstract Type getResponseType();
 
 }

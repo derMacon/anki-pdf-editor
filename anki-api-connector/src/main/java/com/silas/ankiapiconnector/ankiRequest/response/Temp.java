@@ -1,10 +1,6 @@
 package com.silas.ankiapiconnector.ankiRequest.response;
 
-import com.google.gson.Gson;
 import com.silas.ankiapiconnector.ankiRequest.AnkiConnector;
-import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
-import com.silas.ankiapiconnector.ankiRequest.request.Params;
-import com.silas.ankiapiconnector.ankiRequest.request.Request;
 
 import java.io.IOException;
 
