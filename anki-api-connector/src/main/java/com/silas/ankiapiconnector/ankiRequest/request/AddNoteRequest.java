@@ -2,9 +2,9 @@ package com.silas.ankiapiconnector.ankiRequest.request;
 
 import com.silas.ankiapiconnector.ankiRequest.response.AddNoteResponse;
 import com.silas.ankiapiconnector.logic.Card;
+import org.json.JSONArray;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
 
 public class AddNoteRequest extends Request {
 
@@ -40,18 +40,27 @@ public class AddNoteRequest extends Request {
     }
 
     @Override
+    public Type getResponseType() {
+        return RESPONSE_TYPE;
+    }
+
+    @Override
     public String toJson() {
         return String.format(JSON_TEMPLATE,
                 String.valueOf(this.version),
                 card.getDeckName(),
                 card.getFrontSide(),
                 card.getBackSide(),
-                Arrays.toString(card.getTags())
+                arrayToJson(card.getTags())
         );
     }
 
-    @Override
-    public Type getResponseType() {
-        return RESPONSE_TYPE;
+    private String arrayToJson(Object[] arr) {
+        JSONArray output = new JSONArray();
+        for(Object curr : arr) {
+            output.put(curr);
+        }
+        return output.toString();
     }
+
 }

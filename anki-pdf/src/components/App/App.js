@@ -15,7 +15,8 @@ export default class App extends React.Component {
       // doc obj will be distributed throughout whole component structure
       // contains the file, currPage and maxPage number.
       document: {
-        projectName: 'exampleStack',
+        projectName: 'TestDeck',
+        updateProjectName: (newName) => this.setState({projectName: newName}),
         file: 'http://localhost:8080/retrievePdf?name=example',
         currPage: 1,
         pageCnt: undefined,

@@ -11,11 +11,10 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Card card = new Card("TestDeck", "Basic", "hmm hmm", "back", new String[] {});
-        System.out.println(new Gson().toJson(card));
-
+        Card card = new Card("TestDeck", "hmm hmm2", "back", new String[] {"tag"});
+        System.out.println(card);
         Request requ = new AddNoteRequest(card);
-        System.out.println(new Gson().toJson(requ));
+        System.out.println(requ.toJson());
 
         AnkiConnector connector =  new AnkiConnector();
         Response resp = connector.request(requ);

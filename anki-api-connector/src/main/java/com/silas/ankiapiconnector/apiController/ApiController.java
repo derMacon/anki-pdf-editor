@@ -2,6 +2,7 @@ package com.silas.ankiapiconnector.apiController;
 
 
 import com.silas.ankiapiconnector.ankiRequest.AnkiConnector;
+import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
 import com.silas.ankiapiconnector.logic.Card;
 import com.silas.ankiapiconnector.logic.Document;
 import com.silas.ankiapiconnector.logic.PdfDoc;
@@ -42,13 +43,13 @@ public class ApiController implements ApiConnection {
         System.out.println("card: ");
         System.out.println(card);
         // todo ueberarbeiten
-//        try {
-//            ApiConnection connector = new ApiController();
-//            connector.addCard(card);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            AnkiConnector connector = new AnkiConnector();
+            connector.request(new AddNoteRequest(card));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "success";
     }
 

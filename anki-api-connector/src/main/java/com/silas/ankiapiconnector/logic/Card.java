@@ -4,14 +4,12 @@ import java.util.Arrays;
 
 public class Card {
     private String deckName;
-    private String modelName;
     private String frontSide;
     private String backSide;
     private String[] tags;
 
-    public Card(String deckName, String modelName, String frontSide, String backSide, String[] tags) {
+    public Card(String deckName, String frontSide, String backSide, String[] tags) {
         this.deckName = deckName;
-        this.modelName = modelName;
         this.frontSide = frontSide;
         this.backSide = backSide;
         this.tags = tags;
@@ -19,10 +17,6 @@ public class Card {
 
     public String getDeckName() {
         return deckName;
-    }
-
-    public String getModelName() {
-        return modelName;
     }
 
     public String getFrontSide() {
