@@ -31,6 +31,7 @@ public class Card {
         return tags;
     }
 
+
     @Override
     public String toString() {
         return "front: " + this.frontSide + "\n"

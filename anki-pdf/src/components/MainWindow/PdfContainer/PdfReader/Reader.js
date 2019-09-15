@@ -25,7 +25,7 @@ export class Reader extends PureComponent {
 
 
   componentWillReceiveProps({document}) {
-    this.setState({pageIdx: document.currPage});
+    this.setState({pageIdx: document.currPage - 1});
   }
 
   setDivSize = () => {
@@ -41,7 +41,7 @@ export class Reader extends PureComponent {
           <PdfComponent
             wrapperDivWidth={this.state.width}
             wrapperDivHeight={this.state.height}
-            file={doc.file}
+            document={doc}
             pageIdx={this.state.pageIdx}
           />
         </div>
@@ -53,33 +53,17 @@ export class Reader extends PureComponent {
 
 class PdfComponent extends PureComponent {
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {currPageIdx: this.props.document.currPage - 1}
-  // }
-
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
-    // this.props.document.pageCnt = numPages;
-    // this.props.document.updatePageCnt(numPages);
+    this.props.document.pageCnt = numPages;
   };
 
-  componentDidMount() {
-    // this.props.document.updatePageCnt(this.state.numPages);
-  }
-
-
-  componentWillReceiveProps({document}) {
-    console.log('updated')
-  }
-
   render() {
-    // const doc = this.props.document;
-    // const pdf = doc.file;
+    const doc = this.props.document;
     return (
       <div>
         <Document
-          file={this.props.file}
+          file={doc.file}
           onLoadSuccess={this.onDocumentLoadSuccess}
         >
           <Page
