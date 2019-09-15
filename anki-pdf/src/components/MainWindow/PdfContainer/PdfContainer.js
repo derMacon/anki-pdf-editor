@@ -4,6 +4,8 @@ import {ApiConnector} from '../../../util/ApiConnector';
 import './PdfContainer.css';
 
 export class PdfContainer extends React.Component {
+
+
   constructor(props) {
     super(props);
     this.state = {random: 0};
@@ -20,15 +22,15 @@ export class PdfContainer extends React.Component {
     return (
       <div className="PdfContainer">
         <div className="MainPdf">
-          <Reader document={doc}/>
+          <Reader document={doc} pageIdx={0}/>
         </div>
         <div>
           <button onClick={doc.turnPrevPage}>previous page</button>
           <button onClick={doc.turnNextPage}>next page</button>
         </div>
         <div className="SecPdf">
-          <Reader document={doc}/>
-          <Reader document={doc}/>
+          <Reader document={doc} pageIdx={0}/>
+          <Reader document={doc} pageIdx={0}/>
         </div>
       </div>
     );
