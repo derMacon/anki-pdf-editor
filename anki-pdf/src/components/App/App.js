@@ -17,7 +17,7 @@ export default class App extends React.Component {
       document: {
         projectName: 'TestDeck',
         updateProjectName: (newName) => this.setState({projectName: newName}),
-        file: 'http://localhost:8080/retrievePdf?name=example',
+        file: 'http://localhost:8080/serveSelectedPdf',
         currPage: 1,
         pageCnt: undefined,
         turnNextPage: () => this.turnNextPage(),

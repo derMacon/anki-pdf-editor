@@ -8,4 +8,5 @@
 
 .SecPdf {
   height: 24.5vh;
+  display: flex;
 }

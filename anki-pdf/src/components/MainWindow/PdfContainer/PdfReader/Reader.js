@@ -1,23 +1,6 @@
-// import React from 'react';
-// import './Reader.css';
-
-// export class Reader extends React.Component {
-//   render() {
-//     const properties = '?#zoom=0&scrollbar=0&toolbar=0';
-//     return (
-//         <iframe src={this.props.pageUrl + properties}
-//           width="100%" height="100%">
-//         </iframe>
-//     );
-//   }
-// }
-
-
-
 import React, { PureComponent } from "react"
 import throttle from "lodash.throttle"
 import './Reader.css';
-
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -45,7 +28,11 @@ export class Reader extends PureComponent {
     return (
       <div id="row" style={{height: "100%", width: "100%", display: "flex", overflow: "hidden"}}>
         <div id="pdfWrapper" style={{width: "100%"}} ref={(ref) => this.pdfWrapper = ref}>
-          <PdfComponent wrapperDivWidth={this.state.width} wrapperDivHeight={this.state.height}/>
+          <PdfComponent
+            wrapperDivWidth={this.state.width}
+            wrapperDivHeight={this.state.height}
+            document={this.props.document}
+          />
         </div>
       </div>
     )
@@ -54,13 +41,17 @@ export class Reader extends PureComponent {
 
 class PdfComponent extends PureComponent {
   render() {
-    const pdf = './example.pdf';
+    const doc = this.props.document;
+    const pdf = doc.file;
+    // const pdf = './example.pdf';
     return (
       <div>
-        <Document
-          file={pdf}
-        >
-          <Page pageIndex={2} width={this.props.wrapperDivWidth} height={this.props.wrapperDivHeight}/>
+        <Document file={pdf}>
+          <Page
+            pageIndex={doc.currPage}
+            width={this.props.wrapperDivWidth}
+            height={this.props.wrapperDivHeight}
+          />
         </Document>
       </div>
     )

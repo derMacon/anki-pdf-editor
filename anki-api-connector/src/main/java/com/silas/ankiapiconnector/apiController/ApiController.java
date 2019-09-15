@@ -53,7 +53,6 @@ public class ApiController implements ApiConnection {
         return "success";
     }
 
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/retrievePdf", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> retrievePdf(String name) {
@@ -61,6 +60,37 @@ public class ApiController implements ApiConnection {
         // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
 
         File file = new File("src/main/resources/META-INF/resources/example.pdf");
+        System.out.println(file.getAbsolutePath());
+        System.out.println("file: " + (file.exists() && !file.isDirectory()));
+        byte[] contents = null;
+
+        try {
+            contents = Files.readAllBytes(file.toPath());
+        } catch (IOException e) {
+            System.out.println("not cool\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Here you have to set the actual filename of your pdf
+        String filename = "output.pdf";
+        headers.setContentDispositionFormData(filename, filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+
+        System.out.println("file sent");
+        return response;
+    }
+
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @RequestMapping(method = RequestMethod.GET, value = "/serveSelectedPdf", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<byte[]> serveSelectedPdf(String name) {
+
+        // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
+
+        File file = new File("src/main/resources/META-INF/resources/lastDocs/CVL.pdf");
         System.out.println(file.getAbsolutePath());
         System.out.println("file: " + (file.exists() && !file.isDirectory()));
         byte[] contents = null;

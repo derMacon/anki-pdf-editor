@@ -1,13 +1,7 @@
 import React from 'react';
-import {SecPdf} from './SecPdf/SecPdf';
-import {MainPdf} from './MainPdf/MainPdf';
 import {Reader} from './PdfReader/Reader';
-
 import {ApiConnector} from '../../../util/ApiConnector';
-
 import './PdfContainer.css';
-
-
 
 export class PdfContainer extends React.Component {
   constructor(props) {
@@ -21,23 +15,20 @@ export class PdfContainer extends React.Component {
     console.log('refreshed')
   }
 
-        // <MainPdf ApiConnector={ApiConnector}/>
-        // <SecPdf ApiConnector={ApiConnector} refreshIframe={this.refreshIframe}/>
-
   render() {
-    console.log(ApiConnector)
+    const doc = this.props.document;
     return (
       <div className="PdfContainer">
         <div className="MainPdf">
-          <Reader/>
+          <Reader document={doc}/>
         </div>
         <div>
           <button>previous page</button>
           <button>next page</button>
         </div>
         <div className="SecPdf">
-            <Reader/>
-            <Reader/>
+          <Reader document={doc}/>
+          <Reader document={doc}/>
         </div>
       </div>
     );
