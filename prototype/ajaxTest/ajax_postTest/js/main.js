@@ -58,6 +58,30 @@ var input3 =
         }
     };
 
+
+var input4 = {
+"action": "addNotes",
+"version": 6,
+"params": {
+  "notes": [ 
+    {
+      "deckName": "TestDeck",
+      "modelName": "Basic",
+      "fields": {
+        "Front": "why?",
+        "Back": "because!",
+        "Card ID": "foo"
+      },
+      "options": {
+        "allowDuplicate": true
+      },
+      "tags": []
+    } 
+  ]
+}
+}
+
+
 var input = {
     "action": "modelFieldNames",
     "version": 6,
@@ -65,5 +89,5 @@ var input = {
         "modelName": "Einfach-26e94"
     }
 };
-requ.send(JSON.stringify(input3));
+requ.send(JSON.stringify(input4));
 console.log();

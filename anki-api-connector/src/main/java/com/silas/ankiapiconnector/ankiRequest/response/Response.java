@@ -1,15 +1,15 @@
-package com.silas.ankiapiconnector.ankiRequest;
+package com.silas.ankiapiconnector.ankiRequest.response;
 
-public class ResponseBody<E> {
-    private E result;
+public abstract class Response {
+    private Object result;
     private String error;
 
-    public ResponseBody(E result, String error) {
+    public Response(Object result, String error) {
         this.result = result;
         this.error = error;
     }
 
-    public E getResult() {
+    public Object getResult() {
         return result;
     }
 
@@ -17,7 +17,7 @@ public class ResponseBody<E> {
         return error;
     }
 
-    public void setResult(E result) {
+    public void setResult(Object result) {
         this.result = result;
     }
 
