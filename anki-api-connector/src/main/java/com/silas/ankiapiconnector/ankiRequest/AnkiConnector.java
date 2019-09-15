@@ -47,6 +47,8 @@ public class AnkiConnector {
 
     public String sendRequest(String jsonInputString) throws IOException {
 
+        System.out.println("instr: " + jsonInputString);
+
         try(OutputStream os = this.connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);

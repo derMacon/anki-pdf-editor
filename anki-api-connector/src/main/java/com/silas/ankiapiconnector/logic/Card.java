@@ -3,6 +3,7 @@ package com.silas.ankiapiconnector.logic;
 import java.util.Arrays;
 
 public class Card {
+
     private String deckName;
     private String frontSide;
     private String backSide;
@@ -10,8 +11,8 @@ public class Card {
 
     public Card(String deckName, String frontSide, String backSide, String[] tags) {
         this.deckName = deckName;
-        this.frontSide = frontSide;
-        this.backSide = backSide;
+        this.frontSide = parseImg(frontSide);
+        this.backSide = parseImg(backSide);
         this.tags = tags;
     }
 
@@ -31,6 +32,9 @@ public class Card {
         return tags;
     }
 
+    public static String parseImg(String side) {
+        return side.replaceAll("<(\\d*)>", "<img src=$1.png>");
+    }
 
     @Override
     public String toString() {

@@ -69,7 +69,7 @@ var input4 = {
       "modelName": "Basic",
       "fields": {
         "Front": "why?",
-        "Back": "because!",
+        "Back": "img! <img src=007.png>",
         "Card ID": "foo"
       },
       "options": {
