@@ -47,7 +47,6 @@ export class EditorContainer extends React.Component {
 
   insertAtCaret(text) {
     // todo
-    console.log(text)
   }
 
   render() {
@@ -68,7 +67,7 @@ export class EditorContainer extends React.Component {
           </div>
 
           <div className="btnMenu">
-            <button type="button" onClick={this.insertAtCaret('hi')}>Insert page</button>
+            <button type="button" onClick={this.insertAtCaret('textInput')}>Insert page</button>
             <input type="submit" value="Submit"/>
           </div>
         </div>

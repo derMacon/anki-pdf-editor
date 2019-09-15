@@ -39,14 +39,25 @@ export class Reader extends PureComponent {
   }
 }
 
+
 class PdfComponent extends PureComponent {
+
+  
+
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({ numPages });
+    this.props.document.pageCnt = numPages;
+  };
+
   render() {
     const doc = this.props.document;
     const pdf = doc.file;
-    // const pdf = './example.pdf';
     return (
       <div>
-        <Document file={pdf}>
+        <Document
+          file={pdf}
+          onLoadSuccess={this.onDocumentLoadSuccess}
+        >
           <Page
             pageIndex={doc.currPage}
             width={this.props.wrapperDivWidth}

@@ -23,8 +23,8 @@ export class PdfContainer extends React.Component {
           <Reader document={doc}/>
         </div>
         <div>
-          <button>previous page</button>
-          <button>next page</button>
+          <button onClick={doc.turnPrevPage}>previous page</button>
+          <button onClick={doc.turnNextPage}>next page</button>
         </div>
         <div className="SecPdf">
           <Reader document={doc}/>

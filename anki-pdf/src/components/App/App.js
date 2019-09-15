@@ -20,6 +20,7 @@ export default class App extends React.Component {
         file: 'http://localhost:8080/serveSelectedPdf',
         currPage: 1,
         pageCnt: undefined,
+        updatePageCnt: (newPageCnt) => this.setState({pageCnt: newPageCnt}),
         turnNextPage: () => this.turnNextPage(),
         turnPrevPage: () => this.turnPrevPage(),
         click: this.handleClick
@@ -70,7 +71,6 @@ export default class App extends React.Component {
   // increments the currPage count and updates the doc if possible.
   turnNextPage() {
     let page = Number(this.state.document.currPage) + 1;
-    console.log('next page');
     if (this.state.document.pageCnt >= page) {
       console.log('next page ' + page + '/' + this.state.document.pageCnt);
       this.updatePageNum(page);
