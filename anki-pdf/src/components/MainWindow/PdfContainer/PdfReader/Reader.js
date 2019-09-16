@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react"
 import throttle from "lodash.throttle"
-import './Reader.css';
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 

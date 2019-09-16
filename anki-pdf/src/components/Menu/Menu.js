@@ -40,14 +40,17 @@ export class Menu extends React.Component {
         </div>
         <button onclick={this.searchTerm}>Search Term</button>
         <button onclick={this.displayHelp}>Help</button>
-        <div className="infoItem">
-          Project: {this.props.document.projectName}
-        </div>
-        <div className="infoItem">
-          Filename: {this.extractFileName(doc.file)}
-        </div>
-        <div className="infoItem">
-          Page: {doc.currPage} / {doc.pageCnt}
+
+        <div className="stats">
+          <div className="infoItem">
+            Project: {this.props.document.projectName}
+          </div>
+          <div className="infoItem">
+            Filename: {this.extractFileName(doc.file)}
+          </div>
+          <div className="infoItem">
+            Page: {doc.currPage} / {doc.pageCnt}
+          </div>
         </div>
       </div>
     );

@@ -1,11 +1,13 @@
 .PdfContainer {
+  margin: 10px 10px 10px 10px;
 }
 
 .MainPdf {
-  height: 70vh;
+  height: 66vh;
 }
 
 .SecPdf {
-  height: 24.5vh;
+  height: 27vh;
+  /*flex: 1;*/
   display: flex;
 }
