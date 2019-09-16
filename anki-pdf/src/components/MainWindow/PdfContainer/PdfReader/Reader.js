@@ -25,7 +25,8 @@ export class Reader extends PureComponent {
 
 
   componentWillReceiveProps({document}) {
-    this.setState({pageIdx: document.currPage - 1});
+    const pageIdx = (document.currPage - 1) + this.props.offset;
+    this.setState({pageIdx: pageIdx});
   }
 
   setDivSize = () => {

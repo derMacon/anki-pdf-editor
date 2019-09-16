@@ -22,15 +22,15 @@ export class PdfContainer extends React.Component {
     return (
       <div className="PdfContainer">
         <div className="MainPdf">
-          <Reader document={doc} pageIdx={0}/>
+          <Reader document={doc} offset={0}/>
         </div>
         <div>
           <button onClick={doc.turnPrevPage}>previous page</button>
           <button onClick={doc.turnNextPage}>next page</button>
         </div>
         <div className="SecPdf">
-          <Reader document={doc} pageIdx={-1}/>
-          <Reader document={doc} pageIdx={1}/>
+          <Reader document={doc} offset={-1}/>
+          <Reader document={doc} offset={1}/>
         </div>
       </div>
     );
