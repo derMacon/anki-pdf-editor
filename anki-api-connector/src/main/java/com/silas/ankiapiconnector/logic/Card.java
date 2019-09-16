@@ -1,44 +1,41 @@
 package com.silas.ankiapiconnector.logic;
 
+import java.util.Arrays;
+
 public class Card {
-    private String front;
-    private String back;
-    private String tags;
 
-    public Card(String front, String back, String tags) {
-        this.front = front;
-        this.back = back;
+    private String deckName;
+    private String frontSide;
+    private String backSide;
+    private String[] tags;
+
+    public Card(String deckName, String frontSide, String backSide, String[] tags) {
+        this.deckName = deckName;
+        this.frontSide = frontSide;
+        this.backSide = backSide;
         this.tags = tags;
     }
 
-    public String getFront() {
-        return front;
+    public String getDeckName() {
+        return deckName;
     }
 
-    public String getBack() {
-        return back;
+    public String getFrontSide() {
+        return frontSide;
     }
 
-    public String getTags() {
+    public String getBackSide() {
+        return backSide;
+    }
+
+    public String[] getTags() {
         return tags;
-    }
-
-    public void setFront(String front) {
-        this.front = front;
-    }
-
-    public void setBack(String back) {
-        this.back = back;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
     }
 
     @Override
     public String toString() {
-        return "front: " + this.front + "\n"
-                + "back: " + this.back + "\n"
-                + "tags: " + this.tags;
+        return "front: " + this.frontSide + "\n"
+                + "back: " + this.backSide + "\n"
+                + "tags: " + Arrays.toString(this.tags);
     }
 }

@@ -1,14 +1,14 @@
 {
-  "name": "pdf-app",
+  "name": "react-pdf-prot",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "lodash.throttle": "^4.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-hotkeys": "^2.0.0",
     "react-scripts": "0.9.5"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

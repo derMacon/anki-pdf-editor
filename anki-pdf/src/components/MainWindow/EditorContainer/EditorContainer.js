@@ -19,6 +19,7 @@ export class EditorContainer extends React.Component {
   }
 
   handleSubmit(event) {
+    const projectName = this.props.document.projectName;
     const frontForm = this.frontRef.current.value;
     const backForm = this.backRef.current.value;
     const tagsForm = this.tagsRef.current.value;
@@ -30,8 +31,9 @@ export class EditorContainer extends React.Component {
     } else {
 
       const cardObj = {
-        front: frontForm,
-        back: backForm,
+        deckName: projectName,
+        frontSide: frontForm,
+        backSide: backForm,
         tags: tagsForm
       }
 
@@ -45,7 +47,6 @@ export class EditorContainer extends React.Component {
 
   insertAtCaret(text) {
     // todo
-    console.log(text)
   }
 
   render() {
@@ -66,7 +67,7 @@ export class EditorContainer extends React.Component {
           </div>
 
           <div className="btnMenu">
-            <button type="button" onClick={this.insertAtCaret('hi')}>Insert page</button>
+            <button type="button" onClick={this.insertAtCaret('textInput')}>Insert page</button>
             <input type="submit" value="Submit"/>
           </div>
         </div>

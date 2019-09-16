@@ -1,7 +1,11 @@
 .PdfContainer {
-  background-color: var(--color-4);
 }
 
-.PdfContainer > * {
-  flex: 1;
+.MainPdf {
+  height: 70vh;
+}
+
+.SecPdf {
+  height: 24.5vh;
+  display: flex;
 }
