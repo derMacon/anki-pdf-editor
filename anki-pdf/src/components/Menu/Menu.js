@@ -27,6 +27,8 @@ export class Menu extends React.Component {
   }
 
   render() {
+    console.log('pr')
+    console.log(this.props.document.fileName())
     const doc = this.props.document;
     return (
       <div className="Menu">
@@ -38,15 +40,16 @@ export class Menu extends React.Component {
             <a href={GIT_REPO_URL}>Github-Project</a>
           </div>
         </div>
-        <button onclick={this.searchTerm}>Search Term</button>
-        <button onclick={this.displayHelp}>Help</button>
+        
+        <button onClick={this.searchTerm}>Search Term</button>
+        <button onClick={this.displayHelp}>Help</button>
 
         <div className="stats">
           <div className="infoItem">
             Project: {this.props.document.projectName}
           </div>
           <div className="infoItem">
-            Filename: {this.extractFileName(doc.file)}
+            Filename: {doc.fileName() + '.pdf'}
           </div>
           <div className="infoItem">
             Page: {doc.currPage} / {doc.pageCnt}

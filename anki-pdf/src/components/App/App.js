@@ -1,10 +1,9 @@
 import React from 'react';
 import {Menu} from '../Menu/Menu';
 import {MainWindow} from '../MainWindow/MainWindow';
-import './App.css';
-
+import {ApiConnector} from '../../util/ApiConnector';
 import { HotKeys } from "react-hotkeys";
-
+import './App.css';
 
 export default class App extends React.Component {
 
@@ -17,7 +16,8 @@ export default class App extends React.Component {
       document: {
         projectName: 'TestDeck',
         updateProjectName: (newName) => this.setState({projectName: newName}),
-        file: 'http://localhost:8080/serveSelectedPdf',
+        file: ApiConnector.selectedPdf,
+        fileName: () => ApiConnector.selectedPdfName(),
         currPage: 1,
         pageCnt: undefined,
         updatePageCnt: (newPageCnt) => this.setState({pageCnt: newPageCnt}),
