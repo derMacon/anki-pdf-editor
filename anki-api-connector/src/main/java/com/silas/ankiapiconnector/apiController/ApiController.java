@@ -26,7 +26,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class ApiController implements ApiConnection {
 
-    private Document doc;
     private HtmlParser parser;
 
     public ApiController() throws IOException {
@@ -34,13 +33,13 @@ public class ApiController implements ApiConnection {
             String url_resLastDoc = "/src/main/resources/META-INF/resources/lastDocs/";
             String url_resTempPages = "/src/main/resources/META-INF/resources/tempPages/pdf/";
             String url = System.getProperty("user.dir") + url_resLastDoc + "CVL.pdf";
-            doc = new PdfDoc(url);
             parser = new HtmlParser(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
     @RequestMapping(method = RequestMethod.POST, value = "/addCard", produces = APPLICATION_JSON_VALUE)
     public String addCard(Card card) {
         System.out.println("card: ");
@@ -55,6 +54,60 @@ public class ApiController implements ApiConnection {
         return "success";
     }
 
+    @Override
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @RequestMapping(method = RequestMethod.GET, value = "/selectedPdfName")
+    public String getSelectedPdfName() {
+        return this.parser.getPdfName();
+    }
+
+    @Override
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @RequestMapping(method = RequestMethod.GET, value = "/serveSelectedPdf", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<byte[]> serveSelectedPdf() {
+
+        // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
+
+        File file = new File("src/main/resources/META-INF/resources/lastDocs/CVL.pdf");
+        System.out.println(file.getAbsolutePath());
+        System.out.println("file: " + (file.exists() && !file.isDirectory()));
+        byte[] contents = null;
+
+        try {
+            contents = Files.readAllBytes(file.toPath());
+        } catch (IOException e) {
+            System.out.println("not cool\n" + e.getMessage());
+            e.printStackTrace();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        // Here you have to set the actual filename of your pdf
+        String filename = "output.pdf";
+        headers.setContentDispositionFormData(filename, filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+
+        System.out.println("file sent");
+        return response;
+    }
+
+    @Override
+    public String openNewDocument(String path) {
+        String message = "success";
+        // todo
+        return message;
+    }
+
+    @Override
+    public String openNewProject(String name) {
+        return null;
+    }
+}
+
+
+/*
+    // todo check if needed
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/retrievePdf", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> retrievePdf(String name) {
@@ -86,36 +139,6 @@ public class ApiController implements ApiConnection {
     }
 
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @RequestMapping(method = RequestMethod.GET, value = "/serveSelectedPdf", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<byte[]> serveSelectedPdf(String name) {
-
-        // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
-
-        File file = new File("src/main/resources/META-INF/resources/lastDocs/CVL.pdf");
-        System.out.println(file.getAbsolutePath());
-        System.out.println("file: " + (file.exists() && !file.isDirectory()));
-        byte[] contents = null;
-
-        try {
-            contents = Files.readAllBytes(file.toPath());
-        } catch (IOException e) {
-            System.out.println("not cool\n" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        // Here you have to set the actual filename of your pdf
-        String filename = "output.pdf";
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-
-        System.out.println("file sent");
-        return response;
-    }
-
     private ResponseEntity<byte[]> servePdfFile(File file) {
         // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
 
@@ -144,52 +167,5 @@ public class ApiController implements ApiConnection {
 
     }
 
-    @Override
-    @RequestMapping(method = RequestMethod.GET, value = "/turnNextPage")
-    public void turnNextPage() {
-        assert doc != null;
-        doc.turnNextPage();
-        System.out.println("kommt an" + doc.getCurrentPageNum());
-    }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getNextPage")
-    public String getNextPage() {
-        assert doc != null;
-        return this.doc.getNextPage_url();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/getCurrPage")
-    public String getCurrPage() {
-        assert doc != null;
-        return this.doc.getCurrPage_url();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/getPrevPage")
-    public String getPrevPage() {
-        assert doc != null;
-        return this.doc.getPrevPage_url();
-    }
-
-    @Override
-    public void turnPrevPage() {
-        assert doc != null;
-        doc.turnPrevPage();
-    }
-
-    @Override
-    public String openNewDocument(String path) {
-        String message = "success";
-        try {
-            this.doc = new PdfDoc(path);
-        } catch (IOException e) {
-            message = "file non existent";
-            e.printStackTrace();
-        }
-        return message;
-    }
-
-    @Override
-    public String openNewProject(String name) {
-        return null;
-    }
-}
+ */

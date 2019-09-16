@@ -5,12 +5,13 @@ import org.springframework.http.ResponseEntity;
 
 public interface ApiConnection {
 
+    // post requests
     String addCard(Card card);
-
-    void turnNextPage();
-    void turnPrevPage();
-
     String openNewDocument(String path);
     String openNewProject(String name);
+
+    // get requests
+    ResponseEntity<byte[]> serveSelectedPdf();
+    String getSelectedPdfName();
 
 }
