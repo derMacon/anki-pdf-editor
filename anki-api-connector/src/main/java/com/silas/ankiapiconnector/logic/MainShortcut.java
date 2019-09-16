@@ -2,6 +2,9 @@ package com.silas.ankiapiconnector.logic;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 public class MainShortcut {
 
@@ -10,7 +13,14 @@ public class MainShortcut {
         String url_resTempPages = "/src/main/resources/META-INF/resources/tempPages/pdf/";
         String url = System.getProperty("user.dir") + url_resLastDoc + "CVL.pdf";
 
-        Document doc = new PdfDoc(url);
+//        HtmlParser p = new HtmlParser(url);
+//        p.parseImg("<1>");
+
+        String HOME_DIR = System.getProperty("user.home");
+//        String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/";
+        String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
+
+        System.out.println("exist: " + Files.exists(new File(ANKI_IMG_PAGES).toPath()));
 
 
 

@@ -11,8 +11,8 @@ public class Card {
 
     public Card(String deckName, String frontSide, String backSide, String[] tags) {
         this.deckName = deckName;
-        this.frontSide = parseImg(frontSide);
-        this.backSide = parseImg(backSide);
+        this.frontSide = frontSide;
+        this.backSide = backSide;
         this.tags = tags;
     }
 
@@ -30,10 +30,6 @@ public class Card {
 
     public String[] getTags() {
         return tags;
-    }
-
-    public static String parseImg(String side) {
-        return side.replaceAll("<(\\d*)>", "<img src=$1.png>");
     }
 
     @Override

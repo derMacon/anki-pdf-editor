@@ -5,6 +5,7 @@ import com.silas.ankiapiconnector.ankiRequest.AnkiConnector;
 import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
 import com.silas.ankiapiconnector.logic.Card;
 import com.silas.ankiapiconnector.logic.Document;
+import com.silas.ankiapiconnector.logic.HtmlParser;
 import com.silas.ankiapiconnector.logic.PdfDoc;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,13 +27,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class ApiController implements ApiConnection {
 
     private Document doc;
+    private HtmlParser parser;
 
-    public ApiController() {
+    public ApiController() throws IOException {
         try {
             String url_resLastDoc = "/src/main/resources/META-INF/resources/lastDocs/";
             String url_resTempPages = "/src/main/resources/META-INF/resources/tempPages/pdf/";
             String url = System.getProperty("user.dir") + url_resLastDoc + "CVL.pdf";
             doc = new PdfDoc(url);
+            parser = new HtmlParser(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,8 +48,7 @@ public class ApiController implements ApiConnection {
         // todo ueberarbeiten
         try {
             AnkiConnector connector = new AnkiConnector();
-            connector.request(new AddNoteRequest(card));
-
+            connector.request(new AddNoteRequest(parser.parseImgTag(card)));
         } catch (IOException e) {
             e.printStackTrace();
         }
