@@ -52,7 +52,7 @@ public class HtmlParser {
         for(int curr : nums) {
             renderImageInTemp(curr);
         }
-        return side.replaceAll("<(\\d*)>", "<img src=$1.png>");
+        return side.replaceAll("<(\\d*)>", "<img src=" + projectName + "_$1.png>");
     }
 
     /**
