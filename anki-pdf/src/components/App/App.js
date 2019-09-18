@@ -18,6 +18,7 @@ export default class App extends React.Component {
         updateProjectName: (newName) => this.setState({projectName: newName}),
         file: ApiConnector.selectedPdf,
         fileName: () => ApiConnector.selectedPdfName(),
+        selectFile: () => ApiConnector.selectNewPdf(),
         currPage: 1,
         pageCnt: undefined,
         updatePageCnt: (newPageCnt) => this.setState({pageCnt: newPageCnt}),
@@ -55,7 +56,7 @@ export default class App extends React.Component {
 
   // todo not working for some reason
   componentDidMount() {
-    this.setPageCnt(5);
+    this.setPageCnt(300);
   }
 
   // Setter function for the overall page count, will be used

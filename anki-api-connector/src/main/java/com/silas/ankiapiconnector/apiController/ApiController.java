@@ -1,12 +1,11 @@
 package com.silas.ankiapiconnector.apiController;
-
-
 import com.silas.ankiapiconnector.ankiRequest.AnkiConnector;
 import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
+import com.silas.ankiapiconnector.ankiRequest.request.GetDecksRequest;
+import com.silas.ankiapiconnector.ankiRequest.request.Request;
+import com.silas.ankiapiconnector.ankiRequest.response.Response;
 import com.silas.ankiapiconnector.logic.Card;
-import com.silas.ankiapiconnector.logic.Document;
 import com.silas.ankiapiconnector.logic.HtmlParser;
-import com.silas.ankiapiconnector.logic.PdfDoc;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -93,9 +96,13 @@ public class ApiController implements ApiConnection {
     }
 
     @Override
-    public String openNewDocument(String path) {
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @RequestMapping(method = RequestMethod.GET, value = "/selectNewPdf")
+    public String openNewDocument() {
         String message = "success";
         // todo
+
+
         return message;
     }
 
@@ -103,6 +110,26 @@ public class ApiController implements ApiConnection {
     public String openNewProject(String name) {
         return null;
     }
+
+    @Override
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @RequestMapping(method = RequestMethod.GET, value = "/showProjects")
+    public List<String> showPossibleProjects() {
+        List<String> out = null;
+
+        try {
+            AnkiConnector connector = new AnkiConnector();
+            Response r = connector.request(new GetDecksRequest());
+            out = (ArrayList<String>)r.getResult();
+        } catch (IOException e) {
+            System.out.println("hmmm " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return out;
+    }
+
+
 }
 
 

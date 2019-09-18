@@ -35,12 +35,12 @@ export class Menu extends React.Component {
         <div className="dropdown">
           <button className="dropbtn">Open</button>
           <div className="dropdown-content">
-            <a href="#" onClick={this.openNewPdf}>new File</a>
+            <a href="#" onClick={doc.selectFile}>new File</a>
             <a href="#" onClick={this.openNewProject}>new Project</a>
             <a href={GIT_REPO_URL}>Github-Project</a>
           </div>
         </div>
-        
+
         <button onClick={this.searchTerm}>Search Term</button>
         <button onClick={this.displayHelp}>Help</button>
 
