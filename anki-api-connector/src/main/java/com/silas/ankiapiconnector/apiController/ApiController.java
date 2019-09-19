@@ -71,7 +71,8 @@ public class ApiController implements ApiConnection {
 
         // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
 
-        File file = new File("src/main/resources/META-INF/resources/lastDocs/CVL.pdf");
+//        File file = new File("src/main/resources/META-INF/resources/lastDocs/CVL.pdf");
+        File file = new File(System.getProperty("user.home") + "/Documents/lastDocs/CVL.pdf");
         System.out.println(file.getAbsolutePath());
         System.out.println("file: " + (file.exists() && !file.isDirectory()));
         byte[] contents = null;
