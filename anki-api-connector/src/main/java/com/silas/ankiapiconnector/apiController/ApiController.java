@@ -99,10 +99,10 @@ public class ApiController implements ApiConnection {
     @Override
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/selectNewPdf")
-    public String openNewDocument() {
+    public String selectNewPdf(String path) {
         String message = "success";
         // todo
-
+        System.out.println(path);
 
         return message;
     }

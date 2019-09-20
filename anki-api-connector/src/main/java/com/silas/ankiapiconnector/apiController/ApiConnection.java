@@ -9,7 +9,7 @@ public interface ApiConnection {
 
     // post requests
     String addCard(Card card);
-    String openNewDocument();
+    String selectNewPdf(String path);
     String openNewProject(String name);
     List<String> showPossibleProjects();
 
