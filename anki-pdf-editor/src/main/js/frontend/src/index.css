@@ -1,5 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap');
+
+:root {
+  /* light theme
+  --color-1: #f0f0f0;
+  --color-2: #c5d5c5;
+  --color-3: #9fa9a3;
+  --color-4: #e3e0cc;
+  --black: black;
+  */
+
+  /* --color-1: #202020; */
+  --color-1: #1d1d1d;
+  --color-2: #272727;
+  --color-3: #2e2e2e;
+  --color-4: #363636;
+
+  --white: #a7a7a7;
+  --black: black;
+
+  /*--default-padding: */
+}
+
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  height: 100vh;
+  background-color: var(--color-1);
+}
+
+body, textarea, button, input {
+  font-size: larger;
+  font-family: 'Open Sans', sans-serif;
+  color: var(--white);
+}
+
+body * {
+  -webkit-border-radius: 2px;
+  -moz-border-radius:    2px;
+  border-radius:         2px;
+
+}
+
+div {
+  -webkit-box-shadow: inset 0px 0px 10px -2px var(--black);
+  -moz-box-shadow: inset    0px 0px 10px -2px var(--black);
+  box-shadow: inset         0px 0px 10px -2px var(--black);
+}
+
+
+/* https://css-tricks.com/overriding-default-button-styles/ */
+button, input {
+    display: inline-block;
+    border: none;
+    padding: 2px 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    text-decoration: none;
+    background: var(--color-3);
+    font-family: sans-serif;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out,
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+    background: var(--color-4);
+}
+
+button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+button:active {
+    transform: scale(0.99);
 }
