@@ -34,7 +34,8 @@ public class Card {
 
     @Override
     public String toString() {
-        return "front: " + this.frontSide + "\n"
+        return "deck: " + this.deckName + "\n"
+                + "front: " + this.frontSide + "\n"
                 + "back: " + this.backSide + "\n"
                 + "tags: " + Arrays.toString(this.tags);
     }
