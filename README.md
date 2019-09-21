@@ -11,13 +11,16 @@ Two main projects:
 
 ## Todo - Front-end
 ### near-term
-* implement page insert at cursor pos
 * implement menu
 * fix responsive css
+* textarea should submit linebreaks
 
 ### long-term
 * implement pdf search
 * make components resizable
-* frame to big for window
-* set uniform margin
+
+### Resources
+* [Color palette for the themes](https://material.io/design/color/dark-theme.html#behavior)
+* [Bind React with Spring](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot)
+* Example - [Binding Spring / React](https://github.com/tzehe/react-spring-example)
 

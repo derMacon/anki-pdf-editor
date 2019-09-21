@@ -1,15 +1,12 @@
 const urlApiServer = 'http://localhost:8080/';
 
 const addCard_endpoint = urlApiServer + 'addCard';
-const retrievePdf_endpoint = urlApiServer + 'retrievePdf';
-const turnCurrPage_endpoint = urlApiServer + 'turnCurrPage';
-const turnPrevPage_endpoint = urlApiServer + 'turnPrevPage';
-const turnNextPage_endpoint = urlApiServer + 'turnNextPage';
+const serveSelectedPdf_endpoint = urlApiServer + 'serveSelectedPdf';
+const getPdfName_endpoint = urlApiServer + 'selectedPdfName';
+const selectNewPdf_endpoint = urlApiServer + 'selectNewPdf';
 
-const tempDir_urlPrefix = 'tempPages/pdf/';
-const urlCurrPage = urlApiServer + tempDir_urlPrefix + 'currentPage.pdf';
-const urlNextPage = urlApiServer + tempDir_urlPrefix + 'nextPage.pdf';
-const urlPrevPage = urlApiServer + tempDir_urlPrefix + 'previousPage.pdf';
+// todo check if needed
+// const retrievePdf_endpoint = urlApiServer + 'retrievePdf';
 
 
 function generatePostSyntax(cardObj) {
@@ -29,66 +26,33 @@ function requestPost(postSyntax, url) {
 }
 
 function requestGet(url) {
-    // var xmlHttp = new XMLHttpRequest();
-    // xmlHttp.onreadystatechange = function() {
-    //     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-    //         return xmlHttp.responseText;
-    //     }
-    // }
-    // xmlHttp.open("GET", url, true); // true for asynchronous
-    // xmlHttp.send(null);
-
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", url, false ); // false for synchronous request
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
 
+
 export const ApiConnector = {
   submitCard(cardObj) {
-    console.log(`debug:\n
-    front ${cardObj.front}\n
-    back ${cardObj.back}\n
-    tags ${cardObj.tags}`);
-
     const postSyntax = generatePostSyntax(cardObj);
-    console.log('before send: ' + postSyntax);
-
+    console.log('before sending json: ' + postSyntax);
     requestPost(postSyntax, addCard_endpoint);
   },
 
+  selectedPdf: serveSelectedPdf_endpoint,
 
-  turnPrevPage() {
-    requestPost('', turnNextPage_endpoint);
+  selectedPdfName() {
+    return requestGet(getPdfName_endpoint);
   },
 
-  turnNextPage() {
-    requestGet(turnNextPage_endpoint);
-  },
-
-  currPage_url: urlCurrPage,
-  prevPage_url: urlPrevPage,
-  nextPage_url: urlNextPage,
-
-  getCurrPage_url() {
-    console.log('bis hier')
-    return requestGet(urlApiServer + 'getCurrPage');
-  },
-
-  getNextPage_url() {
-    return requestGet(urlApiServer + 'getNextPage');
-  },
-
-  getPrevPage_url() {
-    console.log('uri: ' + requestGet(urlApiServer + 'getPrevPage'));
-    return requestGet(urlApiServer + 'getPrevPage');
-  },
-
-
-
-
-  retrievePdf(name) {
-    console.log(`debug name: ${name}`);
-    requestPost(`fileName=${name}`, retrievePdf_endpoint);
+  selectNewPdf() {
+    console.log('hier hier')
+    requestGet(selectNewPdf_endpoint);
   }
+
+  // retrievePdf(name) {
+  //   requestPost(`fileName=${name}`, retrievePdf_endpoint);
+  // },
+
 }

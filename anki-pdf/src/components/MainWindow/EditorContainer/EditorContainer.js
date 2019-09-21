@@ -45,8 +45,17 @@ export class EditorContainer extends React.Component {
     }
   }
 
-  insertAtCaret(text) {
-    // todo
+  // https://stackoverflow.com/questions/11076975/insert-text-into-textarea-at-cursor-position-javascript/41426040
+  insertAtCaret() {
+    const data = `<${this.props.document.currPage}>`
+    const target = document.getElementById('back');
+     if (target.setRangeText) {
+     //if setRangeText function is supported by current browser
+     target.setRangeText(data)
+    } else {
+      target.focus()
+      document.execCommand('insertText', false /*no UI*/, data);
+    }
   }
 
   render() {
@@ -58,7 +67,7 @@ export class EditorContainer extends React.Component {
             <textarea id="front" ref={this.frontRef} name="front" type="text" placeholder="front Side"></textarea>
           </div>
 
-          <div className="backSide">
+          <div id="back" className="backSide">
             <textarea ref={this.backRef} name="front" type="text" placeholder="back Side"></textarea>
           </div>
 
@@ -67,7 +76,7 @@ export class EditorContainer extends React.Component {
           </div>
 
           <div className="btnMenu">
-            <button type="button" onClick={this.insertAtCaret('textInput')}>Insert page</button>
+            <button type="button" onClick={() => this.insertAtCaret()}>Insert page</button>
             <input type="submit" value="Submit"/>
           </div>
         </div>

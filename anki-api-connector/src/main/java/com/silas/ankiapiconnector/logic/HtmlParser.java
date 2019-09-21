@@ -1,7 +1,6 @@
 package com.silas.ankiapiconnector.logic;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -28,14 +27,18 @@ public class HtmlParser {
     public static int DEFAULT_DPI = 150;
 
     private PDDocument doc;
-    private String projectName;
-    private final String FILE_TEMPLATE = TEMP_IMG_PAGES + projectName + "_%s.png";
+    private String pdfName;
+    private final String FILE_TEMPLATE = TEMP_IMG_PAGES + pdfName + "_%s.png";
 
     public HtmlParser(String path) throws IOException {
         File file = new File(path);
         assert file != null && file.isFile();
         this.doc = PDDocument.load(file);
-        this.projectName = FilenameUtils.removeExtension(file.getName());
+        this.pdfName = FilenameUtils.removeExtension(file.getName());
+    }
+
+    public String getPdfName() {
+        return pdfName;
     }
 
     public Card parseImgTag(final Card input) throws IOException {
@@ -52,7 +55,7 @@ public class HtmlParser {
         for(int curr : nums) {
             renderImageInTemp(curr);
         }
-        return side.replaceAll("<(\\d*)>", "<img src=" + projectName + "_$1.png>");
+        return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>");
     }
 
     /**
@@ -65,7 +68,7 @@ public class HtmlParser {
     private void renderImageInTemp(Integer pageNum) throws IOException {
         PDFRenderer pdfRenderer = new PDFRenderer(this.doc);
         BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNum - 1, DEFAULT_DPI, ImageType.RGB);
-        String path = ANKI_IMG_PAGES + projectName + "_" + pageNum + ".png";
+        String path = ANKI_IMG_PAGES + pdfName + "_" + pageNum + ".png";
         File currPageImg = new File(path);
         ImageIOUtil.writeImage(bim, currPageImg.getPath(), DEFAULT_DPI);
         ImageResizer.resizeImage(currPageImg.getPath(), currPageImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
