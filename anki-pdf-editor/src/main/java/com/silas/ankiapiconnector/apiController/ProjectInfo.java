@@ -7,6 +7,8 @@ public class ProjectInfo {
             "\"pdf\": \"%s\"\n" +
             "}";
 
+    private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
+
     private String deck;
     private String pdf;
 
@@ -26,8 +28,20 @@ public class ProjectInfo {
         this.pdf = pdf;
     }
 
+    public String getDeck() {
+        return deck;
+    }
+
+    public String getPdf() {
+        return pdf;
+    }
+
     public String toJson() {
         return String.format(JSON_TEMPLATE, deck, pdf);
+    }
+
+    public String toUrlParameters() {
+        return String.format(URL_PARAMETER_TEMPLATE, deck, pdf);
     }
 
 }

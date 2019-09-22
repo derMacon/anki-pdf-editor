@@ -13,7 +13,7 @@ public class AnkiApiConnectorApplication {
 
 	private static final int API_PORT = 8080;
 	private static final int GUI_PORT = 3000;
-	private static final String KILL_PROCESS_TEMPLATE = "kill $(lsof -t -i:%d)";
+	private static final String KILL_PROCESS_COMMAND = "kill $(lsof -t -i:%d)";
 
 	private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
 	private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
@@ -22,11 +22,11 @@ public class AnkiApiConnectorApplication {
 
 
 	public static void main(String[] args) throws IOException {
-		killPorts();
-		startAnki();
+//		killPorts();
+//		startAnki();
 	    SpringApplication.run(AnkiApiConnectorApplication.class, args);
 		selectLastProject();
-	    startGui();
+//	    startGui();
 	}
 
 	public static void selectLastProject() throws IOException {
@@ -53,12 +53,12 @@ public class AnkiApiConnectorApplication {
 	}
 
 	private static void initSpringApi(ProjectInfo projectInfo) throws IOException {
-		new PostConnector(8080, "initProjectInfo").request(projectInfo.toJson());
+		new PostConnector(8080, "initProjectInfo").urlRequest(projectInfo.toUrlParameters());
 	}
 
 	private static void killPorts() throws IOException {
-		Runtime.getRuntime().exec(String.format(KILL_PROCESS_TEMPLATE, API_PORT));
-		Runtime.getRuntime().exec(String.format(KILL_PROCESS_TEMPLATE, GUI_PORT));
+		Runtime.getRuntime().exec(String.format(KILL_PROCESS_COMMAND, API_PORT));
+		Runtime.getRuntime().exec(String.format(KILL_PROCESS_COMMAND, GUI_PORT));
 	}
 
 	private static void startAnki() throws IOException {

@@ -26,7 +26,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class ApiController implements ApiConnection {
 
+//    private static final String MANUAL_URL = System.getProperty("user.dir") + ""
+
     private HtmlParser parser;
+    private ProjectInfo projectInfo;
 
     public ApiController() throws IOException {
         try {
@@ -41,9 +44,10 @@ public class ApiController implements ApiConnection {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.POST, value = "/initProjectInfo")
-    public void initProjectInfo(ProjectInfo projectInfo) {
+    public void initProjectInfo(ProjectInfo projectInfo) throws IOException {
         System.out.println("kommt an: " + projectInfo.toJson());
-//        System.out.println("kommt an...");
+        this.projectInfo = projectInfo;
+        this.parser = new HtmlParser(projectInfo.getPdf());
     }
 
     @Override
@@ -54,7 +58,7 @@ public class ApiController implements ApiConnection {
         // todo ueberarbeiten
         try {
             PostConnector connector = new PostConnector(8765);
-            connector.request(new AddNoteRequest(parser.parseImgTag(card)));
+            connector.jsonRequest(new AddNoteRequest(parser.parseImgTag(card)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,7 +128,7 @@ public class ApiController implements ApiConnection {
 
         try {
             PostConnector connector = new PostConnector(8765);
-            Response r = connector.request(new GetDecksRequest());
+            Response r = connector.jsonRequest(new GetDecksRequest());
             out = (ArrayList<String>)r.getResult();
         } catch (IOException e) {
             System.out.println("hmmm " + e.getMessage());

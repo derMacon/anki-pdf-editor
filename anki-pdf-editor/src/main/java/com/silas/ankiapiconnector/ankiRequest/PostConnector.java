@@ -6,12 +6,15 @@ import com.silas.ankiapiconnector.ankiRequest.response.Response;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class PostConnector {
 
     private static final Integer DEFAULT_PORT = 8765;
 
+    private String url = null;
     private HttpURLConnection connection = null;
     private Gson gson = new Gson();
 
@@ -24,8 +27,8 @@ public class PostConnector {
     }
 
     private void setupConnection(Integer port, String command) throws IOException {
-        URL url = new URL ("http://localhost:" + port + command);
-        connection = (HttpURLConnection)url.openConnection();
+        url = "http://localhost:" + port + command;
+        connection = (HttpURLConnection)new URL(url).openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json; utf-8");
         connection.setRequestProperty("Accept", "application/json");
@@ -37,12 +40,12 @@ public class PostConnector {
      * - StackOverflow: https://stackoverflow.com/questions/7181534/http-post-using-json-in-java
      * @throws IOException
      */
-    public Response request(Request request) throws IOException {
-        String jsonResponse = request(request.toJson());
+    public Response jsonRequest(Request request) throws IOException {
+        String jsonResponse = jsonRequest(request.toJson());
         return gson.fromJson(jsonResponse, request.getResponseType());
     }
 
-    public String request(String jsonInputString) throws IOException {
+    public String jsonRequest(String jsonInputString) throws IOException {
 
         System.out.println("input str: " + jsonInputString);
 
@@ -64,6 +67,50 @@ public class PostConnector {
         System.out.println("out: " + output);
         return output;
 
+    }
+
+    /**
+     * http://zetcode.com/java/getpostrequest/
+     * @param urlParameters
+     * @throws IOException
+     */
+    public void urlRequest(String urlParameters) throws IOException {
+        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+
+        try {
+
+            URL myurl = new URL(url);
+            connection = (HttpURLConnection) myurl.openConnection();
+
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("User-Agent", "Java client");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+                wr.write(postData);
+            }
+
+            StringBuilder content;
+
+            try (BufferedReader in = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()))) {
+
+                String line;
+                content = new StringBuilder();
+
+                while ((line = in.readLine()) != null) {
+                    content.append(line);
+                    content.append(System.lineSeparator());
+                }
+            }
+
+            System.out.println(content.toString());
+
+        } finally {
+
+            connection.disconnect();
+        }
     }
 
 

@@ -33,6 +33,6 @@ public class Temp {
 //        System.out.println(new Gson().toJson(requ));
 //
         PostConnector connector =  new PostConnector(8765);
-        connector.request(in);
+        connector.jsonRequest(in);
     }
 }
