@@ -51,8 +51,8 @@ export const ApiConnector = {
   },
 
   selectDeck() {
-    console.log('hier hier')
     requestGet(selectDeck_endpoint);
+    window.location.reload();
   }
 
 }

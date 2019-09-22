@@ -2,12 +2,11 @@ package com.silas.ankiapiconnector.apiController;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.function.Consumer;
 import javax.swing.*;
-import java.util.*;
-import java.text.SimpleDateFormat;
 
 /**
- * Not my work, only modified:
+ * Not my work, only slightly modified:
  * https://www.math.uni-hamburg.de/doc/java/tutorial/uiswing/components/example-1dot4/ComboBoxDemo2.java
  */
 public class DeckChooser extends JPanel
@@ -16,7 +15,11 @@ public class DeckChooser extends JPanel
     JLabel result;
     String currentPattern;
 
-    public DeckChooser(String[] decks) {
+    private Consumer<String> callback;
+    private String deck;
+    private JButton btn;
+
+    public DeckChooser(String[] decks, Consumer<String> callback) {
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         String[] patternExamples = decks;
@@ -32,7 +35,7 @@ public class DeckChooser extends JPanel
         patternList.addActionListener(this);
 
         //Create the UI for displaying result.
-        JLabel resultLabel = new JLabel("Current Date/Time",
+        JLabel resultLabel = new JLabel("Anki deck selector",
                 JLabel.LEADING); //== LEFT
         result = new JLabel(" ");
         result.setForeground(Color.black);
@@ -57,9 +60,16 @@ public class DeckChooser extends JPanel
         patternPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         resultPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        btn = new JButton("submit");
+        btn.addActionListener(e -> {
+            callback.accept(deck);
+            frame.dispose();
+        });
+
         add(patternPanel);
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(resultPanel);
+        add(btn);
 
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
@@ -69,15 +79,17 @@ public class DeckChooser extends JPanel
     public void actionPerformed(ActionEvent e) {
         JComboBox cb = (JComboBox)e.getSource();
         String newSelection = (String)cb.getSelectedItem();
-        currentPattern = newSelection;
-        reformat();
+
+        this.deck = newSelection;
     }
 
+    // todo delete
     public void reformat() {
         try {
             String dataString = "";
             result.setForeground(Color.black);
             result.setText(dataString);
+
         } catch (IllegalArgumentException iae) {
             result.setForeground(Color.red);
             result.setText("Error: " + iae.getMessage());
@@ -89,16 +101,16 @@ public class DeckChooser extends JPanel
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    public static void createAndShowGUI(String[] decks) {
+    public static void createAndShowGUI(String[] decks, Consumer<String> callback) {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         //Create and set up the window.
-        JFrame frame = new JFrame("ComboBoxDemo2");
+        frame = new JFrame("DeckSeletor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        JComponent newContentPane = new DeckChooser(decks);
+        JComponent newContentPane = new DeckChooser(decks, callback);
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 

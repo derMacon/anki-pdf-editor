@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -145,7 +146,7 @@ public class ApiController implements ApiConnection {
             Response r = connector.jsonRequest(new GetDecksRequest());
             out = (ArrayList<String>) r.getResult();
 
-            String deck = chooseDeck(out.toArray(new String[0]));
+            chooseDeck(out.toArray(new String[0]));
 
         } catch (IOException e) {
             System.out.println("hmmm " + e.getMessage());
@@ -155,17 +156,21 @@ public class ApiController implements ApiConnection {
 
     // todo getter for projectinfo => no need getDeck and getPdf / getPdfName etc.
 
-    private String chooseDeck(String[] decks) {
-        String output = null;
-
-        DeckChooser deckChooser = new DeckChooser(decks);
+    private void chooseDeck(String[] decks) {
+        Consumer<String> callback = deck -> updateDeck(deck);
+        DeckChooser deckChooser = new DeckChooser(decks, callback);
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                deckChooser.createAndShowGUI(decks);
+                deckChooser.createAndShowGUI(decks, callback);
             }
         });
+    }
 
-        return output;
+    private void updateDeck(String newDeck) {
+        assert newDeck != newDeck;
+        String pdf = this.projectInfo.getPdfPath();
+        this.projectInfo = new ProjectInfo(newDeck, pdf);
+        System.out.println("updated projInfo: " + projectInfo.toJson());
     }
 
 }

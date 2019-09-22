@@ -42,6 +42,7 @@ public class AnkiApiConnectorApplication {
 
     private static void startGui() throws IOException {
         Runtime.getRuntime().exec(FRONTEND_START_COMMAND);
+        System.out.println("Started gui");
     }
 
 }
