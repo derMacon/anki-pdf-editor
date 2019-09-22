@@ -64,7 +64,7 @@ public class HtmlParser {
     /**
      * Renders an image of the given page given that the page is actually existent in the underlying pdf document
      *
-     * @param pageNum page num which the user selected (page to copy to the clipboard)
+     * @param pageNum page num which the user selected
      * @return an cliboard image which can be saved in the systems clipboard
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */

@@ -49,6 +49,7 @@ export const ApiConnector = {
   selectNewPdf() {
     console.log('hier hier')
     requestGet(selectNewPdf_endpoint);
+    window.location.reload();
   }
 
   // retrievePdf(name) {

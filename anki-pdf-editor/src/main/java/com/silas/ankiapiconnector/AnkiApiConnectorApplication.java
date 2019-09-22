@@ -1,15 +1,9 @@
-package com.silas.ankiapiconnector.apiController;
+package com.silas.ankiapiconnector;
 
-import com.silas.ankiapiconnector.ankiRequest.PostConnector;
-import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfo;
-import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfoContainer;
-import org.apache.commons.io.input.ReversedLinesFileReader;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication
@@ -35,7 +29,6 @@ public class AnkiApiConnectorApplication {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(AnkiApiConnectorApplication.class);
 		builder.headless(false);
 		ConfigurableApplicationContext context = builder.run(args);
-
 	}
 
 	private static void killPorts() throws IOException {

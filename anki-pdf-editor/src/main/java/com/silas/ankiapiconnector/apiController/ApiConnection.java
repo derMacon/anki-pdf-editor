@@ -11,7 +11,7 @@ public interface ApiConnection {
     // post requests
 //    void initProjectInfo(ProjectInfo projectInfo);
     String addCard(Card card);
-    String selectNewPdf(String path);
+    String selectNewPdf() throws IOException;
     String openNewProject(String name);
     List<String> showPossibleProjects();
 

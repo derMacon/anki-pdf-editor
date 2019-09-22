@@ -7,6 +7,7 @@ import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfo;
 import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfoContainer;
 import com.silas.ankiapiconnector.logic.Card;
 import com.silas.ankiapiconnector.logic.HtmlParser;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,16 +27,16 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ApiController implements ApiConnection {
 
     private HtmlParser parser;
-
+    private ProjectInfo projectInfo;
 
     public ApiController() throws IOException {
-        String path = ProjectInfoContainer.getProjectInfo().getPdf();
-        parser = new HtmlParser(path);
+        projectInfo = new ProjectInfo();
+        parser = new HtmlParser(projectInfo.getPdfPath());
     }
 
 //    @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -62,25 +63,23 @@ public class ApiController implements ApiConnection {
     }
 
     @Override
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/selectedPdfName")
     public String getSelectedPdfName() {
-        return this.parser.getPdfName();
+        return this.projectInfo.getPdfName();
     }
 
+    /**
+     * https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
+     * @return
+     * @throws IOException
+     */
     @Override
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/serveSelectedPdf", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> serveSelectedPdf() throws IOException {
-
-        // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
-
-//        File file = new File("src/main/resources/META-INF/resources/lastDocs/CVL.pdf");
-//        File file = new File(System.getProperty("user.home") + "/Documents/lastDocs/CVL.pdf");
-        String path = ProjectInfoContainer.getProjectInfo().getPdf();
+       // todo ueberarbeiten
+        String path = projectInfo.getPdfPath();
         File file = new File(path);
         System.out.println(file.getAbsolutePath());
-        System.out.println("file: " + (file.exists() && !file.isDirectory()));
         byte[] contents = null;
 
         try {
@@ -98,26 +97,36 @@ public class ApiController implements ApiConnection {
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
 
-        System.out.println("file sent");
         return response;
     }
 
-    @Override
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/selectNewPdf")
-    public String selectNewPdf(String path) {
+    public String selectNewPdf() throws IOException {
         String message = "success";
-        // todo
-        System.out.println(path);
-        openFileChooser();
+
+        File output = openFileChooser();
+        String outName = output.getName();
+        File copy = new File(projectInfo.getLastDocsDir() + outName);
+
+        // only copy if file isn't already existent in the lastDocs directory
+        if (output != null && output.exists() && !copy.exists()) {
+            System.out.println("copy " + output.getAbsolutePath() + " to " + copy.getAbsolutePath());
+            FileUtils.copyFile(output, copy);
+        }
+
+        String deck = projectInfo.getDeck();
+        projectInfo = new ProjectInfo(deck, output.getName());
+
+        System.out.println("pi: " + projectInfo.toJson());
 
         return message;
     }
 
     private File openFileChooser() {
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser(projectInfo.getLastDocsDir());
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & GIF Images", "jpg", "gif");
+                "PDF", "pdf");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
         File output = null;
@@ -129,14 +138,12 @@ public class ApiController implements ApiConnection {
         return output;
     }
 
-
     @Override
     public String openNewProject(String name) {
         return null;
     }
 
     @Override
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/showProjects")
     public List<String> showPossibleProjects() {
         List<String> out = null;

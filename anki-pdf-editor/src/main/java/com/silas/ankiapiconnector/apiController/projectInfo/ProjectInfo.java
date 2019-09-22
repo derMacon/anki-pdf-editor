@@ -1,5 +1,6 @@
 package com.silas.ankiapiconnector.apiController.projectInfo;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.input.ReversedLinesFileReader;
 
 import java.io.File;
@@ -52,8 +53,16 @@ public class ProjectInfo {
         return deck;
     }
 
-    public String getPdf() {
+    public String getPdfPath() {
         return pdf;
+    }
+
+    public String getPdfName() {
+        return FilenameUtils.removeExtension(new File(pdf).getName());
+    }
+
+    public String getLastDocsDir() {
+        return LAST_DOCS_DIR;
     }
 
     // todo check if needed
