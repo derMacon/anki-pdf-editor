@@ -32,6 +32,7 @@ public class ApiController implements ApiConnection {
 
     private HtmlParser parser;
 
+
     public ApiController() throws IOException {
         String path = ProjectInfoContainer.getProjectInfo().getPdf();
         parser = new HtmlParser(path);

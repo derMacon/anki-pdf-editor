@@ -17,41 +17,35 @@ public class ProjectInfo {
     private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
 
-    private String deck;
-    private String pdf;
+    private final String deck;
+    private final String pdf;
 
-    ProjectInfo(String deck, String pdfName) {
+    public ProjectInfo(String deck, String pdfName) {
         this.deck = deck;
         this.pdf = LAST_DOCS_DIR + pdfName;
     }
 
-    ProjectInfo() throws IOException {
+    public ProjectInfo() throws IOException {
+        String deck = null;
+        String pdf = null;
         int n_lines = 2;
         int counter = 0;
         ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
+
         while(counter < n_lines) {
             String line = object.readLine();
             if (line.startsWith("deck")) {
-                this.deck = line.split(":")[1];
+                deck = line.split(":")[1];
             } else if (line.startsWith("pdf")) {
-                this.pdf = LAST_DOCS_DIR + line.split(":")[1];
+                pdf = LAST_DOCS_DIR + line.split(":")[1];
             } else {
                 throw new IOException("input line does not match pattern");
             }
             counter++;
         }
-    }
 
-    public void setDeck(String deck) {
         this.deck = deck;
-    }
-
-    public void setPdf(String pdf) {
         this.pdf = pdf;
-    }
-
-    public static File getProjHistory() {
-        return PROJ_HISTORY;
     }
 
     public String getDeck() {
@@ -62,6 +56,7 @@ public class ProjectInfo {
         return pdf;
     }
 
+    // todo check if needed
     public String toJson() {
         return String.format(JSON_TEMPLATE, deck, pdf);
     }
