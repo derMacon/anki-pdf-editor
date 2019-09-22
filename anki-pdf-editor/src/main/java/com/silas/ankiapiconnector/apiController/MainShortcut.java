@@ -5,7 +5,7 @@ public class MainShortcut {
 //        System.out.println("test");
 //        ApiController.chooseDeckTest();
 
-        String[] decks = new String[] {"1", "2", "3asdfasdfasdfasdf", "4", "5", "6", "7"};
+        String[] decks = new String[] {"1", "2", "testdeck", "3asdfasdfasdfasdf", "4", "5", "6", "7"};
 
         DeckChooser deckChooser = new DeckChooser(decks);
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

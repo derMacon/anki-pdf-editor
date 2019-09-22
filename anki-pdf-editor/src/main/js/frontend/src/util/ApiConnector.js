@@ -4,6 +4,7 @@ const addCard_endpoint = urlApiServer + 'addCard';
 const serveSelectedPdf_endpoint = urlApiServer + 'serveSelectedPdf';
 const getPdfName_endpoint = urlApiServer + 'selectedPdfName';
 const selectNewPdf_endpoint = urlApiServer + 'selectNewPdf';
+const selectDeck_endpoint = urlApiServer + 'selectDeck';
 
 // todo check if needed
 // const retrievePdf_endpoint = urlApiServer + 'retrievePdf';
@@ -41,19 +42,17 @@ export const ApiConnector = {
   },
 
   selectedPdf: serveSelectedPdf_endpoint,
-
   selectedPdfName() {
     return requestGet(getPdfName_endpoint);
   },
-
   selectNewPdf() {
-    console.log('hier hier')
     requestGet(selectNewPdf_endpoint);
     window.location.reload();
-  }
+  },
 
-  // retrievePdf(name) {
-  //   requestPost(`fileName=${name}`, retrievePdf_endpoint);
-  // },
+  selectDeck() {
+    console.log('hier hier')
+    requestGet(selectDeck_endpoint);
+  }
 
 }

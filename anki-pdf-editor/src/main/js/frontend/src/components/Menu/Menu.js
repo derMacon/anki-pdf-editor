@@ -36,7 +36,7 @@ export class Menu extends React.Component {
           <button className="dropbtn">Open</button>
           <div className="dropdown-content">
             <a href="#" onClick={doc.selectFile}>new File</a>
-            <a href="#" onClick={this.openNewProject}>new Project</a>
+            <a href="#" onClick={doc.selectDeck}>new Project</a>
             <a href={GIT_REPO_URL}>Github-Project</a>
           </div>
         </div>

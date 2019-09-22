@@ -18,7 +18,7 @@ public class AnkiApiConnectorApplication {
 
     public static void main(String[] args) throws IOException {
         killPorts();
-        startAnki();
+//        startAnki();
         loadSpringController(args);
         startGui();
     }

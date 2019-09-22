@@ -19,6 +19,7 @@ export default class App extends React.Component {
         file: ApiConnector.selectedPdf,
         fileName: () => ApiConnector.selectedPdfName(),
         selectFile: () => ApiConnector.selectNewPdf(),
+        selectDeck: () => ApiConnector.selectDeck(),
         currPage: 1,
         pageCnt: undefined,
         updatePageCnt: (newPageCnt) => this.setState({pageCnt: newPageCnt}),

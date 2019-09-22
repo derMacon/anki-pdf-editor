@@ -134,38 +134,39 @@ public class ApiController implements ApiConnection {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "/openProject")
-    public List<String> openProject() {
+    @RequestMapping(method = RequestMethod.GET, value = "/selectDeck")
+    public void selectDeck() {
         List<String> out = null;
+
+        System.out.println("kommt anasdfasdf");
 
         try {
             PostConnector connector = new PostConnector(8765);
             Response r = connector.jsonRequest(new GetDecksRequest());
             out = (ArrayList<String>) r.getResult();
 
-//            String deck = chooseDeck(out.toArray(new String[0]));
+            String deck = chooseDeck(out.toArray(new String[0]));
 
         } catch (IOException e) {
             System.out.println("hmmm " + e.getMessage());
             e.printStackTrace();
         }
-
-        return out;
     }
 
-//    private String chooseDeck(String[] decks) {
-//        String output = null;
-//
-//        DeckChooser deckChooser = new DeckChooser(decks);
-//        deckChooser.showFrame();
-//
-//        return output;
-//    }
-//
-//    public static void chooseDeckTest(String[] decks) {
-//        DeckChooser deckChooser = new DeckChooser(decks);
-//        deckChooser.showFrame();
-//    }
+    // todo getter for projectinfo => no need getDeck and getPdf / getPdfName etc.
+
+    private String chooseDeck(String[] decks) {
+        String output = null;
+
+        DeckChooser deckChooser = new DeckChooser(decks);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                deckChooser.createAndShowGUI(decks);
+            }
+        });
+
+        return output;
+    }
 
 }
 

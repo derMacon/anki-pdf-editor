@@ -3,10 +3,13 @@ package com.silas.ankiapiconnector.apiController;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
+/**
+ * Not my work, only modified:
+ * https://www.math.uni-hamburg.de/doc/java/tutorial/uiswing/components/example-1dot4/ComboBoxDemo2.java
+ */
 public class DeckChooser extends JPanel
         implements ActionListener {
     static JFrame frame;
@@ -70,15 +73,11 @@ public class DeckChooser extends JPanel
         reformat();
     }
 
-    /** Formats and displays today's date. */
     public void reformat() {
-        Date today = new Date();
-        SimpleDateFormat formatter =
-                new SimpleDateFormat(currentPattern);
         try {
-            String dateString = formatter.format(today);
+            String dataString = "";
             result.setForeground(Color.black);
-            result.setText(dateString);
+            result.setText(dataString);
         } catch (IllegalArgumentException iae) {
             result.setForeground(Color.red);
             result.setText("Error: " + iae.getMessage());
