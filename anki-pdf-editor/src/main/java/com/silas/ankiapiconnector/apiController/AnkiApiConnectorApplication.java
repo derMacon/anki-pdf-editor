@@ -1,9 +1,13 @@
 package com.silas.ankiapiconnector.apiController;
 
 import com.silas.ankiapiconnector.ankiRequest.PostConnector;
+import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfo;
+import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfoContainer;
 import org.apache.commons.io.input.ReversedLinesFileReader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,34 +26,22 @@ public class AnkiApiConnectorApplication {
 
 
 	public static void main(String[] args) throws IOException {
-//		killPorts();
+		killPorts();
 //		startAnki();
-	    SpringApplication.run(AnkiApiConnectorApplication.class, args);
-		selectLastProject();
-//	    startGui();
+
+		// use of builder necessary otherwise awt.headlessexception when opening filechooser
+		// https://stackoverflow.com/questions/51004447/spring-boot-java-awt-headlessexception
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(AnkiApiConnectorApplication.class);
+		builder.headless(false);
+		ConfigurableApplicationContext context = builder.run(args);
+
+//		selectLastProject();
+	    startGui();
 	}
 
 	public static void selectLastProject() throws IOException {
-	    initSpringApi(getLastProjectInfo());
-	}
-
-	private static ProjectInfo getLastProjectInfo() throws IOException {
-		int n_lines = 2;
-		int counter = 0;
-		ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
-		ProjectInfo projectInfo = new ProjectInfo();
-		while(counter < n_lines) {
-			String line = object.readLine();
-			if (line.startsWith("deck")) {
-				projectInfo.setDeck(line.split(":")[1]);
-			} else if (line.startsWith("pdf")) {
-				projectInfo.setPdf(line.split(":")[1]);
-			} else {
-				throw new IOException("input line does not match pattern");
-			}
-			counter++;
-		}
-		return projectInfo;
+	    initSpringApi(ProjectInfoContainer.getProjectInfo());
+//	    initSpringApi(getLastProjectInfo());
 	}
 
 	private static void initSpringApi(ProjectInfo projectInfo) throws IOException {

@@ -14,13 +14,13 @@ public class Launcher {
     private static final String KILL_PROCESS_TEMPLATE = "kill $(lsof -t -i:%d)";
 
     public void runAll() throws IOException {
-        killPorts();
+//        killPorts();
 //        startAnki();
-        startBackendApi();
+//        startBackendApi();
         choosePdfFile();
-        startGui();
-        waitForInput();
-        killPorts();
+//        startGui();
+//        waitForInput();
+//        killPorts();
     }
 
     private void killPorts() throws IOException {

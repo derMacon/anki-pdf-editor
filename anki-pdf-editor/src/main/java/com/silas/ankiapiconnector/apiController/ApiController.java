@@ -3,6 +3,8 @@ import com.silas.ankiapiconnector.ankiRequest.PostConnector;
 import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
 import com.silas.ankiapiconnector.ankiRequest.request.GetDecksRequest;
 import com.silas.ankiapiconnector.ankiRequest.response.Response;
+import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfo;
+import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfoContainer;
 import com.silas.ankiapiconnector.logic.Card;
 import com.silas.ankiapiconnector.logic.HtmlParser;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,29 +30,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class ApiController implements ApiConnection {
 
-//    private static final String MANUAL_URL = System.getProperty("user.dir") + ""
-
     private HtmlParser parser;
-    private ProjectInfo projectInfo;
 
     public ApiController() throws IOException {
-        try {
-            String url_resLastDoc = "/home/silasUser/Documents/projects/codecademy_revenue_reactExample/lastDocs/";
-            String url_resTempPages = "/src/main/resources/META-INF/resources/tempPages/pdf/";
-            String url = url_resLastDoc + "CVL.pdf";
-            parser = new HtmlParser(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String path = ProjectInfoContainer.getProjectInfo().getPdf();
+        parser = new HtmlParser(path);
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @RequestMapping(method = RequestMethod.POST, value = "/initProjectInfo")
-    public void initProjectInfo(ProjectInfo projectInfo) throws IOException {
-        System.out.println("kommt an: " + projectInfo.toJson());
-        this.projectInfo = projectInfo;
-        this.parser = new HtmlParser(projectInfo.getPdf());
-    }
+//    @CrossOrigin(origins = "*", allowedHeaders = "*")
+//    @RequestMapping(method = RequestMethod.POST, value = "/initProjectInfo")
+//    public void initProjectInfo(ProjectInfo projectInfo) throws IOException {
+//        System.out.println("kommt an: " + projectInfo.toJson());
+////        this.projectInfo = projectInfo;
+////        this.parser = new HtmlParser(projectInfo.getPdf());
+//    }
 
     @Override
     @RequestMapping(method = RequestMethod.POST, value = "/addCard", produces = APPLICATION_JSON_VALUE)
@@ -75,12 +70,14 @@ public class ApiController implements ApiConnection {
     @Override
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/serveSelectedPdf", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<byte[]> serveSelectedPdf() {
+    public ResponseEntity<byte[]> serveSelectedPdf() throws IOException {
 
         // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
 
 //        File file = new File("src/main/resources/META-INF/resources/lastDocs/CVL.pdf");
-        File file = new File(System.getProperty("user.home") + "/Documents/lastDocs/CVL.pdf");
+//        File file = new File(System.getProperty("user.home") + "/Documents/lastDocs/CVL.pdf");
+        String path = ProjectInfoContainer.getProjectInfo().getPdf();
+        File file = new File(path);
         System.out.println(file.getAbsolutePath());
         System.out.println("file: " + (file.exists() && !file.isDirectory()));
         byte[] contents = null;
@@ -111,9 +108,26 @@ public class ApiController implements ApiConnection {
         String message = "success";
         // todo
         System.out.println(path);
+        openFileChooser();
 
         return message;
     }
+
+    private File openFileChooser() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JPG & GIF Images", "jpg", "gif");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(null);
+        File output = null;
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " +
+                    chooser.getSelectedFile().getName());
+            output = chooser.getSelectedFile();
+        }
+        return output;
+    }
+
 
     @Override
     public String openNewProject(String name) {

@@ -31,7 +31,10 @@ public class HtmlParser {
     private final String FILE_TEMPLATE = TEMP_IMG_PAGES + pdfName + "_%s.png";
 
     public HtmlParser(String path) throws IOException {
-        File file = new File(path);
+        this(new File(path));
+    }
+
+    public HtmlParser(File file) throws IOException {
         assert file != null && file.isFile();
         this.doc = PDDocument.load(file);
         this.pdfName = FilenameUtils.removeExtension(file.getName());

@@ -3,6 +3,7 @@ package com.silas.ankiapiconnector.apiController;
 import com.silas.ankiapiconnector.logic.Card;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ApiConnection {
@@ -15,7 +16,7 @@ public interface ApiConnection {
     List<String> showPossibleProjects();
 
     // get requests
-    ResponseEntity<byte[]> serveSelectedPdf();
+    ResponseEntity<byte[]> serveSelectedPdf() throws IOException;
     String getSelectedPdfName();
 
 }
