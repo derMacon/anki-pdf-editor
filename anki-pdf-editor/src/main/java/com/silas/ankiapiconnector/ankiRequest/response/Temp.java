@@ -32,7 +32,7 @@ public class Temp {
 //        Request requ = new AddNoteRequest(\"addNote\", 6, new Params(card));
 //        System.out.println(new Gson().toJson(requ));
 //
-        PostConnector connector =  new PostConnector(8765);
+        PostConnector connector = new PostConnector(8765);
         connector.jsonRequest(in);
     }
 }

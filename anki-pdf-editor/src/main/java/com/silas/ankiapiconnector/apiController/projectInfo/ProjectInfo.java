@@ -33,7 +33,7 @@ public class ProjectInfo {
         int counter = 0;
         ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
 
-        while(counter < n_lines) {
+        while (counter < n_lines) {
             String line = object.readLine();
             if (line.startsWith("deck")) {
                 deck = line.split(":")[1];

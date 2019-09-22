@@ -57,7 +57,7 @@ public class AddNoteRequest extends Request {
 
     private String arrayToJson(Object[] arr) {
         JSONArray output = new JSONArray();
-        for(Object curr : arr) {
+        for (Object curr : arr) {
             output.put(curr);
         }
         return output.toString();

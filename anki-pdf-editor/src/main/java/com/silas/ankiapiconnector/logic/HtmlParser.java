@@ -55,7 +55,7 @@ public class HtmlParser {
     public String parseImg(String side) throws IOException {
         int[] nums = extractAllNumbers(side);
 //        Arrays.stream(nums).forEach(this::renderImageInTemp);
-        for(int curr : nums) {
+        for (int curr : nums) {
             renderImageInTemp(curr);
         }
         return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>");

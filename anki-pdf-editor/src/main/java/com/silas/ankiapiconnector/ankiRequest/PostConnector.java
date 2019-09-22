@@ -28,7 +28,7 @@ public class PostConnector {
 
     private void setupConnection(Integer port, String command) throws IOException {
         url = "http://localhost:" + port + command;
-        connection = (HttpURLConnection)new URL(url).openConnection();
+        connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json; utf-8");
         connection.setRequestProperty("Accept", "application/json");
@@ -38,6 +38,7 @@ public class PostConnector {
     /**
      * Usefull resources:
      * - StackOverflow: https://stackoverflow.com/questions/7181534/http-post-using-json-in-java
+     *
      * @throws IOException
      */
     public Response jsonRequest(Request request) throws IOException {
@@ -49,13 +50,13 @@ public class PostConnector {
 
         System.out.println("input str: " + jsonInputString);
 
-        try(OutputStream os = this.connection.getOutputStream()) {
+        try (OutputStream os = this.connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);
         }
 
         String output = null;
-        try(BufferedReader br = new BufferedReader(
+        try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(connection.getInputStream(), "utf-8"))) {
             StringBuilder response = new StringBuilder();
             String responseLine = null;
@@ -71,6 +72,7 @@ public class PostConnector {
 
     /**
      * http://zetcode.com/java/getpostrequest/
+     *
      * @param urlParameters
      * @throws IOException
      */
@@ -112,7 +114,6 @@ public class PostConnector {
             connection.disconnect();
         }
     }
-
 
 
 //    private static void curlFromBash(String command) {

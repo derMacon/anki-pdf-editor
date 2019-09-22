@@ -16,7 +16,7 @@ public class PdfDoc implements Document {
     private static final String API_ENDPOINT = "http://localhost:8080/";
     private static final String RES_LOCATION = "tempPages/pdf/";
 
-    private static final String URL_RESLASTDOC =  System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/lastDocs/";
+    private static final String URL_RESLASTDOC = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/lastDocs/";
     private static final String URL_RES_TEMP_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/pdf/";
 
     private static final String OUT_OF_BOUND = "outOfBound";
@@ -51,9 +51,9 @@ public class PdfDoc implements Document {
 
         //Saving each page as an individual document
         int i = 1;
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             PDDocument pd = iterator.next();
-            pd.save(URL_RES_TEMP_PAGES + i++ +".pdf");
+            pd.save(URL_RES_TEMP_PAGES + i++ + ".pdf");
         }
         System.out.println("Multiple PDF’s created");
 

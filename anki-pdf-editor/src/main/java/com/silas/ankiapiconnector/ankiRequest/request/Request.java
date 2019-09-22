@@ -2,6 +2,7 @@ package com.silas.ankiapiconnector.ankiRequest.request;
 
 import java.lang.reflect.Type;
 
+// todo rename to AnkiPostRequest
 public abstract class Request {
 
     private static final Integer DEFAULT_VERSION = 6;

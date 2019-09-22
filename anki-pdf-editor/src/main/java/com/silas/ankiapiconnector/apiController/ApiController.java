@@ -1,10 +1,10 @@
 package com.silas.ankiapiconnector.apiController;
+
 import com.silas.ankiapiconnector.ankiRequest.PostConnector;
 import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
 import com.silas.ankiapiconnector.ankiRequest.request.GetDecksRequest;
 import com.silas.ankiapiconnector.ankiRequest.response.Response;
 import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfo;
-import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfoContainer;
 import com.silas.ankiapiconnector.logic.Card;
 import com.silas.ankiapiconnector.logic.HtmlParser;
 import org.apache.commons.io.FileUtils;
@@ -70,24 +70,20 @@ public class ApiController implements ApiConnection {
 
     /**
      * https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
+     *
      * @return
      * @throws IOException
      */
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/serveSelectedPdf", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<byte[]> serveSelectedPdf() throws IOException {
-       // todo ueberarbeiten
+        // todo ueberarbeiten
         String path = projectInfo.getPdfPath();
         File file = new File(path);
         System.out.println(file.getAbsolutePath());
         byte[] contents = null;
 
-        try {
-            contents = Files.readAllBytes(file.toPath());
-        } catch (IOException e) {
-            System.out.println("not cool\n" + e.getMessage());
-            e.printStackTrace();
-        }
+        contents = Files.readAllBytes(file.toPath());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
@@ -100,7 +96,6 @@ public class ApiController implements ApiConnection {
         return response;
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @RequestMapping(method = RequestMethod.GET, value = "/selectNewPdf")
     public String selectNewPdf() throws IOException {
         String message = "success";
@@ -130,7 +125,7 @@ public class ApiController implements ApiConnection {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
         File output = null;
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             System.out.println("You chose to open this file: " +
                     chooser.getSelectedFile().getName());
             output = chooser.getSelectedFile();
@@ -138,20 +133,18 @@ public class ApiController implements ApiConnection {
         return output;
     }
 
-    @Override
-    public String openNewProject(String name) {
-        return null;
-    }
 
-    @Override
-    @RequestMapping(method = RequestMethod.GET, value = "/showProjects")
-    public List<String> showPossibleProjects() {
+    @RequestMapping(method = RequestMethod.GET, value = "/openProject")
+    public List<String> openProject() {
         List<String> out = null;
 
         try {
             PostConnector connector = new PostConnector(8765);
             Response r = connector.jsonRequest(new GetDecksRequest());
-            out = (ArrayList<String>)r.getResult();
+            out = (ArrayList<String>) r.getResult();
+
+//            String deck = chooseDeck(out.toArray(new String[0]));
+
         } catch (IOException e) {
             System.out.println("hmmm " + e.getMessage());
             e.printStackTrace();
@@ -160,6 +153,19 @@ public class ApiController implements ApiConnection {
         return out;
     }
 
+//    private String chooseDeck(String[] decks) {
+//        String output = null;
+//
+//        DeckChooser deckChooser = new DeckChooser(decks);
+//        deckChooser.showFrame();
+//
+//        return output;
+//    }
+//
+//    public static void chooseDeckTest(String[] decks) {
+//        DeckChooser deckChooser = new DeckChooser(decks);
+//        deckChooser.showFrame();
+//    }
 
 }
 
