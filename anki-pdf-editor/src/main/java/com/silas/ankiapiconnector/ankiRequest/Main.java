@@ -1,6 +1,5 @@
 package com.silas.ankiapiconnector.ankiRequest;
 
-import com.google.gson.Gson;
 import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
 import com.silas.ankiapiconnector.ankiRequest.request.Request;
 import com.silas.ankiapiconnector.ankiRequest.response.Response;
@@ -16,9 +15,9 @@ public class Main {
         Request requ = new AddNoteRequest(card);
         System.out.println(requ.toJson());
 
-        AnkiConnector connector =  new AnkiConnector();
-        Response resp = connector.request(requ);
-        System.out.println(resp);
+//        ApiConnector connector =  new ApiConnector();
+//        Response resp = connector.request(requ);
+//        System.out.println(resp);
 
 
 //        Response resp = new SimpleReply("simple", null);

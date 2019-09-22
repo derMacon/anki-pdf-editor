@@ -1,8 +1,7 @@
 package com.silas.ankiapiconnector.apiController;
-import com.silas.ankiapiconnector.ankiRequest.AnkiConnector;
+import com.silas.ankiapiconnector.ankiRequest.PostConnector;
 import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
 import com.silas.ankiapiconnector.ankiRequest.request.GetDecksRequest;
-import com.silas.ankiapiconnector.ankiRequest.request.Request;
 import com.silas.ankiapiconnector.ankiRequest.response.Response;
 import com.silas.ankiapiconnector.logic.Card;
 import com.silas.ankiapiconnector.logic.HtmlParser;
@@ -19,8 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -33,15 +30,20 @@ public class ApiController implements ApiConnection {
 
     public ApiController() throws IOException {
         try {
-//            String url_resLastDoc = "/src/main/resources/META-INF/resources/lastDocs/";
             String url_resLastDoc = "/home/silasUser/Documents/projects/codecademy_revenue_reactExample/lastDocs/";
             String url_resTempPages = "/src/main/resources/META-INF/resources/tempPages/pdf/";
-//            String url = System.getProperty("user.dir") + url_resLastDoc + "CVL.pdf";
             String url = url_resLastDoc + "CVL.pdf";
             parser = new HtmlParser(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @RequestMapping(method = RequestMethod.POST, value = "/initProjectInfo")
+    public void initProjectInfo(ProjectInfo projectInfo) {
+        System.out.println("kommt an: " + projectInfo.toJson());
+//        System.out.println("kommt an...");
     }
 
     @Override
@@ -51,7 +53,7 @@ public class ApiController implements ApiConnection {
         System.out.println(card);
         // todo ueberarbeiten
         try {
-            AnkiConnector connector = new AnkiConnector();
+            PostConnector connector = new PostConnector(8765);
             connector.request(new AddNoteRequest(parser.parseImgTag(card)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -121,7 +123,7 @@ public class ApiController implements ApiConnection {
         List<String> out = null;
 
         try {
-            AnkiConnector connector = new AnkiConnector();
+            PostConnector connector = new PostConnector(8765);
             Response r = connector.request(new GetDecksRequest());
             out = (ArrayList<String>)r.getResult();
         } catch (IOException e) {

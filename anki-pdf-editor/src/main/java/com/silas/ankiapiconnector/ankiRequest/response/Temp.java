@@ -1,6 +1,6 @@
 package com.silas.ankiapiconnector.ankiRequest.response;
 
-import com.silas.ankiapiconnector.ankiRequest.AnkiConnector;
+import com.silas.ankiapiconnector.ankiRequest.PostConnector;
 
 import java.io.IOException;
 
@@ -32,7 +32,7 @@ public class Temp {
 //        Request requ = new AddNoteRequest(\"addNote\", 6, new Params(card));
 //        System.out.println(new Gson().toJson(requ));
 //
-        AnkiConnector connector =  new AnkiConnector(8765);
-        connector.sendRequest(in);
+        PostConnector connector =  new PostConnector(8765);
+        connector.request(in);
     }
 }

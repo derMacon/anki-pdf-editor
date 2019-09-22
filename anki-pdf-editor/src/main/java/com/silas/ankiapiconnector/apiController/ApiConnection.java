@@ -8,6 +8,7 @@ import java.util.List;
 public interface ApiConnection {
 
     // post requests
+//    void initProjectInfo(ProjectInfo projectInfo);
     String addCard(Card card);
     String selectNewPdf(String path);
     String openNewProject(String name);

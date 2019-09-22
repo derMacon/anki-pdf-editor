@@ -1,5 +1,6 @@
 package com.silas.ankiapiconnector.apiController;
 
+import com.silas.ankiapiconnector.ankiRequest.PostConnector;
 import org.apache.commons.io.input.ReversedLinesFileReader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,21 +25,35 @@ public class AnkiApiConnectorApplication {
 		killPorts();
 		startAnki();
 	    SpringApplication.run(AnkiApiConnectorApplication.class, args);
-	    selectLastProject();
+		selectLastProject();
 	    startGui();
 	}
 
 	public static void selectLastProject() throws IOException {
+	    initSpringApi(getLastProjectInfo());
+	}
+
+	private static ProjectInfo getLastProjectInfo() throws IOException {
 		int n_lines = 2;
 		int counter = 0;
-		String lastLines = "";
 		ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
+		ProjectInfo projectInfo = new ProjectInfo();
 		while(counter < n_lines) {
-			lastLines += object.readLine();
+			String line = object.readLine();
+			if (line.startsWith("deck")) {
+				projectInfo.setDeck(line.split(":")[1]);
+			} else if (line.startsWith("pdf")) {
+				projectInfo.setPdf(line.split(":")[1]);
+			} else {
+				throw new IOException("input line does not match pattern");
+			}
 			counter++;
 		}
+		return projectInfo;
+	}
 
-		new ProjectInfo(lastLines);
+	private static void initSpringApi(ProjectInfo projectInfo) throws IOException {
+		new PostConnector(8080, "initProjectInfo").request(projectInfo.toJson());
 	}
 
 	private static void killPorts() throws IOException {
