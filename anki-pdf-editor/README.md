@@ -1,7 +1,3 @@
-# react-spring-example
-
-This is the example project for the dev-recipe [*Integrate React frontend in a Java corporate environment*] (link)
-
 ## Start application 
 
 `mvn clean package` 
