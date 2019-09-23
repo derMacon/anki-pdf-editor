@@ -16,8 +16,8 @@ public class DeckChooser extends JPanel
     String currentPattern;
 
     private Consumer<String> callback;
-    private String deck;
     private JButton btn;
+    private TextField textfld = new TextField("");
 
     public DeckChooser(String[] decks, Consumer<String> callback) {
 
@@ -62,13 +62,18 @@ public class DeckChooser extends JPanel
 
         btn = new JButton("submit");
         btn.addActionListener(e -> {
-            callback.accept(deck);
+            String textInput = textfld.getText();
+            if (textInput.length() == 0) {
+                textInput = currentPattern;
+            }
+            callback.accept(textInput);
             frame.dispose();
         });
 
         add(patternPanel);
         add(Box.createRigidArea(new Dimension(0, 10)));
-        add(resultPanel);
+//        add(resultPanel);
+        add(textfld);
         add(btn);
 
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -79,8 +84,6 @@ public class DeckChooser extends JPanel
     public void actionPerformed(ActionEvent e) {
         JComboBox cb = (JComboBox)e.getSource();
         String newSelection = (String)cb.getSelectedItem();
-
-        this.deck = newSelection;
     }
 
     // todo delete

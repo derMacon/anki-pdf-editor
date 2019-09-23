@@ -3,20 +3,38 @@
 \subtitle{React + Spring}
 \author{derMacon}
 
+% to make a list of frames possible: 
+% https://tex.stackexchange.com/questions/56512/is-there-any-way-to-produce-list-of-frames-with-beamer
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+\addtobeamertemplate{frametitle}{}{%
+  \addcontentsline{lbf}{section}{\protect\makebox[2em][l]{%
+    \protect\usebeamercolor[fg]{structure}\textbullet\hfill}%
+  \insertframetitle\par}%
+}
+
 \begin{document}
 	\begin{frame}
 		\titlepage
 	\end{frame}
 	
 	\begin{frame}
+		\listofframes
+	\end{frame}
+		
+	\begin{frame}
+		\frametitle{Introduction}
 		Testpage 1
 	\end{frame}
-	
 	\begin{frame}
+		\frametitle{Usage}
 		Testpage 2
 	\end{frame}
 	
 	\begin{frame}
+		\frametitle{Installation / Requirements}
 		Testpage 3
 	\end{frame}
+	
 \end{document}
