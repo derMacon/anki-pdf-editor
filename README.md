@@ -3,15 +3,14 @@ This webapp displays a pdf-reader containing an editor to create digital index c
 
 ## Project structure
 Two main projects: 
-* `anki-pdf`: Front-end react project displaying the editor components. Server runs on `http://localhost:3000/`.
-* `anki-api-connector`: Spring boot rest api as the back-end for the webapp. Server runs on `http://localhost:8080/`.
+* `anki-pdf-editor`: Maven project containing a spring boot project as the backend and a react project as a frontend running on port 8080 and 3000 respectively.
+* `lastDocs`: Contains the last pdf documents which the user has selected.
 
 ## Screenshot
 ![alt](./prototype/screenshots/2.png)
 
 ## Todo - Front-end
 ### near-term
-* implement menu
 * fix responsive css
 * textarea should submit linebreaks
 
@@ -21,6 +20,6 @@ Two main projects:
 
 ### Resources
 * [Color palette for the themes](https://material.io/design/color/dark-theme.html#behavior)
-* [Bind React with Spring](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot)
-* Example - [Binding Spring / React](https://github.com/tzehe/react-spring-example)
+* Guide - [Bind React with Spring](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot)
+* Example Project - [Binding Spring / React](https://github.com/tzehe/react-spring-example)
 
