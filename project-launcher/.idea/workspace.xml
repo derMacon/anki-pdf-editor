@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="deebdc4c-27ea-493f-9c1c-f3ea8e397067" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/silas/projectlauncher/Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/silas/projectlauncher/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/silas/projectlauncher/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/silas/projectlauncher/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/silas/projectlauncher/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/silas/projectlauncher/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/silas/projectlauncher/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/silas/projectlauncher/Launcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/silas/projectlauncher/Launcher.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/projectlauncher-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/projectlauncher-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -123,6 +114,7 @@
       <updated>1568997668067</updated>
       <workItem from="1568997671271" duration="540000" />
       <workItem from="1569009996577" duration="5055000" />
+      <workItem from="1569181190455" duration="919000" />
     </task>
     <servers />
   </component>
@@ -134,7 +126,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
