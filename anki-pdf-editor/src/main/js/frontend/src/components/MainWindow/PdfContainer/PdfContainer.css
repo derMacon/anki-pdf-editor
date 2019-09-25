@@ -15,10 +15,8 @@
 .ReaderContainer {
 }
 
-
 .SecPdf {
   height: 27vh;
-  border: 1px solid blue;
-  /*flex: 1;*/
+  /* flex: 1; */
   display: flex;
 }
