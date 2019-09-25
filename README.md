@@ -11,7 +11,7 @@ Two main projects:
 * `prototype`: diverse test projects to reherse specific aspects of the app
 
 ## Screenshot
-![alt](./prototype/screenshots/2.png)
+![alt](./screenshots/2.png)
 
 ## Todo - Front-end
 ### near-term
