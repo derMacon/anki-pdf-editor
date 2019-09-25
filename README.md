@@ -9,7 +9,7 @@ Two main projects:
 * `anki-api-connector`: Spring boot rest api as the back-end for the webapp. Server runs on `http://localhost:8080/`.
 
 ## Screenshot
-![alt](./prototype/screenshots/2.png)
+![alt](./screenshots/2.png)
 
 ## Todo - Front-end
 ### near-term
