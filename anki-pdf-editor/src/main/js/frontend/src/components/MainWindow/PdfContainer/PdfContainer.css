@@ -7,7 +7,7 @@
   height: 66vh;
   max-height: 66vh;
 
-  border: 1px solid var(--white);
+  /* border: 1px solid var(--white); */
   overflow: hidden;
   resize: vertical;
 }

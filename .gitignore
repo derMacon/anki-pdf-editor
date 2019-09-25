@@ -5,6 +5,10 @@
 *.out
 *.snm
 *.toc
+*.lbf
+
+*/.idea/
+*.iml
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
