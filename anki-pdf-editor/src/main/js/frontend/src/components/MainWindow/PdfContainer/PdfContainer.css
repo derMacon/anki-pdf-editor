@@ -3,11 +3,22 @@
 }
 
 .MainPdf {
+  min-height: 30vh;
   height: 66vh;
+  max-height: 66vh;
+
+  border: 1px solid var(--white);
+  overflow: hidden;
+  resize: vertical;
 }
+
+.ReaderContainer {
+}
+
 
 .SecPdf {
   height: 27vh;
+  border: 1px solid blue;
   /*flex: 1;*/
   display: flex;
 }

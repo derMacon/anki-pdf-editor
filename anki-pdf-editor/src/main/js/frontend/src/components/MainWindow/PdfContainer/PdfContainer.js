@@ -22,7 +22,9 @@ export class PdfContainer extends React.Component {
     return (
       <div className="PdfContainer">
         <div className="MainPdf">
-          <Reader document={doc} offset={0}/>
+          <div className="ReaderContainer">
+            <Reader document={doc} offset={0}/>
+          </div>
         </div>
         <div>
           <button onClick={doc.turnPrevPage}>previous page</button>

@@ -72,7 +72,6 @@ public class DeckChooser extends JPanel
 
         add(patternPanel);
         add(Box.createRigidArea(new Dimension(0, 10)));
-//        add(resultPanel);
         add(textfld);
         add(btn);
 

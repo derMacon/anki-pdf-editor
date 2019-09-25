@@ -4,11 +4,15 @@ import {EditorContainer} from './EditorContainer/EditorContainer';
 import './MainWindow.css';
 
 export class MainWindow extends React.Component {
-  
+        // <PdfContainer document={this.props.document}/>
+        // <div class="isResizable">The quick brown fox jumps over the lazy dog.</div>
+
   render() {
     return (
       <div className="MainWindow">
-        <PdfContainer document={this.props.document}/>
+        <div className="isResizable">
+          <PdfContainer document={this.props.document}/>
+        </div>
         <EditorContainer document={this.props.document}/>
       </div>
     );
