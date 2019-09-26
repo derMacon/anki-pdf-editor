@@ -1,0 +1,19 @@
+" ----------------- Anki-Editor -------------------
+
+"keykombination ',' + 'p' prints the api response to 
+"the current cursor position
+let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
+:nmap ,p "=system(apiUrl)<C-M>p
+
+"maps the keykombination ',' + 'c' to creating 
+"a new card in the current file 
+:map ,c ifront: 
+\<CR>
+\<CR>back: 
+\<CR>
+\<CR>tags: 
+\<CR>
+\<CR>-----------------
+\<CR>
+\<CR><Esc>8k
+
