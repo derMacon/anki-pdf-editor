@@ -4,7 +4,6 @@ import com.silas.ankiapiconnector.ankiRequest.PostConnector;
 import com.silas.ankiapiconnector.ankiRequest.request.AddNoteRequest;
 import com.silas.ankiapiconnector.ankiRequest.request.GetDecksRequest;
 import com.silas.ankiapiconnector.ankiRequest.response.Response;
-import com.silas.ankiapiconnector.apiController.projectInfo.ProjectInfo;
 import com.silas.ankiapiconnector.logic.Card;
 import com.silas.ankiapiconnector.logic.HtmlParser;
 import org.apache.commons.io.FileUtils;
@@ -12,10 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -119,6 +115,12 @@ public class ApiController implements ApiConnection {
         return message;
     }
 
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getProjectInfo")
+    public ProjectInfo getProjectInfo() throws IOException {
+        return this.projectInfo;
+    }
+
     private File openFileChooser() {
         JFileChooser chooser = new JFileChooser(projectInfo.getLastDocsDir());
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -170,7 +172,20 @@ public class ApiController implements ApiConnection {
         assert newDeck != newDeck;
         String pdf = this.projectInfo.getPdfPath();
         this.projectInfo = new ProjectInfo(newDeck, pdf);
+        // todo write to file
         System.out.println("updated projInfo: " + projectInfo.toJson());
+        // todo make anki file for vim
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/setCurrPage")
+    public void setCurrPage(int pageNum) {
+        projectInfo.updatePage(pageNum);
+        System.out.println(projectInfo);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getCurrPage")
+    public String getCurrPage() {
+        return "<" + this.projectInfo.getCurrPageNum() + ">";
     }
 
 }

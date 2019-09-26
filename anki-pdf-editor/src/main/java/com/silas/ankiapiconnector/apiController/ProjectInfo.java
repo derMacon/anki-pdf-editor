@@ -1,5 +1,6 @@
-package com.silas.ankiapiconnector.apiController.projectInfo;
+package com.silas.ankiapiconnector.apiController;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.input.ReversedLinesFileReader;
 
@@ -7,6 +8,16 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProjectInfo {
+
+
+    private static final String VIM_USAGE =
+                      "************************************************\n"
+                    + "*         Anki-Editor - version 1.0            *\n"
+                    + "*              In normal mode:                 *\n"
+                    + "*  - type ,c to add a template for a new card  *\n"
+                    + "*  - type ,p to paste the current page number  *\n"
+                    + "************************************************\n\n\n";
+
 
     private final static String JSON_TEMPLATE = "{\n" +
             "\"deck\": \"%s\",\n" +
@@ -17,13 +28,16 @@ public class ProjectInfo {
 
     private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
+    private static final String DECK_DIR = LAST_DOCS_DIR + "decks/%s.anki";
 
-    private final String deck;
-    private final String pdf;
+    private String deck;
+    private String pdf;
+    private int currPageNum = 1;
 
     public ProjectInfo(String deck, String pdfName) {
-        this.deck = deck;
         this.pdf = LAST_DOCS_DIR + pdfName;
+        this.deck = String.format(DECK_DIR, deck);
+        updateDeckFile();
     }
 
     public ProjectInfo() throws IOException {
@@ -33,6 +47,7 @@ public class ProjectInfo {
         int counter = 0;
         ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
 
+        // parse .projectHistory file
         while (counter < n_lines) {
             String line = object.readLine();
             if (line.startsWith("deck")) {
@@ -45,8 +60,23 @@ public class ProjectInfo {
             counter++;
         }
 
-        this.deck = deck;
         this.pdf = pdf;
+        this.deck = String.format(DECK_DIR, deck);
+        updateDeckFile();
+    }
+
+    private void updateDeckFile() {
+        File file = new File(deck);
+        if (!file.exists() && !file.isDirectory()) {
+            try {
+                FileUtils.writeStringToFile(file, VIM_USAGE);
+                System.out.println("file wrote");
+                System.out.println(file);
+            } catch (IOException e) {
+                System.out.println("Cannot write file " + file + "\n" + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     public String getDeck() {
@@ -65,6 +95,14 @@ public class ProjectInfo {
         return LAST_DOCS_DIR;
     }
 
+    public int getCurrPageNum() {
+        return currPageNum;
+    }
+
+    public void updatePage(int currPage) {
+        this.currPageNum = currPage;
+    }
+
     // todo check if needed
     public String toJson() {
         return String.format(JSON_TEMPLATE, deck, pdf);
@@ -72,6 +110,13 @@ public class ProjectInfo {
 
     public String toUrlParameters() {
         return String.format(URL_PARAMETER_TEMPLATE, deck, pdf);
+    }
+
+    @Override
+    public String toString() {
+        return "Deck: " + deck + "\n"
+                + "pdf: " + pdf + "\n"
+                + "page" + currPageNum + "\n";
     }
 
 }

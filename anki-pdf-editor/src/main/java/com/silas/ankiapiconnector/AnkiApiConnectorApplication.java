@@ -1,5 +1,6 @@
 package com.silas.ankiapiconnector;
 
+import com.silas.ankiapiconnector.ui.TerminalUi;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,8 +18,8 @@ public class AnkiApiConnectorApplication {
     private static final String FRONTEND_START_COMMAND = "npm start --prefix src/main/js/frontend/";
 
     public static void main(String[] args) throws IOException {
-        killPorts();
-        startAnki();
+//        killPorts();
+//        startAnki();
         loadSpringController(args);
         startGui();
     }
@@ -41,8 +42,17 @@ public class AnkiApiConnectorApplication {
     }
 
     private static void startGui() throws IOException {
-        Runtime.getRuntime().exec(FRONTEND_START_COMMAND);
-        System.out.println("Started gui");
+//        Runtime.getRuntime().exec(FRONTEND_START_COMMAND);
+//        System.out.println("Started gui");
+
+        System.out.println("\n");
+
+        try {
+            new TerminalUi().start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
