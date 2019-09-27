@@ -1,6 +1,6 @@
 package com.silas.ankiapiconnector;
 
-import com.silas.ankiapiconnector.ui.TerminalUi;
+import com.silas.ankiapiconnector.ui.TerminalLogic;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -21,7 +21,7 @@ public class AnkiApiConnectorApplication {
 //        killPorts();
 //        startAnki();
         loadSpringController(args);
-        startGui();
+//        startGui();
     }
 
     private static void loadSpringController(String[] args) {
@@ -48,7 +48,7 @@ public class AnkiApiConnectorApplication {
         System.out.println("\n");
 
         try {
-            new TerminalUi().start();
+            new TerminalLogic().start();
         } catch (Exception e) {
             e.printStackTrace();
         }

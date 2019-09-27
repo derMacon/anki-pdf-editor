@@ -79,7 +79,7 @@ public class ProjectInfo {
         }
     }
 
-    public String getDeck() {
+    public String getDeckFile() {
         return deck;
     }
 

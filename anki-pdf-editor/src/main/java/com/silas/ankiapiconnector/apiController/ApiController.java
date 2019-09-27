@@ -36,14 +36,6 @@ public class ApiController implements ApiConnection {
         parser = new HtmlParser(projectInfo.getPdfPath());
     }
 
-//    @CrossOrigin(origins = "*", allowedHeaders = "*")
-//    @RequestMapping(method = RequestMethod.POST, value = "/initProjectInfo")
-//    public void initProjectInfo(ProjectInfo projectInfo) throws IOException {
-//        System.out.println("kommt an: " + projectInfo.toJson());
-////        this.projectInfo = projectInfo;
-////        this.parser = new HtmlParser(projectInfo.getPdf());
-//    }
-
     @Override
     @RequestMapping(method = RequestMethod.POST, value = "/addCard", produces = APPLICATION_JSON_VALUE)
     public String addCard(Card card) {
@@ -57,6 +49,12 @@ public class ApiController implements ApiConnection {
             e.printStackTrace();
         }
         return "success";
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/parseAnkiFile")
+    public void parseAnkiFile(String path) {
+
     }
 
     @Override
@@ -107,7 +105,7 @@ public class ApiController implements ApiConnection {
             FileUtils.copyFile(output, copy);
         }
 
-        String deck = projectInfo.getDeck();
+        String deck = projectInfo.getDeckFile();
         projectInfo = new ProjectInfo(deck, output.getName());
 
         System.out.println("pi: " + projectInfo.toJson());
