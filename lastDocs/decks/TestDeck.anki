@@ -1,5 +1,3 @@
-======= 'TestDeck' ========
-
 ************************************************
 *         Anki-Editor - version 1.0            *
 *              In normal mode:                 *
@@ -7,13 +5,4 @@
 *  - type ,p to paste the current page number  *
 ************************************************
 
-front: vim test
-
-back: vim back
-
-tags: vim tags
-
------------------
-
-
-
+-------------------'TestDeck'-------------------

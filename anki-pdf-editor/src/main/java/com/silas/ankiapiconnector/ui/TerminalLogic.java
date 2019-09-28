@@ -49,7 +49,7 @@ public class TerminalLogic {
         postConnector = new PostConnector(API_PORT, "addCard");
 
         // run pdf-viewer-server - http://127.0.0.1:9000/
-        String pdfViewerPath = new File(System.getProperty("user.dir")).getParent() + "/pdf_viewer/";
+        String pdfViewerPath = System.getProperty("user.dir") + "src/main/js/pdf_viewer/";
         String openPdfViewer = String.format(OPEN_PDF_VIEWER_COMMAND, pdfViewerPath);
         String[] cmd = {"/bin/sh", "-c", openPdfViewer};
         Runtime.getRuntime().exec(cmd);

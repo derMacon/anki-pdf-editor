@@ -7,13 +7,13 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 
 "maps the keykombination ',' + 'c' to creating 
 "a new card in the current file 
-:map ,c ifront: 
+:nmap ,c G?----<Enter>2o<Esc>ifront:
 \<CR>
-\<CR>back: 
+\<CR>back:
 \<CR>
-\<CR>tags: 
+\<CR>tags:
 \<CR>
 \<CR>-----------------
 \<CR>
-\<CR><Esc>8k
+\<CR><Esc>o<Esc>dG?front<Enter>A
 

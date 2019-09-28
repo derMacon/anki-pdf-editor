@@ -7,6 +7,9 @@ const selectNewPdf_endpoint = urlApiServer + 'selectNewPdf';
 const selectDeck_endpoint = urlApiServer + 'selectDeck';
 const getProjectInfo_endpoint = urlApiServer + 'getProjectInfo';
 
+const setPageNum_template = urlApiServer + 'setPageNum';
+
+
 // todo check if needed
 // const retrievePdf_endpoint = urlApiServer + 'retrievePdf';
 
@@ -54,6 +57,11 @@ export const ApiConnector = {
   selectDeck() {
     requestGet(selectDeck_endpoint);
     window.location.reload();
+  },
+
+  setPageNum(num) {
+    console.log("api joa");
+    requestPost('pageNum=' + num, setPageNum_template);
   },
 
   getProjectInfo() {

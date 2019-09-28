@@ -29,12 +29,22 @@ public class CardFactory {
         return outputStack;
     }
 
+    private static String parseDeckname(String editorInput) {
+        String deckName = "error";
+        Pattern pattern = Pattern.compile("'(.*?)'");
+        Matcher matcher = pattern.matcher(editorInput);
+        if (matcher.find()) {
+            deckName = matcher.group(1);
+        }
+        return deckName;
+    }
+
     private static Card interpretCard(String deckname, String cardBlock) throws IncompleteCardException {
         String front = null;
         String back = null;
         String[] tags = new String[] {};
         for(String line : cardBlock.split(System.getProperty("line.separator"))) {
-            if (line.length() > 0 && !line.startsWith("*") && !line.startsWith("=")) {
+            if (line.length() > 0 && !line.startsWith("*") && !line.startsWith("-")) {
 
                  if (line.startsWith("front:")) {
                     front = line.replace("front: ", "");
@@ -55,13 +65,4 @@ public class CardFactory {
         return new Card(deckname, front, back, tags);
     }
 
-    private static String parseDeckname(String editorInput) {
-        String deckName = "error";
-        Pattern pattern = Pattern.compile("'(.*?)'");
-        Matcher matcher = pattern.matcher(editorInput);
-        if (matcher.find()) {
-            deckName = matcher.group(1);
-        }
-        return deckName;
-    }
 }

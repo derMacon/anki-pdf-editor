@@ -16,7 +16,12 @@ public class ProjectInfo {
                     + "*              In normal mode:                 *\n"
                     + "*  - type ,c to add a template for a new card  *\n"
                     + "*  - type ,p to paste the current page number  *\n"
-                    + "************************************************\n\n\n";
+                    + "************************************************\n\n";
+
+    // length of the line used in the description (see VIM_USAGE)
+    private static final int LINE_LENGTH = 48;
+
+
 
 
     private final static String JSON_TEMPLATE = "{\n" +
@@ -33,11 +38,13 @@ public class ProjectInfo {
     private String deck;
     private String pdf;
     private int currPageNum = 1;
+    private String deckDescription;
 
     public ProjectInfo(String deck, String pdfName) {
         this.pdf = LAST_DOCS_DIR + pdfName;
         this.deck = String.format(DECK_DIR, deck);
         updateDeckFile();
+        deckDescription = formatDeckdescr(deck, LINE_LENGTH);
     }
 
     public ProjectInfo() throws IOException {
@@ -60,6 +67,8 @@ public class ProjectInfo {
             counter++;
         }
 
+        deckDescription = formatDeckdescr(deck, LINE_LENGTH);
+
         this.pdf = pdf;
         this.deck = String.format(DECK_DIR, deck);
         updateDeckFile();
@@ -69,7 +78,7 @@ public class ProjectInfo {
         File file = new File(deck);
         if (!file.exists() && !file.isDirectory()) {
             try {
-                FileUtils.writeStringToFile(file, VIM_USAGE);
+                FileUtils.writeStringToFile(file, VIM_USAGE + this.deckDescription);
                 System.out.println("file wrote");
                 System.out.println(file);
             } catch (IOException e) {
@@ -117,6 +126,28 @@ public class ProjectInfo {
         return "Deck: " + deck + "\n"
                 + "pdf: " + pdf + "\n"
                 + "page" + currPageNum + "\n";
+    }
+
+    private static String formatDeckdescr(String input, int lineLen) {
+        char delimiter = '-';
+        int inputLen = input.length() + 2;
+        assert inputLen <= lineLen;
+        String output = "";
+
+        int offset = (lineLen - inputLen) / 2;
+        for (int i = 0; i < offset; i++) {
+            output += delimiter;
+        }
+        output += '\'' + input + '\'';
+        for (int i = 0; i < offset; i++) {
+            output += delimiter;
+        }
+
+        if ((lineLen - inputLen) % 2 != 0) {
+            output += delimiter;
+        }
+
+        return output + "\n\n";
     }
 
 }

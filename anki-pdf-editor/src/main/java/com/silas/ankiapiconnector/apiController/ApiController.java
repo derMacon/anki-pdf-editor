@@ -52,6 +52,13 @@ public class ApiController implements ApiConnection {
     }
 
 
+    @RequestMapping(method = RequestMethod.POST, value = "/setPageNum")
+    public void setPageNum(Integer pageNum) {
+        System.out.println("new page: " + pageNum);
+        this.projectInfo.updatePage(pageNum);
+    }
+
+
     @RequestMapping(method = RequestMethod.GET, value = "/parseAnkiFile")
     public void parseAnkiFile(String path) {
 

@@ -1,8 +1,8 @@
-import {ApiConnector} from './util/ApiConnector.js';
-
-
 const urlApiServer = 'http://localhost:8080/';
 const serveSelectedPdf_endpoint = urlApiServer + 'serveSelectedPdf';
+const setPageNum_template = urlApiServer + 'setPageNum';
+
+
 
 const url = serveSelectedPdf_endpoint;
 // const url = '../docs/pdf.pdf';
@@ -62,6 +62,7 @@ const showPrevPage = () => {
     return;
   }
   pageNum--;
+  // setPageNum(pageNum);
   queueRenderPage(pageNum);
 };
 
@@ -71,7 +72,7 @@ const showNextPage = () => {
     return;
   }
   pageNum++;
-
+  setPageNum(pageNum);
   queueRenderPage(pageNum);
 };
 
@@ -115,3 +116,23 @@ document.querySelector('#prev-page').addEventListener('click', showPrevPage);
 document.querySelector('#next-page').addEventListener('click', showNextPage);
 document.querySelector('#incScale').addEventListener('click', incScalePage);
 document.querySelector('#decScale').addEventListener('click', decScalePage);
+
+
+
+
+
+function setPageNum(num) {
+  console.log("api joa");
+  requestPost('pageNum=' + num, setPageNum_template);
+}
+
+function requestPost(postSyntax, url) {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+  	console.log(this.responseText);
+  }
+  xhr.open('POST', url);
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  console.log('before send: ' + postSyntax);
+  xhr.send(postSyntax);
+}
