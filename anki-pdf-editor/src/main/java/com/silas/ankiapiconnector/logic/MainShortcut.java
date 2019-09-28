@@ -1,5 +1,7 @@
 package com.silas.ankiapiconnector.logic;
 
+import com.silas.ankiapiconnector.ankiRequest.PostConnector;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
@@ -7,34 +9,21 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class MainShortcut {
 
     public static void main(String[] args) throws IOException {
-        String url_resLastDoc = "/src/main/resources/META-INF/resources/lastDocs/";
-        String url_resTempPages = "/src/main/resources/META-INF/resources/tempPages/pdf/";
-        String url = System.getProperty("user.dir") + url_resLastDoc + "CVL.pdf";
 
-////        HtmlParser p = new HtmlParser(url);
-////        p.parseImg("<1>");
+//        PostConnector c = new PostConnector(8080, "addCard");
+//        Card card = new Card("asdf", "wer", "asdf", new String[] {"tags", "no"});
+//        System.out.println(card.toUrlParam());
 //
-//        String HOME_DIR = System.getProperty("user.home");
-////        String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/";
-//        String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
-//
-//        System.out.println("exist: " + Files.exists(new File(ANKI_IMG_PAGES).toPath()));
+//        c.urlRequest(card.toUrlParam());
 
-
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG & GIF Images", "jpg", "gif");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
-        }
-
+        System.out.println(Pattern.compile("(w|wq)").matcher("wq").find());
+        System.out.println("q".matches("(w|wq)"));
 
     }
 

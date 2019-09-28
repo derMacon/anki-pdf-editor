@@ -1,8 +1,17 @@
 package com.silas.ankiapiconnector.logic;
 
+import org.json.JSONArray;
+
 import java.util.Arrays;
 
 public class Card {
+
+    private static String URL_PARAM_TEMPLATE =
+            "deckName=%s&" +
+            "frontSide=%s&" +
+            "backSide=%s&" +
+            "tags=%s";
+
 
     private String deckName;
     private String frontSide;
@@ -35,8 +44,37 @@ public class Card {
     @Override
     public String toString() {
         return "deck: " + this.deckName + "\n"
-                + "front: " + this.frontSide + "\n"
-                + "back: " + this.backSide + "\n"
+                + "frontSide: " + this.frontSide + "\n"
+                + "backSide: " + this.backSide + "\n"
                 + "tags: " + Arrays.toString(this.tags);
+    }
+
+
+    public String toUrlParam() {
+        return String.format(URL_PARAM_TEMPLATE,
+                deckName,
+                frontSide,
+                backSide,
+                arrayToJson(tags)
+        );
+    }
+
+    private static String arrayToJson(String[] arr) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            output.append(arr[i]);
+            if (i < arr.length - 1) {
+                output.append(",");
+            }
+        }
+        return output.toString();
+
+        // not working: this output = ["data1", "data2"]
+        // desired: output = [data1, data2]
+//        JSONArray output = new JSONArray();
+//        for (Object curr : arr) {
+//            output.put(curr);
+//        }
+//        return output.toString();
     }
 }

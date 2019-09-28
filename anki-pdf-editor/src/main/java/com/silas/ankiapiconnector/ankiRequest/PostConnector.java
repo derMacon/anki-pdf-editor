@@ -22,8 +22,8 @@ public class PostConnector {
         setupConnection(port, "");
     }
 
-    public PostConnector(Integer port, String command) throws IOException {
-        setupConnection(port, "/" + command);
+    public PostConnector(Integer port, String urlPostfix) throws IOException {
+        setupConnection(port, "/" + urlPostfix);
     }
 
     private void setupConnection(Integer port, String command) throws IOException {
@@ -48,6 +48,7 @@ public class PostConnector {
 
     public String jsonRequest(String jsonInputString) throws IOException {
 
+        System.out.println("url: " + url);
         System.out.println("input str: " + jsonInputString);
 
         try (OutputStream os = this.connection.getOutputStream()) {

@@ -42,12 +42,12 @@ public class ApiController implements ApiConnection {
         System.out.println("card: ");
         System.out.println(card);
         // todo ueberarbeiten
-        try {
-            PostConnector connector = new PostConnector(8765);
-            connector.jsonRequest(new AddNoteRequest(parser.parseImgTag(card)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            PostConnector connector = new PostConnector(8765);
+//            connector.jsonRequest(new AddNoteRequest(parser.parseImgTag(card)));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return "success";
     }
 
