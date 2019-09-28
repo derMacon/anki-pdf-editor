@@ -1,3 +1,6 @@
+import {ApiConnector} from './util/ApiConnector.js';
+
+
 const urlApiServer = 'http://localhost:8080/';
 const serveSelectedPdf_endpoint = urlApiServer + 'serveSelectedPdf';
 
@@ -68,6 +71,7 @@ const showNextPage = () => {
     return;
   }
   pageNum++;
+
   queueRenderPage(pageNum);
 };
 
