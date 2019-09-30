@@ -59,6 +59,16 @@ public class ApiController implements ApiConnection {
     }
 
 
+    @RequestMapping(method = RequestMethod.GET, value = "/waitForChange")
+    public int waitForChange() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return this.projectInfo.getCurrPageNum();
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/parseAnkiFile")
     public void parseAnkiFile(String path) {
 

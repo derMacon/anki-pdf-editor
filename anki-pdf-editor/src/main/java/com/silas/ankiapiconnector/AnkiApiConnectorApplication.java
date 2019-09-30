@@ -21,7 +21,7 @@ public class AnkiApiConnectorApplication {
 //        killPorts();
 //        startAnki();
         loadSpringController(args);
-        startGui();
+//        startGui();
     }
 
     private static void loadSpringController(String[] args) {
