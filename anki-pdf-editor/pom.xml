@@ -1,149 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
- <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.8.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.dermacon</groupId>
+	<artifactId>anki-pdf-editor</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>anki-pdf-editor</name>
+	<description>Demo project for Spring Boot</description>
 
- <groupId>com.silas</groupId>
- <artifactId>anki-pdf-editor</artifactId>
- <version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
 
- <packaging>jar</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
 
- <parent>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-parent</artifactId>
-  <version>2.0.4.RELEASE</version>
-  <relativePath/> <!-- lookup parent from repository -->
- </parent>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>12</version>
+		</dependency>
 
- <properties>
-  <java.version>1.8</java.version>
- </properties>
+		<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.16</version>
+		</dependency>
 
- <dependencies>
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-web</artifactId>
-  </dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox-tools</artifactId>
+			<version>2.0.16</version>
+		</dependency>
 
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-data-rest</artifactId>
-  </dependency>
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
 
-  <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
-  <dependency>
-   <groupId>org.apache.pdfbox</groupId>
-   <artifactId>pdfbox</artifactId>
-   <version>2.0.16</version>
-  </dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20190722</version>
+		</dependency>
 
-  <dependency>
-   <groupId>org.apache.pdfbox</groupId>
-   <artifactId>pdfbox-tools</artifactId>
-   <version>2.0.16</version>
-  </dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
 
-  <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-  <dependency>
-   <groupId>commons-io</groupId>
-   <artifactId>commons-io</artifactId>
-   <version>2.6</version>
-  </dependency>
-  <dependency>
-   <groupId>org.json</groupId>
-   <artifactId>json</artifactId>
-   <version>20190722</version>
-  </dependency>
-  <dependency>
-   <groupId>com.google.code.gson</groupId>
-   <artifactId>gson</artifactId>
-   <version>2.8.5</version>
-  </dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.10</version>
+		</dependency>
+	</dependencies>
 
-  <dependency>
-   <groupId>org.apache.httpcomponents</groupId>
-   <artifactId>httpclient</artifactId>
-   <version>4.5.10</version>
-  </dependency>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-test</artifactId>
-   <scope>test</scope>
-  </dependency>
-
- </dependencies>
-
- <build>
-  <plugins>
-   <plugin>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-maven-plugin</artifactId>
-   </plugin>
-
-
-   <!--
-      1. used for local installation of node and npm
-      2. to install dependencies with npm install
-      3. building the application
-    -->
-   <plugin>
-    <groupId>com.github.eirslett</groupId>
-    <artifactId>frontend-maven-plugin</artifactId>
-    <version>1.6</version>
-    <configuration>
-     <nodeVersion>v10.0.0</nodeVersion>
-     <npmVersion>6.1.0</npmVersion>
-     <workingDirectory>src/main/js/frontend</workingDirectory>
-    </configuration>
-    <executions>
-     <execution>
-      <id>Install node and npm locally to the project</id>
-      <goals>
-       <goal>install-node-and-npm</goal>
-      </goals>
-     </execution>
-     <execution>
-      <id>npm install</id>
-      <goals>
-       <goal>npm</goal>
-      </goals>
-     </execution>
-     <execution>
-      <id>Build frontend</id>
-      <goals>
-       <goal>npm</goal>
-      </goals>
-      <configuration>
-       <arguments>run build</arguments>
-      </configuration>
-     </execution>
-    </executions>
-   </plugin>
-   <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-resources-plugin</artifactId>
-    <executions>
-     <execution>
-      <id>Copy frontend build to target</id>
-      <phase>process-resources</phase>
-      <goals>
-       <goal>copy-resources</goal>
-      </goals>
-      <configuration>
-       <outputDirectory>${basedir}/target/classes/resources</outputDirectory>
-       <resources>
-        <resource>
-         <directory>${basedir}/src/main/js/frontend/build</directory>
-         <filtering>true</filtering>
-        </resource>
-       </resources>
-      </configuration>
-     </execution>
-    </executions>
-   </plugin>
-  </plugins>
- </build>
 </project>
