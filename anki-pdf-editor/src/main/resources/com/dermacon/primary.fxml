@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dermacon.ui.PrimaryController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dermacon.ui.FXMLController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
