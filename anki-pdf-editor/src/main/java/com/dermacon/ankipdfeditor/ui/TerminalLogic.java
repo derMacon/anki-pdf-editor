@@ -25,6 +25,7 @@ public class TerminalLogic {
     private static final String UPDATE_PROJECT_QUERY =
             "Current project: %s\n"
                     + "Type\n"
+                    + "  - a to write new cards\n"
                     + "  - e to edit project properties\n"
                     + "  - wq to save with exit\n"
                     + "  - w to save without exit\n\n";
@@ -45,43 +46,43 @@ public class TerminalLogic {
     private PostConnector postConnector;
 
     public TerminalLogic() throws IOException {
-        updateProjectInfo();
-        postConnector = new PostConnector(API_PORT, "addCard");
+//        updateProjectInfo();
+//        postConnector = new PostConnector(API_PORT, "addCard");
 
-        // run pdf-viewer-server - http://127.0.0.1:9000/
-        String pdfViewerPath = System.getProperty("user.dir") + "src/main/js/pdf_viewer/";
-        String openPdfViewer = String.format(OPEN_PDF_VIEWER_COMMAND, pdfViewerPath);
-        String[] cmd = {"/bin/sh", "-c", openPdfViewer};
-        Runtime.getRuntime().exec(cmd);
+//         run pdf-viewer-server - http://127.0.0.1:9000/
+//        String pdfViewerPath = System.getProperty("user.dir") + "src/main/js/pdf_viewer/";
+//        String openPdfViewer = String.format(OPEN_PDF_VIEWER_COMMAND, pdfViewerPath);
+//        String[] cmd = {"/bin/sh", "-c", openPdfViewer};
+//        Runtime.getRuntime().exec(cmd);
 
-        openCurrProject();
+//        openCurrProject();
     }
 
-    /**
-     * https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
-     *
-     * @param urlToRead
-     * @return
-     * @throws Exception
-     */
-    public static String getRequest(String urlToRead) throws IOException {
-        StringBuilder result = new StringBuilder();
-        URL url = new URL(urlToRead);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        String line;
-        while ((line = rd.readLine()) != null) {
-            result.append(line);
-        }
-        rd.close();
-        return result.toString();
-    }
+//    /**
+//     * https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
+//     *
+//     * @param urlToRead
+//     * @return
+//     * @throws Exception
+//     */
+//    public static String getRequest(String urlToRead) throws IOException {
+//        StringBuilder result = new StringBuilder();
+//        URL url = new URL(urlToRead);
+//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//        conn.setRequestMethod("GET");
+//        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//        String line;
+//        while ((line = rd.readLine()) != null) {
+//            result.append(line);
+//        }
+//        rd.close();
+//        return result.toString();
+//    }
 
-    private void updateProjectInfo() throws IOException {
-        String requestResponse = getRequest(PROJECT_INFO_COMMAND);
-        this.projectInfo = new Gson().fromJson(requestResponse, ProjectInfo.class);
-    }
+//    private void updateProjectInfo() throws IOException {
+//        String requestResponse = getRequest(PROJECT_INFO_COMMAND);
+//        this.projectInfo = new Gson().fromJson(requestResponse, ProjectInfo.class);
+//    }
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
@@ -90,7 +91,7 @@ public class TerminalLogic {
         System.out.println("Anki-Editor - version 1.0\n");
 
         do {
-        System.out.println(String.format(UPDATE_PROJECT_QUERY, projectInfo));
+            System.out.println(String.format(UPDATE_PROJECT_QUERY, projectInfo));
 //        shutdown = runQuery("w");
             keepRunning = runQuery(scanner.nextLine().toLowerCase());
         } while (keepRunning);
@@ -104,8 +105,9 @@ public class TerminalLogic {
         // a shutdown is can only be prevented if the user
         // wants to edit the project info OR wants to
         // save his work
-        boolean keepRunning = choice.matches("(e|w)");
+        boolean keepRunning = choice.matches("(e|w|a)");
 
+        /*
         try {
 
             // start anki since the rest api has to be exposed
@@ -140,10 +142,13 @@ public class TerminalLogic {
             e.printStackTrace();
         }
 
+         */
+
         return keepRunning;
     }
 
     public void openCurrProject() throws IOException {
+        /*
         String requestResponse = getRequest(PROJECT_INFO_COMMAND);
         projectInfo = new Gson().fromJson(requestResponse, ProjectInfo.class);
 
@@ -162,6 +167,8 @@ public class TerminalLogic {
             System.out.println("open pdf");
         }
        startBrowserPdf();
+
+         */
     }
 
     private void startBrowserPdf() throws IOException {

@@ -1,22 +1,36 @@
 package com.dermacon.ankipdfeditor;
 
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @SpringBootApplication
 public class AnkiPdfEditorApplication {
 
+	private ImageView imageView;
+
+	public void setImageView(ImageView imageView) {
+		this.imageView = imageView;
+	}
+
 	public static void main(String[] args) {
+		new App().main(args);
 //		SpringApplication.run(AnkiPdfEditorApplication.class, args);
         loadSpringController(args);
-		App.main(args);
+//		App.main(args);
+
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//
+//		currPdfPage.get().setImage(new Image("https://upload.wikimedia.org/wikipedia/commons/a/a2/Wikimedia_Outreach_test_logo.png"));
+//		System.out.println("finito");
 	}
 
 	private static void loadSpringController(String[] args) {

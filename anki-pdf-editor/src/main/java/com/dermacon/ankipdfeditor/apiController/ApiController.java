@@ -28,87 +28,33 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ApiController implements ApiConnection {
+public class ApiController {
 
     private HtmlParser parser;
     private ProjectInfo projectInfo;
 
     public ApiController() throws IOException {
-//        projectInfo = new ProjectInfo();
-//        parser = new HtmlParser(projectInfo.getPdfPath());
+        projectInfo = new ProjectInfo();
+        parser = new HtmlParser(projectInfo.getPdfPath());
     }
-
-    @Override
-    @RequestMapping(method = RequestMethod.POST, value = "/addCard", produces = APPLICATION_JSON_VALUE)
-    public String addCard(Card card) {
-        System.out.println("card: ");
-        System.out.println(card);
-        // todo ueberarbeiten
-//        try {
-//            PostConnector connector = new PostConnector(8765);
-//            connector.jsonRequest(new AddNoteRequest(parser.parseImgTag(card)));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        return "success";
-    }
-
 
     @RequestMapping(method = RequestMethod.POST, value = "/setPageNum")
     public void setPageNum(Integer pageNum) {
         System.out.println("new page: " + pageNum);
-//        this.projectInfo.updatePage(pageNum);
+        this.projectInfo.updatePage(pageNum);
     }
 
-
-    @RequestMapping(method = RequestMethod.GET, value = "/waitForChange")
-    public int waitForChange() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return this.projectInfo.getCurrPageNum();
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/parseAnkiFile")
     public void parseAnkiFile(String path) {
 
     }
 
-    @Override
     @RequestMapping(method = RequestMethod.GET, value = "/selectedPdfName")
     public String getSelectedPdfName() {
         return this.projectInfo.getPdfName();
     }
 
-    /**
-     * https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
-     *
-     * @return
-     * @throws IOException
-     */
-    @Override
-    @RequestMapping(method = RequestMethod.GET, value = "/serveSelectedPdf", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<byte[]> serveSelectedPdf() throws IOException {
-        // todo ueberarbeiten
-        String path = projectInfo.getPdfPath();
-        File file = new File(path);
-        System.out.println(file.getAbsolutePath());
-        byte[] contents = null;
-
-        contents = Files.readAllBytes(file.toPath());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        // Here you have to set the actual filename of your pdf
-        String filename = "output.pdf";
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-
-        return response;
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/selectNewPdf")
     public String selectNewPdf() throws IOException {
@@ -207,67 +153,3 @@ public class ApiController implements ApiConnection {
 
 }
 
-
-/*
-    // todo check if needed
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @RequestMapping(method = RequestMethod.GET, value = "/retrievePdf", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<byte[]> retrievePdf(String name) {
-
-        // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
-
-        File file = new File("src/main/resources/META-INF/resources/example.pdf");
-        System.out.println(file.getAbsolutePath());
-        System.out.println("file: " + (file.exists() && !file.isDirectory()));
-        byte[] contents = null;
-
-        try {
-            contents = Files.readAllBytes(file.toPath());
-        } catch (IOException e) {
-            System.out.println("not cool\n" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        // Here you have to set the actual filename of your pdf
-        String filename = "output.pdf";
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-
-        System.out.println("file sent");
-        return response;
-    }
-
-
-    private ResponseEntity<byte[]> servePdfFile(File file) {
-        // https://stackoverflow.com/questions/16652760/return-generated-pdf-using-spring-mvc
-
-        // todo delete debug - schick machen
-        System.out.println(file.getAbsolutePath());
-        System.out.println("file: " + (file.exists() && !file.isDirectory()));
-        byte[] contents = null;
-
-        try {
-            contents = Files.readAllBytes(file.toPath());
-        } catch (IOException e) {
-            System.out.println("not cool\n" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        // Here you have to set the actual filename of your pdf
-        String filename = "output.pdf";
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-
-        System.out.println("file sent");
-        return response;
-
-    }
-
-
- */
