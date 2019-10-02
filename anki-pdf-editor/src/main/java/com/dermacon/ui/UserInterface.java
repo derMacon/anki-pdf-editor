@@ -1,7 +1,7 @@
 package com.dermacon.ui;
 
 
-import com.dermacon.logic.DataContainer;
+import com.dermacon.data.project.DataContainer;
 
 import java.io.IOException;
 

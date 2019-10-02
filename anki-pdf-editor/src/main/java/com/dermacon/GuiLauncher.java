@@ -1,6 +1,6 @@
 package com.dermacon;
 
-import com.dermacon.logic.DataContainer;
+import com.dermacon.data.project.DataContainer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

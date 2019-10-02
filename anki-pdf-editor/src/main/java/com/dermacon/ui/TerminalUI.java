@@ -2,8 +2,8 @@ package com.dermacon.ui;
 
 
 import com.dermacon.GuiLauncher;
-import com.dermacon.logic.ProjectController;
-import com.dermacon.logic.DataContainer;
+import com.dermacon.data.project.ProjectController;
+import com.dermacon.data.project.DataContainer;
 
 import java.io.IOException;
 

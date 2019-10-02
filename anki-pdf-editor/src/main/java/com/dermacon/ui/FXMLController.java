@@ -3,7 +3,7 @@ package com.dermacon.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.dermacon.logic.DataContainer;
+import com.dermacon.data.project.DataContainer;
 import com.dermacon.apiController.SpringApiController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

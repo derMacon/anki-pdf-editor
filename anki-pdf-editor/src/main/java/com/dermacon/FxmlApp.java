@@ -1,7 +1,7 @@
 package com.dermacon;
 
 import com.dermacon.apiController.SpringApiController;
-import com.dermacon.logic.DataContainer;
+import com.dermacon.data.project.DataContainer;
 import com.dermacon.ui.FXMLController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
