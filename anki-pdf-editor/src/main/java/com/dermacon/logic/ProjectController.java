@@ -15,18 +15,24 @@ public class ProjectController {
 
     private static final int API_PORT = 8080;
 
-    private ProjectInfo projectInfo;
+    private DataContainer dataContainer;
 
     public ProjectController() throws IOException {
-        this.projectInfo = new ProjectInfo();
+        this.dataContainer = new DataContainer();
     }
 
-    public ProjectInfo getProjectInfo() {
-        return projectInfo;
+    public DataContainer getDataContainer() {
+        return dataContainer;
     }
 
-    public void pushToAnki() {
 
+    public void pushToAnki() throws IOException {
+        startAnki();
+
+    }
+
+    private static void startAnki() throws IOException {
+        Runtime.getRuntime().exec(ANKI_START_COMMAND);
     }
 
 

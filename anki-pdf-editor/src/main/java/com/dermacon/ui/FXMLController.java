@@ -3,7 +3,7 @@ package com.dermacon.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.dermacon.logic.ProjectInfo;
+import com.dermacon.logic.DataContainer;
 import com.dermacon.apiController.SpringApiController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 
 public class FXMLController implements Initializable {
 
-    private ProjectInfo projectData;
+    private DataContainer projectData;
 
     @FXML
     private Label lbl;
@@ -27,7 +27,7 @@ public class FXMLController implements Initializable {
         SpringApiController.setJFXController(this);
     }
 
-    public void setProjectData(ProjectInfo projectData) {
+    public void setProjectData(DataContainer projectData) {
         this.projectData = projectData;
         lbl.setText(projectData.toString());
         System.out.println(projectData);
@@ -38,7 +38,7 @@ public class FXMLController implements Initializable {
         int newPageNum = projectData.turnNextPage();
 
         Platform.runLater(() -> {
-            imgVw_page.setImage(new Image(projectData.getImgPath()));
+            imgVw_page.setImage(new Image(projectData.getCurrPageImage()));
         });
 
         return newPageNum;
@@ -49,7 +49,7 @@ public class FXMLController implements Initializable {
         int newPageNum = projectData.turnPrevPage();
 
         Platform.runLater(() -> {
-            imgVw_page.setImage(new Image(projectData.getImgPath()));
+            imgVw_page.setImage(new Image(projectData.getCurrPageImage()));
         });
 
         return newPageNum;

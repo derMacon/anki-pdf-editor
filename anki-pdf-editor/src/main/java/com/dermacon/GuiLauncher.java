@@ -1,6 +1,6 @@
 package com.dermacon;
 
-import com.dermacon.logic.ProjectInfo;
+import com.dermacon.logic.DataContainer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class GuiLauncher {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(GuiLauncher.class, args);
-        new FxmlApp().launchPdf(new ProjectInfo());
+        new FxmlApp().launchPdf(new DataContainer());
     }
 
 }

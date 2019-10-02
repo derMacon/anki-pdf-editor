@@ -1,7 +1,7 @@
 package com.dermacon;
 
 import com.dermacon.apiController.SpringApiController;
-import com.dermacon.logic.ProjectInfo;
+import com.dermacon.logic.DataContainer;
 import com.dermacon.ui.FXMLController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +17,10 @@ import java.io.IOException;
 public class FxmlApp extends Application {
 
     private static final String FXML_NAME = "primary";
-    private static ProjectInfo projectInfo;
+    private static DataContainer dataContainer;
 
-    public void launchPdf(ProjectInfo projectInfo_) {
-        projectInfo = projectInfo_;
+    public void launchPdf(DataContainer dataContainer_) {
+        dataContainer = dataContainer_;
         launch();
     }
 
@@ -30,7 +30,7 @@ public class FxmlApp extends Application {
         Parent parent = fxmlLoader.load();
 
         FXMLController controller = fxmlLoader.getController();
-        controller.setProjectData(this.projectInfo);
+        controller.setProjectData(this.dataContainer);
         SpringApiController.setJFXController(controller);
 
         Scene scene = new Scene(parent);

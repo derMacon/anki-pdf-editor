@@ -20,9 +20,7 @@ public class TerminalLauncher implements Runnable {
 
     @Override
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         boolean keepRunning;
-
         System.out.println("Anki-Editor - version 1.0\n");
 
         do {
@@ -50,9 +48,8 @@ public class TerminalLauncher implements Runnable {
                 ui.updateProjectInfo();
             } else if (choice.equals("wq")) {
                 ui.save();
-            } else if (choice.equals("q")) {
+            } else if (choice.equals("w")) {
                 ui.save();
-                keepRunning = false;
             }
 
             keepRunning = choice.matches("(e|w|a)");

@@ -3,7 +3,7 @@ package com.dermacon.ui;
 
 import com.dermacon.GuiLauncher;
 import com.dermacon.logic.ProjectController;
-import com.dermacon.logic.ProjectInfo;
+import com.dermacon.logic.DataContainer;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ public class TerminalUI implements UserInterface {
     @Override
     public void openEditor() throws IOException {
         // open vim
-        String pathToDeckFile = controller.getProjectInfo().getDeckFile();
+        String pathToDeckFile = controller.getDataContainer().getProjectInfo().getDeck();
         String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
         Runtime.getRuntime().exec(openNewTerminalCommand);
     }
@@ -38,12 +38,12 @@ public class TerminalUI implements UserInterface {
     }
 
     @Override
-    public void save() {
+    public void save() throws IOException {
         controller.pushToAnki();
     }
 
     @Override
-    public ProjectInfo displayProjectInfo() {
-        return controller.getProjectInfo();
+    public DataContainer displayProjectInfo() {
+        return controller.getDataContainer();
     }
 }
