@@ -1,7 +1,7 @@
 package com.dermacon.ui;
 
 
-import com.dermacon.data.project.DataContainer;
+import com.dermacon.data.project.ProjectController;
 
 import java.io.IOException;
 
@@ -10,5 +10,5 @@ public interface UserInterface {
     void openPdfViewer() throws IOException;
     void updateProjectInfo();
     void save() throws IOException;
-    DataContainer displayProjectInfo();
+    ProjectController displayProjectInfo();
 }

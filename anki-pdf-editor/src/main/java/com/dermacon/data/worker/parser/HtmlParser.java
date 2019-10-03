@@ -1,4 +1,4 @@
-package com.dermacon.data.worker;
+package com.dermacon.data.worker.parser;
 
 import com.dermacon.data.card.Card;
 import org.apache.commons.io.FilenameUtils;

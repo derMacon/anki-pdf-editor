@@ -1,11 +1,15 @@
-package blockingQueue;
+package com.dermacon.data.worker.multithreading;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class Worker implements Runnable {
 
     private final Assignments assignments;
+    private final PDDocument pdf;
 
-    public Worker(Assignments assignments) {
+    public Worker(Assignments assignments, PDDocument pdf) {
         this.assignments = assignments;
+        this.pdf = pdf;
     }
 
     @Override
@@ -21,6 +25,7 @@ public class Worker implements Runnable {
 
     private void render(Integer pageNum) throws InterruptedException {
         Thread.sleep(1000);
-        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum);
+        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum + " from " + pdf.toString());
+        // todo
     }
 }

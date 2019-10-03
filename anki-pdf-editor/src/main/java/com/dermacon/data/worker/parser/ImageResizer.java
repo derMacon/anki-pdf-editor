@@ -1,4 +1,4 @@
-package com.dermacon.data.worker;
+package com.dermacon.data.worker.parser;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

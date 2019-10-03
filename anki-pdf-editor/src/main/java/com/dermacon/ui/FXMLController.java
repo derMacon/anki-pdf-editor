@@ -3,7 +3,7 @@ package com.dermacon.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.dermacon.data.project.DataContainer;
+import com.dermacon.data.project.ProjectController;
 import com.dermacon.apiController.SpringApiController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 
 public class FXMLController implements Initializable {
 
-    private DataContainer projectData;
+    private ProjectController projectData;
 
     @FXML
     private Label lbl;
@@ -27,7 +27,7 @@ public class FXMLController implements Initializable {
         SpringApiController.setJFXController(this);
     }
 
-    public void setProjectData(DataContainer projectData) {
+    public void setProjectData(ProjectController projectData) {
         this.projectData = projectData;
         lbl.setText(projectData.toString());
         System.out.println(projectData);

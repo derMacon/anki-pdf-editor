@@ -1,10 +1,10 @@
-package blockingQueue;
+package com.dermacon.data.worker.multithreading;
 
 import java.util.LinkedList;
 
 public class Assignments {
 
-    private static final int OFFSET = 2;
+    private static final int OFFSET = 2; //todo
     private LinkedList<Integer> assignments = new LinkedList<>();
     private LinkedList<Integer> renderedImages = new LinkedList<>();
     private int pageCnt;

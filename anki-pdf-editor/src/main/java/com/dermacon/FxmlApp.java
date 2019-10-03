@@ -1,7 +1,7 @@
 package com.dermacon;
 
 import com.dermacon.apiController.SpringApiController;
-import com.dermacon.data.project.DataContainer;
+import com.dermacon.data.project.ProjectController;
 import com.dermacon.ui.FXMLController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +17,9 @@ import java.io.IOException;
 public class FxmlApp extends Application {
 
     private static final String FXML_NAME = "primary";
-    private static DataContainer dataContainer;
+    private static ProjectController dataContainer;
 
-    public void launchPdf(DataContainer dataContainer_) {
+    public void launchPdf(ProjectController dataContainer_) {
         dataContainer = dataContainer_;
         launch();
     }
