@@ -13,9 +13,10 @@ public class Manager implements Renderer {
     private Assignments assignments;
     private List<Thread> workers = new LinkedList<>();
     private boolean isRunning = false;
+    private PDDocument pdf;
 
-    public Manager(String pdfPath) {
-        PDDocument pdf = PDDocument.load(new File(pdfPath));
+    public Manager(PDDocument pdf) {
+        this.pdf = pdf;
         assignments = new Assignments(pdf.getNumberOfPages());
 
         Thread thread;

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Assignments {
 
-    private static final int OFFSET = 2; //todo
+    private static final int OFFSET = 40; //todo
     private LinkedList<Integer> assignments = new LinkedList<>();
     private LinkedList<Integer> renderedImages = new LinkedList<>();
     private int pageCnt;

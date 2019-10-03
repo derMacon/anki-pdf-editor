@@ -31,22 +31,23 @@ public class ProjectController {
     private Renderer renderer;
 
     public ProjectController(String deck, String pdfName) throws IOException {
-        String pdf = String.format(PDF_DIR, pdfName);
-        int numberOfPages = PDDocument.load(new File(pdf)).getNumberOfPages();
+        String pdfPath = String.format(PDF_DIR, pdfName);
+        PDDocument pdf = PDDocument.load(new File(pdfPath));
 
         projectInfo = new ProjectInfo(
                 String.format(DECK_DIR, deck),
                 pdf,
-                new PageData(1, numberOfPages) // todo builder pattern
+                1
         );
 
         createDeckFile();
-        startWorker();
+        renderer = new Manager(projectInfo.getPdf());
+        renderer.renderPageSurrounding(projectInfo.getCurrPage());
     }
 
     public ProjectController() throws IOException {
         String deck = null;
-        String pdf = null;
+        PDDocument pdf = null;
         Integer page = null;
         int n_lines = 3;
         int counter = 0;
@@ -58,7 +59,8 @@ public class ProjectController {
             if (line.startsWith("deck")) {
                 deck = String.format(DECK_DIR, line.split(":")[1]);
             } else if (line.startsWith("pdf")) {
-                pdf = String.format(PDF_DIR, line.split(":")[1]);
+                String pdfPath = String.format(PDF_DIR, line.split(":")[1]);
+                pdf = PDDocument.load(new File(pdfPath));
             } else if (line.startsWith("page")) {
                 page = Integer.parseInt(line.split(":")[1]);
             } else {
@@ -67,15 +69,15 @@ public class ProjectController {
             counter++;
         }
 
-        int numberOfPages = PDDocument.load(new File(pdf)).getNumberOfPages();
         this.projectInfo = new ProjectInfo(
                 deck,
                 pdf,
-                new PageData(page, numberOfPages)
+                page
         ); // todo builder pattern
 
         createDeckFile();
-        renderer = new Manager(projectInfo.getPdf())
+        renderer = new Manager(projectInfo.getPdf());
+        renderer.renderPageSurrounding(projectInfo.getCurrPage());
     }
 
     private void createDeckFile() {
@@ -124,31 +126,23 @@ public class ProjectController {
     }
 
     public int turnNextPage() {
-        PageData pageData = projectInfo.getPages();
-        int out = pageData.getCurrPage();
-        if (out < pageData.getPageCnt()) {
-            out++;
+        int out = projectInfo.getCurrPage();
+        if (out < projectInfo.getPdf().getNumberOfPages()) {
+            renderer.renderPageSurrounding(out++);
         }
         return out;
     }
 
     public int turnPrevPage() {
-        PageData pageData = projectInfo.getPages();
-        int out = pageData.getCurrPage();
+        int out = projectInfo.getCurrPage();
         if (out > 0) {
-            out--;
+            renderer.renderPageSurrounding(out--);
         }
         return out;
     }
 
-
     public String getCurrPageImage() {
         return "https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png"; // todo
     }
-
-    private void startWorker() {
-
-    }
-
 
 }

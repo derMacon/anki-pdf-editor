@@ -1,5 +1,9 @@
 package com.dermacon.data.project;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+
+import java.io.IOException;
+
 public class ProjectInfo {
 
     private final static String JSON_TEMPLATE = "{\n" +
@@ -10,27 +14,26 @@ public class ProjectInfo {
     private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
 
     private final String deck;
-    private final String pdf;
-    private final PageData pages;
+    private final PDDocument pdf;
+    private final int currPage;
 
-    public ProjectInfo(String deck, String pdf, PageData pages) {
+    public ProjectInfo(String deck, PDDocument pdf, int currPage) throws IOException {
         this.deck = deck;
         this.pdf = pdf;
-        this.pages = pages;
+        this.currPage = currPage;
     }
 
     public String getDeck() {
         return deck;
     }
 
-    public String getPdf() {
+    public PDDocument getPdf() {
         return pdf;
     }
 
-    public PageData getPages() {
-        return pages;
+    public int getCurrPage() {
+        return currPage;
     }
-
 
     // todo check if needed
     public String toJson() {
@@ -45,6 +48,7 @@ public class ProjectInfo {
     public String toString() {
         return "Deck: " + deck + "\n"
                 + "pdf: " + pdf + "\n"
-                + "page" + pages.toString() + "\n";
+                + "currPage: " + currPage + "\n"
+                + "pageCnt: " + pdf.getNumberOfPages() + "\n";
     }
 }
