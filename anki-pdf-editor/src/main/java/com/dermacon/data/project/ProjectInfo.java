@@ -2,9 +2,11 @@ package com.dermacon.data.project;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ProjectInfo {
+
 
     private final static String JSON_TEMPLATE = "{\n" +
             "\"deck\": \"%s\",\n" +
@@ -13,22 +15,60 @@ public class ProjectInfo {
 
     private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
 
-    private final String deck;
-    private final PDDocument pdf;
+    private final String deckPath;
     private final int currPage;
 
-    public ProjectInfo(String deck, PDDocument pdf, int currPage) throws IOException {
-        this.deck = deck;
-        this.pdf = pdf;
-        this.currPage = currPage;
+    // redundant, but at least encapsulated (file io only in this class)
+    // PDDocument not able to return its path
+    private final PDDocument pdfDoc;
+    private final String pdfPath;
+
+
+    public static class InfoBuilder {
+        private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
+        private static final String DECK_DIR = LAST_DOCS_DIR + "decks/%s.anki";
+        private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/%s";
+
+        private String deckPath ;
+        private String pdfPath;
+        private PDDocument pdfDoc;
+        private int currPage;
+
+        public void deckName(String deckName) {
+            this.deckPath = String.format(DECK_DIR, deckName);
+        }
+
+        public void pdfName(String pdfName) {
+            this.pdfPath = String.format(PDF_DIR, pdfName);
+        }
+
+        public void currPage(String currPage) {
+            this.currPage = Integer.parseInt(currPage);
+        }
+
+        public ProjectInfo build() throws IOException {
+            this.pdfDoc = PDDocument.load(new File(pdfPath));
+            return new ProjectInfo(this);
+        }
     }
 
-    public String getDeck() {
-        return deck;
+    private ProjectInfo(InfoBuilder builder) {
+        this.deckPath = builder.deckPath;
+        this.pdfPath = builder.pdfPath;
+        this.pdfDoc = builder.pdfDoc;
+        this.currPage = builder.currPage;
     }
 
-    public PDDocument getPdf() {
-        return pdf;
+    public String getDeckPath() {
+        return deckPath;
+    }
+
+    public PDDocument getPdfDoc() {
+        return pdfDoc;
+    }
+
+    public String getPdfPath() {
+        return pdfPath;
     }
 
     public int getCurrPage() {
@@ -37,18 +77,18 @@ public class ProjectInfo {
 
     // todo check if needed
     public String toJson() {
-        return String.format(JSON_TEMPLATE, deck, pdf);
+        return String.format(JSON_TEMPLATE, deckPath, pdfDoc);
     }
 
     public String toUrlParameters() {
-        return String.format(URL_PARAMETER_TEMPLATE, deck, pdf);
+        return String.format(URL_PARAMETER_TEMPLATE, deckPath, pdfDoc);
     }
 
     @Override
     public String toString() {
-        return "Deck: " + deck + "\n"
-                + "pdf: " + pdf + "\n"
+        return "Deck: " + deckPath + "\n"
+                + "pdf: " + pdfDoc + "\n"
                 + "currPage: " + currPage + "\n"
-                + "pageCnt: " + pdf.getNumberOfPages() + "\n";
+                + "pageCnt: " + pdfDoc.getNumberOfPages() + "\n";
     }
 }

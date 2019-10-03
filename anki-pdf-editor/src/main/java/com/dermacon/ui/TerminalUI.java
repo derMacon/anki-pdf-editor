@@ -12,24 +12,25 @@ public class TerminalUI implements UserInterface {
     private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim %s";
 
     private AnkiConnector ankiConnector;
-    private ProjectController dataContainer;
+    private ProjectController projectController;
 
     public TerminalUI() throws IOException {
-        dataContainer = new ProjectController();
+        projectController = new ProjectController();
         ankiConnector = new AnkiConnector();
     }
 
     @Override
     public void openEditor() throws IOException {
         // open vim
-        String pathToDeckFile = dataContainer.getProjectInfo().getDeck();
+        String pathToDeckFile = projectController.getProjectInfo().getDeckPath();
         String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
         Runtime.getRuntime().exec(openNewTerminalCommand);
     }
 
     @Override
     public void openPdfViewer() throws IOException {
-        GuiLauncher.main(new String[0]);
+//        GuiLauncher.main(new String[0]);
+        GuiLauncher.launch(projectController);
     }
 
     @Override
@@ -41,11 +42,11 @@ public class TerminalUI implements UserInterface {
 
     @Override
     public void save() throws IOException {
-        ankiConnector.pushToAnki(this.dataContainer.getProjectInfo());
+        ankiConnector.pushToAnki(this.projectController.getProjectInfo());
     }
 
     @Override
     public ProjectController displayProjectInfo() {
-        return this.dataContainer;
+        return this.projectController;
     }
 }

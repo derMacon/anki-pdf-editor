@@ -17,10 +17,10 @@ import java.io.IOException;
 public class FxmlApp extends Application {
 
     private static final String FXML_NAME = "primary";
-    private static ProjectController dataContainer;
+    private static ProjectController projectController;
 
-    public void launchPdf(ProjectController dataContainer_) {
-        dataContainer = dataContainer_;
+    public void launchPdf(ProjectController projectController_) {
+        projectController = projectController_;
         launch();
     }
 
@@ -30,7 +30,7 @@ public class FxmlApp extends Application {
         Parent parent = fxmlLoader.load();
 
         FXMLController controller = fxmlLoader.getController();
-        controller.setProjectData(this.dataContainer);
+        controller.setProjectData(this.projectController);
         SpringApiController.setJFXController(controller);
 
         Scene scene = new Scene(parent);

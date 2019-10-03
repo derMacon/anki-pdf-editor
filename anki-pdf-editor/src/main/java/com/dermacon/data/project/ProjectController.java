@@ -30,58 +30,41 @@ public class ProjectController {
     private ProjectInfo projectInfo;
     private Renderer renderer;
 
-    public ProjectController(String deck, String pdfName) throws IOException {
-        String pdfPath = String.format(PDF_DIR, pdfName);
-        PDDocument pdf = PDDocument.load(new File(pdfPath));
-
-        projectInfo = new ProjectInfo(
-                String.format(DECK_DIR, deck),
-                pdf,
-                1
-        );
-
+    public ProjectController() throws IOException {
+        parseProjHistory();
         createDeckFile();
-        renderer = new Manager(projectInfo.getPdf());
-        renderer.renderPageSurrounding(projectInfo.getCurrPage());
+        startWorker();
     }
 
-    public ProjectController() throws IOException {
-        String deck = null;
-        PDDocument pdf = null;
-        Integer page = null;
-        int n_lines = 3;
-        int counter = 0;
+    /**
+     * parse .projectHistory file
+     * @throws IOException
+     */
+    private void parseProjHistory() throws IOException {
         ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
+        ProjectInfo.InfoBuilder builder = new ProjectInfo.InfoBuilder();
+        int counter = 0, n_lines = 3;
+        String line;
 
-        // parse .projectHistory file
         while (counter < n_lines) {
-            String line = object.readLine();
+            line = object.readLine();
             if (line.startsWith("deck")) {
-                deck = String.format(DECK_DIR, line.split(":")[1]);
+                builder.deckName(line.split(":")[1]);
             } else if (line.startsWith("pdf")) {
-                String pdfPath = String.format(PDF_DIR, line.split(":")[1]);
-                pdf = PDDocument.load(new File(pdfPath));
+                builder.pdfName(line.split(":")[1]);
             } else if (line.startsWith("page")) {
-                page = Integer.parseInt(line.split(":")[1]);
+                builder.currPage(line.split(":")[1]);
             } else {
-                throw new IOException("input line does not match pattern"); // todo pattern to javadoc
+                throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
             }
             counter++;
         }
 
-        this.projectInfo = new ProjectInfo(
-                deck,
-                pdf,
-                page
-        ); // todo builder pattern
-
-        createDeckFile();
-        renderer = new Manager(projectInfo.getPdf());
-        renderer.renderPageSurrounding(projectInfo.getCurrPage());
+        this.projectInfo = builder.build();
     }
 
     private void createDeckFile() {
-        String deckFilePath = projectInfo.getDeck();
+        String deckFilePath = projectInfo.getDeckPath();
         String deckDescription = formatDeckdescr(deckFilePath, LINE_LENGTH); // todo
 
         File file = new File(deckFilePath);
@@ -121,13 +104,18 @@ public class ProjectController {
         return output + "\n\n";
     }
 
+    private void startWorker() {
+        renderer = new Manager(projectInfo.getPdfDoc());
+        renderer.renderPageSurrounding(projectInfo.getCurrPage());
+    }
+
     public ProjectInfo getProjectInfo() {
         return projectInfo;
     }
 
     public int turnNextPage() {
         int out = projectInfo.getCurrPage();
-        if (out < projectInfo.getPdf().getNumberOfPages()) {
+        if (out < projectInfo.getPdfDoc().getNumberOfPages()) {
             renderer.renderPageSurrounding(out++);
         }
         return out;
@@ -144,5 +132,4 @@ public class ProjectController {
     public String getCurrPageImage() {
         return "https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png"; // todo
     }
-
 }
