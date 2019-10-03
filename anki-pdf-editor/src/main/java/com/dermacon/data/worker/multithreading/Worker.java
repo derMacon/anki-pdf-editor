@@ -2,7 +2,6 @@ package com.dermacon.data.worker.multithreading;
 
 import com.dermacon.data.project.ProjectInfo;
 import com.dermacon.data.worker.parser.ImageResizer;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -22,8 +21,6 @@ class Worker implements Runnable {
      */
     private static int DEFAULT_DPI = 150;
 
-    private static String IMG_TEMP_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/img_temp/";
-
     private final Assignments assignments;
     private final ProjectInfo projectInfo;
 
@@ -37,16 +34,14 @@ class Worker implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 render(assignments.getAssignment());
-            } catch (InterruptedException e) {
+                // todo check
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+            } catch (IOException e) {
+                System.err.println("image render error: " + e.getMessage());
                 Thread.currentThread().interrupt();
             }
         }
-    }
-
-    public void render(Integer pageNum) throws InterruptedException {
-        Thread.sleep(1000);
-        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum);
-        // todo
     }
 
     /**
@@ -56,12 +51,12 @@ class Worker implements Runnable {
      * @return an cliboard image which can be saved in the systems clipboard
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
-    private void renderImageInTemp(Integer pageNum) throws IOException {
+    public void render(Integer pageNum) throws IOException {
+//        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum);
         PDDocument pdf = this.projectInfo.getPdfDoc();
         PDFRenderer pdfRenderer = new PDFRenderer(pdf);
         BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNum - 1, DEFAULT_DPI, ImageType.RGB);
-        String path = projectInfo.getPdfName() + "_" + pageNum + ".png";
-        File currPageImg = new File(path);
+        File currPageImg = new File(projectInfo.getImgPath(pageNum));
         ImageIOUtil.writeImage(bim, currPageImg.getPath(), DEFAULT_DPI);
         ImageResizer.resizeImage(currPageImg.getPath(), currPageImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }

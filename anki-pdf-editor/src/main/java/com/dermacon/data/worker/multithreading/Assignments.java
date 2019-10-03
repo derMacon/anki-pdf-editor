@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 class Assignments {
 
-    private static final int OFFSET = 40; //todo
+    private static final int PAGE_INTERVALL = 2; //todo
     private LinkedList<Integer> assignments = new LinkedList<>();
     private LinkedList<Integer> renderedImages = new LinkedList<>();
     private int pageCnt;
@@ -18,7 +18,7 @@ class Assignments {
             assignments.add(0, pageNum);
 
             int next, prev;
-            for (int i = 1; i < OFFSET; i++) {
+            for (int i = 1; i < PAGE_INTERVALL; i++) {
                 next = pageNum + i;
                 prev = pageNum - i;
 

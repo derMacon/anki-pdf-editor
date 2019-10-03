@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 
 public class FXMLController implements Initializable {
 
-    private ProjectController projectData;
+    private ProjectController projectInfo;
 
     @FXML
     private Label lbl;
@@ -27,18 +27,18 @@ public class FXMLController implements Initializable {
         SpringApiController.setJFXController(this);
     }
 
-    public void setProjectData(ProjectController projectData) {
-        this.projectData = projectData;
-        lbl.setText(projectData.toString());
-        System.out.println(projectData);
+    public void setProjectInfo(ProjectController projectInfo) {
+        this.projectInfo = projectInfo;
+        lbl.setText(projectInfo.toString());
+        System.out.println(projectInfo);
     }
 
     public int turnNextPage() {
         System.out.println("turn next page");
-        int newPageNum = projectData.turnNextPage();
+        int newPageNum = projectInfo.turnNextPage();
 
         Platform.runLater(() -> {
-            imgVw_page.setImage(new Image(projectData.getCurrPageImage()));
+            imgVw_page.setImage(new Image("file:" + projectInfo.getCurrPageImage()));
         });
 
         return newPageNum;
@@ -46,10 +46,10 @@ public class FXMLController implements Initializable {
 
     public int turnPrevPage() {
         System.out.println("turn prev page");
-        int newPageNum = projectData.turnPrevPage();
+        int newPageNum = projectInfo.turnPrevPage();
 
         Platform.runLater(() -> {
-            imgVw_page.setImage(new Image(projectData.getCurrPageImage()));
+            imgVw_page.setImage(new Image("file:" + projectInfo.getCurrPageImage()));
         });
 
         return newPageNum;

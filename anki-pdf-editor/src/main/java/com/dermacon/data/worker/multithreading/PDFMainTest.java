@@ -1,7 +1,6 @@
 package com.dermacon.data.worker.multithreading;
 
 import com.dermacon.data.project.ProjectInfo;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
@@ -19,10 +18,14 @@ public class PDFMainTest {
         b.deckName("TestDeck");
         b.pdfName("CVL.pdf");
 
-
         Renderer r = new Manager(b.build());
         r.renderPageSurrounding(1);
 
+//        Assignments a = new Assignments(20);
+//        a.addPage(1);
+//        System.out.println(a);
+//        a.addPage(2);
+//        System.out.println(a);
 
     }
 

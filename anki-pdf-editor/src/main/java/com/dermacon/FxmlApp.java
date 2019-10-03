@@ -30,7 +30,7 @@ public class FxmlApp extends Application {
         Parent parent = fxmlLoader.load();
 
         FXMLController controller = fxmlLoader.getController();
-        controller.setProjectData(this.projectController);
+        controller.setProjectInfo(this.projectController);
         SpringApiController.setJFXController(controller);
 
         Scene scene = new Scene(parent);

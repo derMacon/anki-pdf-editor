@@ -116,7 +116,8 @@ public class ProjectController {
     public int turnNextPage() {
         int out = projectInfo.getCurrPage();
         if (out < projectInfo.getPdfDoc().getNumberOfPages()) {
-            renderer.renderPageSurrounding(out++);
+            projectInfo.setCurrPage(++out);
+            renderer.renderPageSurrounding(out);
         }
         return out;
     }
@@ -124,12 +125,14 @@ public class ProjectController {
     public int turnPrevPage() {
         int out = projectInfo.getCurrPage();
         if (out > 0) {
-            renderer.renderPageSurrounding(out--);
+            projectInfo.setCurrPage(--out);
+            renderer.renderPageSurrounding(out);
         }
         return out;
     }
 
     public String getCurrPageImage() {
-        return "https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png"; // todo
+        return projectInfo.getCurrImgPath();
+//        return "https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png"; // todo
     }
 }

@@ -22,7 +22,7 @@ public class ProjectInfo {
     private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
 
     private final String deckPath;
-    private final int currPage;
+    private int currPage;
 
     // redundant, but at least encapsulated (file io only in this class)
     // PDDocument not able to return its path
@@ -79,6 +79,23 @@ public class ProjectInfo {
     public int getCurrPage() {
         return currPage;
     }
+
+    public String getImgTempDir() {
+        return IMG_TEMP_DIR;
+    }
+
+    public String getImgPath(int pageNum) {
+        return IMG_TEMP_DIR + getPdfName() + "_" + pageNum + ".png";
+    }
+
+    public String getCurrImgPath() {
+        return getImgPath(currPage);
+    }
+
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
+    }
+
 
     // todo check if needed
     public String toJson() {
