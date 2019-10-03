@@ -22,10 +22,5 @@ Two main projects:
 * make components resizable
 
 ### Resources
-* [Color palette for the themes](https://material.io/design/color/dark-theme.html#behavior)
-* [Bind React with Spring](https://developer.okta.com/blog/2018/07/19/simple-crud-react-and-spring-boot)
-* Example - [Binding Spring / React](https://github.com/tzehe/react-spring-example)
-
-* Might be [usefull](https://stackoverflow.com/questions/46334733/spring-data-rest-application-backend-notify-frontend)
-* Websocket - [Stackoverflow](https://stackoverflow.com/questions/37307697/scheduled-websocket-push-with-springboot)
+* [Blocking queue example](https://www.mkyong.com/java/java-blockingqueue-examples/)
 
