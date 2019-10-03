@@ -1,11 +1,17 @@
 package com.dermacon.data.project;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ProjectInfo {
+
+    private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
+    private static final String IMG_TEMP_DIR = LAST_DOCS_DIR + "img_temp/";
+    private static final String DECK_DIR = LAST_DOCS_DIR + "decks/%s.anki";
+    private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/%s";
 
 
     private final static String JSON_TEMPLATE = "{\n" +
@@ -25,12 +31,7 @@ public class ProjectInfo {
 
 
     public static class InfoBuilder {
-        private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
-        private static final String DECK_DIR = LAST_DOCS_DIR + "decks/%s.anki";
-        private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/%s";
-
-        private String deckPath ;
-        private String pdfPath;
+        private String deckPath, pdfPath;
         private PDDocument pdfDoc;
         private int currPage;
 
@@ -69,6 +70,10 @@ public class ProjectInfo {
 
     public String getPdfPath() {
         return pdfPath;
+    }
+
+    public String getPdfName() {
+        return FilenameUtils.removeExtension(FilenameUtils.getName(pdfPath));
     }
 
     public int getCurrPage() {

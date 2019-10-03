@@ -105,7 +105,7 @@ public class ProjectController {
     }
 
     private void startWorker() {
-        renderer = new Manager(projectInfo.getPdfDoc());
+        renderer = new Manager(projectInfo);
         renderer.renderPageSurrounding(projectInfo.getCurrPage());
     }
 

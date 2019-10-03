@@ -1,6 +1,6 @@
 package com.dermacon;
 
-import com.dermacon.apiController.SpringApiController;
+import com.dermacon.springApi.SpringApiController;
 import com.dermacon.data.project.ProjectController;
 import com.dermacon.ui.FXMLController;
 import javafx.application.Application;

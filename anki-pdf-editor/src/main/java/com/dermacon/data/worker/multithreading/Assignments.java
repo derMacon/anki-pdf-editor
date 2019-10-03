@@ -2,7 +2,7 @@ package com.dermacon.data.worker.multithreading;
 
 import java.util.LinkedList;
 
-public class Assignments {
+class Assignments {
 
     private static final int OFFSET = 40; //todo
     private LinkedList<Integer> assignments = new LinkedList<>();

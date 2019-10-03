@@ -29,7 +29,6 @@ public class TerminalUI implements UserInterface {
 
     @Override
     public void openPdfViewer() throws IOException {
-//        GuiLauncher.main(new String[0]);
         GuiLauncher.launch(projectController);
     }
 

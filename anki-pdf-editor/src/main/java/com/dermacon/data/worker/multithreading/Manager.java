@@ -1,5 +1,6 @@
 package com.dermacon.data.worker.multithreading;
 
+import com.dermacon.data.project.ProjectInfo;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
@@ -8,20 +9,23 @@ import java.util.List;
 
 public class Manager implements Renderer {
 
-    private static final int THREAD_CNT = 5;
+    private static final int THREAD_CNT = 2; //todo
 
-    private Assignments assignments;
-    private List<Thread> workers = new LinkedList<>();
-    private boolean isRunning = false;
-    private PDDocument pdf;
+    private final Assignments assignments;
+    private final List<Thread> workers = new LinkedList<>();
+    private final ProjectInfo projectInfo;
 
-    public Manager(PDDocument pdf) {
-        this.pdf = pdf;
-        assignments = new Assignments(pdf.getNumberOfPages());
+    private boolean isRunning = false; //todo ???
+
+    public Manager(ProjectInfo projectInfo) {
+        this.projectInfo = projectInfo;
+
+        int pageCnt = projectInfo.getPdfDoc().getNumberOfPages();
+        assignments = new Assignments(pageCnt);
 
         Thread thread;
         for (int i = 0; i < THREAD_CNT; i++) {
-            thread = new Thread(new Worker(assignments, pdf));
+            thread = new Thread(new Worker(assignments, projectInfo));
             thread.start();
             workers.add(thread);
         }

@@ -1,4 +1,4 @@
-package com.dermacon.apiController;
+package com.dermacon.springApi;
 
 import com.dermacon.ui.FXMLController;
 import org.springframework.web.bind.annotation.CrossOrigin;

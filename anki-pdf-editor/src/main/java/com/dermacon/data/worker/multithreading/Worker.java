@@ -1,6 +1,8 @@
 package com.dermacon.data.worker.multithreading;
 
+import com.dermacon.data.project.ProjectInfo;
 import com.dermacon.data.worker.parser.ImageResizer;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -10,7 +12,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Worker implements Runnable {
+class Worker implements Runnable {
+
+    private static final int DEFAULT_WIDTH = 930;
+    private static final int DEFAULT_HEIGHT = 650;
 
     /**
      * Default output resolution of the images (in dots per inch)
@@ -20,11 +25,11 @@ public class Worker implements Runnable {
     private static String IMG_TEMP_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/img_temp/";
 
     private final Assignments assignments;
-    private final PDDocument pdf;
+    private final ProjectInfo projectInfo;
 
-    public Worker(Assignments assignments, PDDocument pdf) {
+    public Worker(Assignments assignments, ProjectInfo projectInfo) {
         this.assignments = assignments;
-        this.pdf = pdf;
+        this.projectInfo = projectInfo;
     }
 
     @Override
@@ -40,23 +45,24 @@ public class Worker implements Runnable {
 
     public void render(Integer pageNum) throws InterruptedException {
         Thread.sleep(1000);
-//        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum + " from " + pdf.toString());
+        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum);
         // todo
     }
 
-//    /**
-//     * Renders an image of the given page given that the page is actually existent in the underlying pdf document
-//     *
-//     * @param pageNum page num which the user selected
-//     * @return an cliboard image which can be saved in the systems clipboard
-//     * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
-//     */
-//    private void renderImageInTemp(Integer pageNum) throws IOException {
-//        PDFRenderer pdfRenderer = new PDFRenderer(this.pdf);
-//        BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNum - 1, DEFAULT_DPI, ImageType.RGB);
-//        String path = IMG_TEMP_DIR + pdf.getDocument().getP + "_" + pageNum + ".png";
-//        File currPageImg = new File(path);
-//        ImageIOUtil.writeImage(bim, currPageImg.getPath(), DEFAULT_DPI);
-//        ImageResizer.resizeImage(currPageImg.getPath(), currPageImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
-//    }
+    /**
+     * Renders an image of the given page given that the page is actually existent in the underlying pdf document
+     *
+     * @param pageNum page num which the user selected
+     * @return an cliboard image which can be saved in the systems clipboard
+     * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
+     */
+    private void renderImageInTemp(Integer pageNum) throws IOException {
+        PDDocument pdf = this.projectInfo.getPdfDoc();
+        PDFRenderer pdfRenderer = new PDFRenderer(pdf);
+        BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNum - 1, DEFAULT_DPI, ImageType.RGB);
+        String path = projectInfo.getPdfName() + "_" + pageNum + ".png";
+        File currPageImg = new File(path);
+        ImageIOUtil.writeImage(bim, currPageImg.getPath(), DEFAULT_DPI);
+        ImageResizer.resizeImage(currPageImg.getPath(), currPageImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
 }
