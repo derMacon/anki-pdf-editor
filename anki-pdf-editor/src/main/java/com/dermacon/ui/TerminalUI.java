@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class TerminalUI implements UserInterface {
 
+//    private static final String NEW_TERMINAL_COMMAND = "xterm vim %s";
     private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim %s";
 
     private AnkiConnector ankiConnector;
@@ -22,9 +23,9 @@ public class TerminalUI implements UserInterface {
     @Override
     public void openEditor() throws IOException {
         // open vim
-//        String pathToDeckFile = projectController.getProjectInfo().getDeckPath();
-//        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
-//        Runtime.getRuntime().exec(openNewTerminalCommand);
+        String pathToDeckFile = projectController.getProjectInfo().getDeck().getPath();
+        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
+        Runtime.getRuntime().exec(openNewTerminalCommand);
     }
 
     @Override
