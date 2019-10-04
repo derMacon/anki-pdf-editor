@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 
 public class FXMLController implements Initializable {
 
-    private ProjectController projectInfo;
+    private ProjectController projectController;
 
     @FXML
     private Label lbl;
@@ -25,34 +25,46 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SpringApiController.setJFXController(this);
+        updateGui();
     }
 
-    public void setProjectInfo(ProjectController projectInfo) {
-        this.projectInfo = projectInfo;
-        lbl.setText(projectInfo.toString());
-        System.out.println(projectInfo);
+    public void setProjectController(ProjectController projectController) {
+        this.projectController = projectController;
+        lbl.setText(projectController.toString());
+        System.out.println(projectController);
     }
 
     public int turnNextPage() {
-        System.out.println("turn next page");
-        int newPageNum = projectInfo.turnNextPage();
-
-        Platform.runLater(() -> {
-            imgVw_page.setImage(new Image("file:" + projectInfo.getCurrPageImage()));
-        });
-
+        int newPageNum = projectController.turnNextPage();
+        updateGui();
         return newPageNum;
     }
 
     public int turnPrevPage() {
-        System.out.println("turn prev page");
-        int newPageNum = projectInfo.turnPrevPage();
-
-        Platform.runLater(() -> {
-            imgVw_page.setImage(new Image("file:" + projectInfo.getCurrPageImage()));
-        });
-
+        int newPageNum = projectController.turnPrevPage();
+        updateGui();
         return newPageNum;
+    }
+
+    private void updateGui() {
+        Platform.runLater(() -> {
+            String path = projectController.getCurrPageImage();
+
+            // todo img not showing if rendering is too slow
+//            while(!(new File(path).exists())) {
+//                try {
+//                    Thread.sleep(50);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println("waiting for img");
+//            }
+
+            Image img = new Image("file:" + path);
+            imgVw_page.setImage(img);
+
+            lbl.setText(String.valueOf(projectController.getProjectInfo().getCurrPage()));
+        });
     }
 
 

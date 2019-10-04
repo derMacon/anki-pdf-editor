@@ -5,4 +5,6 @@ All features can also be used via shortcuts. To use this programm the user has t
 
 ### Resources
 * [Blocking queue example](https://www.mkyong.com/java/java-blockingqueue-examples/)
+* record screen - `peek`
+* stop screenkey - `pkill -f screenkey`
 

@@ -2,12 +2,16 @@ package com.dermacon.data.project;
 
 import com.dermacon.ankiApi.PostConnector;
 import com.dermacon.ankiApi.request.AddNoteAnkiRequest;
+import com.dermacon.ankiApi.request.SyncAnkiRequest;
+import com.dermacon.ankiApi.response.AnkiResponse;
 import com.dermacon.data.card.Card;
 import com.dermacon.data.card.CardStackFactory;
+import com.dermacon.data.card.IncompleteCardException;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AnkiConnector {
@@ -25,13 +29,30 @@ public class AnkiConnector {
     private static final int SPRING_API_PORT = 8080;
     private static final int ANKI_API_PORT = 8765;
 
-    public static void pushToAnki(ProjectInfo projectInfo) throws IOException {
+    public static void pushToAnki(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
         startAnki();
         List<Card> cardStack = CardStackFactory.produceStack(projectInfo);
         // not possible as stream since an exception will be thrown
         // for some reason the postconnector instance is not reusable...
+        AnkiResponse response;
+        List<Card> problematicCards = new LinkedList<>();
         for(Card curr : cardStack) {
-            new PostConnector(ANKI_API_PORT).jsonRequest(new AddNoteAnkiRequest(curr));
+            response = new PostConnector(ANKI_API_PORT).jsonRequest(new AddNoteAnkiRequest(curr));
+            if (response.getError() != null) {
+                problematicCards.add(curr);
+            }
+        }
+
+        if (problematicCards.isEmpty()) {
+            response = new PostConnector(ANKI_API_PORT).jsonRequest(new SyncAnkiRequest());
+            if (response.getError() != null) {
+                throw new IOException("could not sync with anki api");
+            }
+        } else {
+            throw new IncompleteCardException(
+                    "No sync with anki possible - the following cards were incorrect:\n"
+                            + problematicCards.toString()
+            );
         }
     }
 

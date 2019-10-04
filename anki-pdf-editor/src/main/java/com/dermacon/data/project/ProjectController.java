@@ -16,28 +16,41 @@ public class ProjectController {
                     + "*         Anki-Editor - version 1.0            *\n"
                     + "*              In normal mode:                 *\n"
                     + "*  - type ,c to add a template for a new card  *\n"
-                    + "*  - type ,p to paste the current page number  *\n"
+                    + "*  - type p to paste the current page number   *\n"
+                    + "*  - type z to turn to the next page           *\n"
+                    + "*  - type Z to turn to the previous page       *\n"
+                    + "*                                              *\n"
+                    + "*  hint:                                       *\n"
+                    + "*  - If page is not available with simply      *\n"
+                    + "*    typing p try ,p                           *\n"
                     + "************************************************\n\n";
 
     // length of the line used in the description (see VIM_USAGE)
-    private static final int LINE_LENGTH = 48; // todo make from VIM_USAGE dependent
+    private static final int LINE_LENGTH = VIM_USAGE.split("\n")[0].length();
 
     private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
-    private static final String DECK_DIR = LAST_DOCS_DIR + "decks/%s.anki";
-    private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/%s";
 
     private ProjectInfo projectInfo;
     private Renderer renderer;
 
     public ProjectController() throws IOException {
-        parseProjHistory();
+        createProjectInfo();
         createDeckFile();
         startWorker();
     }
 
+    private void createProjectInfo() throws IOException {
+        if (PROJ_HISTORY.exists()) {
+            parseProjHistory();
+        } else {
+            this.projectInfo = new ProjectInfo.InfoBuilder()
+                    .buildWithInitProjStructure();
+        }
+    }
+
     /**
-     * parse .projectHistory file
+     * parse /lastDocs/.projectHistory file
      * @throws IOException
      */
     private void parseProjHistory() throws IOException {
@@ -64,10 +77,10 @@ public class ProjectController {
     }
 
     private void createDeckFile() {
-        String deckFilePath = projectInfo.getDeckPath();
-        String deckDescription = formatDeckdescr(deckFilePath, LINE_LENGTH); // todo
+        String deckDescription =
+                formatDeckdescr(projectInfo.getDeckName(), LINE_LENGTH);
 
-        File file = new File(deckFilePath);
+        File file = new File(projectInfo.getDeckPath());
         if (!file.exists() && !file.isDirectory()) {
             try {
                 FileUtils.writeStringToFile(file, VIM_USAGE + deckDescription);
@@ -133,6 +146,5 @@ public class ProjectController {
 
     public String getCurrPageImage() {
         return projectInfo.getCurrImgPath();
-//        return "https://upload.wikimedia.org/wikipedia/commons/d/d9/Test.png"; // todo
     }
 }

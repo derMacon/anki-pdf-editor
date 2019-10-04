@@ -13,6 +13,9 @@ public class ProjectInfo {
     private static final String DECK_DIR = LAST_DOCS_DIR + "decks/%s.anki";
     private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/%s";
 
+    private static final String DEFAULT_DECK = String.format(DECK_DIR, "TestDeck");
+    private static final String DEFAULT_PDF = String.format(PDF_DIR, "manual.pdf");
+
 
     private final static String JSON_TEMPLATE = "{\n" +
             "\"deck\": \"%s\",\n" +
@@ -51,6 +54,12 @@ public class ProjectInfo {
             this.pdfDoc = PDDocument.load(new File(pdfPath));
             return new ProjectInfo(this);
         }
+
+        public ProjectInfo buildWithInitProjStructure() throws IOException {
+            // todo init project structure (directories)
+            this.pdfDoc = PDDocument.load(new File(DEFAULT_PDF));
+            return new ProjectInfo(this);
+        }
     }
 
     private ProjectInfo(InfoBuilder builder) {
@@ -62,6 +71,10 @@ public class ProjectInfo {
 
     public String getDeckPath() {
         return deckPath;
+    }
+
+    public String getDeckName() {
+        return FilenameUtils.removeExtension(FilenameUtils.getName(deckPath));
     }
 
     public PDDocument getPdfDoc() {
