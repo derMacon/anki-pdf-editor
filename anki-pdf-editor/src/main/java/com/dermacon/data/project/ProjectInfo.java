@@ -1,5 +1,6 @@
 package com.dermacon.data.project;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -7,15 +8,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProjectInfo {
-
-    private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
-    private static final String IMG_TEMP_DIR = LAST_DOCS_DIR + "img_temp/";
-    private static final String DECK_DIR = LAST_DOCS_DIR + "decks/%s.anki";
-    private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/%s";
-
-    private static final String DEFAULT_DECK = String.format(DECK_DIR, "TestDeck");
-    private static final String DEFAULT_PDF = String.format(PDF_DIR, "manual.pdf");
-
 
     private final static String JSON_TEMPLATE = "{\n" +
             "\"deck\": \"%s\",\n" +
@@ -27,46 +19,26 @@ public class ProjectInfo {
     private final String deckPath;
     private int currPage;
 
-    // redundant, but at least encapsulated (file io only in this class)
-    // PDDocument not able to return its path
     private final PDDocument pdfDoc;
     private final String pdfPath;
+    private final String imgPath;
+    private final String projHistoryPath;
 
 
-    public static class InfoBuilder {
-        private String deckPath, pdfPath;
-        private PDDocument pdfDoc;
-        private int currPage;
-
-        public void deckName(String deckName) {
-            this.deckPath = String.format(DECK_DIR, deckName);
-        }
-
-        public void pdfName(String pdfName) {
-            this.pdfPath = String.format(PDF_DIR, pdfName);
-        }
-
-        public void currPage(String currPage) {
-            this.currPage = Integer.parseInt(currPage);
-        }
-
-        public ProjectInfo build() throws IOException {
-            this.pdfDoc = PDDocument.load(new File(pdfPath));
-            return new ProjectInfo(this);
-        }
-
-        public ProjectInfo buildWithInitProjStructure() throws IOException {
-            // todo init project structure (directories)
-            this.pdfDoc = PDDocument.load(new File(DEFAULT_PDF));
-            return new ProjectInfo(this);
-        }
-    }
-
-    private ProjectInfo(InfoBuilder builder) {
-        this.deckPath = builder.deckPath;
-        this.pdfPath = builder.pdfPath;
-        this.pdfDoc = builder.pdfDoc;
-        this.currPage = builder.currPage;
+    /**
+     * Package private constructor, (in theory) only the InfoBuilder can access it.
+     * @param deckPath
+     * @param pdfPath
+     * @param currPage
+     * @throws IOException
+     */
+    ProjectInfo(String deckPath, String pdfPath, String imgPath, String projHistoryPath, int currPage) throws IOException {
+        this.deckPath = deckPath;
+        this.pdfDoc = PDDocument.load(new File(pdfPath));
+        this.pdfPath = pdfPath;
+        this.imgPath = imgPath;
+        this.projHistoryPath = projHistoryPath;
+        this.currPage = currPage;
     }
 
     public String getDeckPath() {
@@ -74,6 +46,10 @@ public class ProjectInfo {
     }
 
     public String getDeckName() {
+        return extractFileName(deckPath);
+    }
+
+    private String extractFileName(String path) {
         return FilenameUtils.removeExtension(FilenameUtils.getName(deckPath));
     }
 
@@ -86,19 +62,15 @@ public class ProjectInfo {
     }
 
     public String getPdfName() {
-        return FilenameUtils.removeExtension(FilenameUtils.getName(pdfPath));
+        return extractFileName(pdfPath);
     }
 
     public int getCurrPage() {
         return currPage;
     }
 
-    public String getImgTempDir() {
-        return IMG_TEMP_DIR;
-    }
-
     public String getImgPath(int pageNum) {
-        return IMG_TEMP_DIR + getPdfName() + "_" + pageNum + ".png";
+        return imgPath + getPdfName() + "_" + pageNum + ".png";
     }
 
     public String getCurrImgPath() {
@@ -121,9 +93,13 @@ public class ProjectInfo {
 
     @Override
     public String toString() {
-        return "Deck: " + deckPath + "\n"
-                + "pdf: " + pdfDoc + "\n"
-                + "currPage: " + currPage + "\n"
-                + "pageCnt: " + pdfDoc.getNumberOfPages() + "\n";
+        return "deck:" + getDeckName() + "\n"
+                + "pdf:" + getPdfName() + "\n"
+                + "page:" + currPage + "\n\n";
     }
+
+    public void saveToFile() throws IOException {
+        FileUtils.writeStringToFile(new File(projHistoryPath), toString());
+    }
+
 }

@@ -22,13 +22,13 @@ public class TerminalUI implements UserInterface {
     @Override
     public void openEditor() throws IOException {
         // open vim
-        String pathToDeckFile = projectController.getProjectInfo().getDeckPath();
-        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
-        Runtime.getRuntime().exec(openNewTerminalCommand);
+//        String pathToDeckFile = projectController.getProjectInfo().getDeckPath();
+//        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
+//        Runtime.getRuntime().exec(openNewTerminalCommand);
     }
 
     @Override
-    public void openPdfViewer() throws IOException {
+    public void openPdfViewer() {
         GuiLauncher.launch(projectController);
     }
 
@@ -42,6 +42,7 @@ public class TerminalUI implements UserInterface {
     @Override
     public void save() throws IOException {
         ankiConnector.pushToAnki(this.projectController.getProjectInfo());
+        projectController.saveProjHistory();
     }
 
     @Override

@@ -33,8 +33,8 @@ public class Manager implements Renderer {
     }
 
     @Override
-    public void renderPageSurrounding(int pageNum) {
-        assignments.addPage(pageNum);
+    public void renderPageIntervall() {
+        assignments.addPage(projectInfo.getCurrPage());
     }
 
     @Override

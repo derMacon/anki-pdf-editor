@@ -13,13 +13,6 @@ public class PDFMainTest {
         File f = new File(path);
         PDDocument pdf = PDDocument.load(f);
 
-        ProjectInfo.InfoBuilder b = new ProjectInfo.InfoBuilder();
-        b.currPage("1");
-        b.deckName("TestDeck");
-        b.pdfName("CVL.pdf");
-
-        Renderer r = new Manager(b.build());
-        r.renderPageSurrounding(1);
 
 //        Assignments a = new Assignments(20);
 //        a.addPage(1);
