@@ -9,6 +9,7 @@ public interface UserInterface {
     void openEditor() throws IOException;
     void openPdfViewer() throws IOException;
     void updateProjectInfo();
+    void push() throws IOException;
     void save() throws IOException;
-    ProjectController displayProjectInfo();
+    ProjectController getProjectController();
 }

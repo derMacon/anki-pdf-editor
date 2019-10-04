@@ -2,7 +2,6 @@ package com.dermacon.data.project;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.ReversedLinesFileReader;
-import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,8 +35,8 @@ public class FileBuilder {
     private static final String DEFAULT_PDF = String.format(PDF_FILE, "manual");
     private static final String MANUAL_RES_PATH = System.getProperty("user.dir") + "/src/main/resources/com/dermacon/manual.pdf";
 
-    private String deckPath = DEFAULT_DECK;
-    private String pdfPath = DEFAULT_PDF;
+    private File deck = new File(DEFAULT_DECK);
+    private File pdf = new File(DEFAULT_PDF);
     private int currPage = 1;
 
     public ProjectInfo build() throws IOException {
@@ -46,12 +45,11 @@ public class FileBuilder {
             parseProjHistory();
         }
 
-        File deckFile = new File(deckPath);
-        if (!deckFile.exists() && !deckFile.isDirectory()) {
-            createDeckFile(deckFile);
+        if (!deck.exists() && !deck.isDirectory()) {
+            createDeckFile(deck);
         }
 
-        return new ProjectInfo(deckPath, pdfPath, currPage);
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, IMG_TEMP_DIR,  currPage);
     }
 
 
@@ -85,34 +83,32 @@ public class FileBuilder {
      *
      * @throws IOException
      */
-    public ProjectInfo parseProjHistory() throws IOException {
+    public void parseProjHistory() throws IOException {
         ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
-        int counter = 0, n_lines = 3;
+        int counter = 0, n_lines = 4;
         String line;
 
         while (counter < n_lines) {
             line = object.readLine();
             if (line.startsWith("deck")) {
-                deckName(line.split(":")[1]);
+                deck(line.split(":")[1]);
             } else if (line.startsWith("pdf")) {
-                pdfName(line.split(":")[1]);
+                pdf(line.split(":")[1]);
             } else if (line.startsWith("page")) {
                 currPage(line.split(":")[1]);
-            } else {
+            } else if(!line.isEmpty()){
                 throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
             }
             counter++;
         }
-
-        return build();
     }
 
-    private void deckName(String deckName) {
-        this.deckPath = String.format(DECK_DIR, deckName);
+    private void deck(String deckName) {
+        this.deck = new File(DECK_DIR + deckName);
     }
 
-    private void pdfName(String pdfName) {
-        this.pdfPath = String.format(PDF_DIR, pdfName);
+    private void pdf(String pdfName) {
+        this.pdf = new File(PDF_DIR + pdfName);
     }
 
     private void currPage(String currPage) {

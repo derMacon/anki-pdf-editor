@@ -40,13 +40,17 @@ public class TerminalUI implements UserInterface {
     }
 
     @Override
-    public void save() throws IOException {
+    public void push() throws IOException {
         ankiConnector.pushToAnki(this.projectController.getProjectInfo());
+    }
+
+    @Override
+    public void save() throws IOException {
         projectController.saveProjHistory();
     }
 
     @Override
-    public ProjectController displayProjectInfo() {
+    public ProjectController getProjectController() {
         return this.projectController;
     }
 }

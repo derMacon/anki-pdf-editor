@@ -2,6 +2,7 @@ package com.dermacon.data.project;
 
 import com.dermacon.data.worker.multithreading.Manager;
 import com.dermacon.data.worker.multithreading.Renderer;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ public class ProjectController {
 
     public int turnNextPage() {
         int out = projectInfo.getCurrPage();
-        if (out < projectInfo.getPdfDoc().getNumberOfPages()) {
+        if (out < projectInfo.getPdfPDDoc().getNumberOfPages()) {
             projectInfo.setCurrPage(++out);
             renderer.renderPageIntervall();
         }
@@ -38,8 +39,8 @@ public class ProjectController {
         return out;
     }
 
-    public String getCurrPageImage() {
-        return projectInfo.getCurrImgPath();
+    public Image getCurrPageImage() {
+        return projectInfo.getCurrImg();
     }
 
     public void saveProjHistory() throws IOException {

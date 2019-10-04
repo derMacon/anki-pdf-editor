@@ -1,9 +1,7 @@
 package com.dermacon.data.worker.multithreading;
 
 import com.dermacon.data.project.ProjectInfo;
-import org.apache.pdfbox.pdmodel.PDDocument;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class Manager implements Renderer {
     public Manager(ProjectInfo projectInfo) {
         this.projectInfo = projectInfo;
 
-        int pageCnt = projectInfo.getPdfDoc().getNumberOfPages();
+        int pageCnt = projectInfo.getPdfPDDoc().getNumberOfPages();
         assignments = new Assignments(pageCnt);
 
         Thread thread;

@@ -1,7 +1,7 @@
 package com.dermacon.data.project;
 
+import javafx.scene.image.Image;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 import java.io.File;
@@ -16,53 +16,38 @@ public class ProjectInfo {
 
     private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
 
-    private final String deckPath;
-    private int currPage;
-
-    private final PDDocument pdfDoc;
-    private final String pdfPath;
+    private final File projHistory;
+    private final File deck;
+    private final File pdf;
+    private final PDDocument pdfPDDoc;
     private final String imgPath;
-    private final String projHistoryPath;
+    private int currPage;
 
 
     /**
      * Package private constructor, (in theory) only the InfoBuilder can access it.
-     * @param deckPath
-     * @param pdfPath
+     * @param deck
+     * @param pdf
+     * @param projHistory
+     * @param imgPath
      * @param currPage
      * @throws IOException
      */
-    ProjectInfo(String deckPath, String pdfPath, String imgPath, String projHistoryPath, int currPage) throws IOException {
-        this.deckPath = deckPath;
-        this.pdfDoc = PDDocument.load(new File(pdfPath));
-        this.pdfPath = pdfPath;
+    ProjectInfo(File deck, File pdf, File projHistory, String imgPath, int currPage) throws IOException {
+        this.deck = deck;
+        this.pdf = pdf;
+        this.pdfPDDoc = PDDocument.load(new File(pdf.getPath()));
+        this.projHistory = projHistory;
         this.imgPath = imgPath;
-        this.projHistoryPath = projHistoryPath;
         this.currPage = currPage;
     }
 
-    public String getDeckPath() {
-        return deckPath;
+    public File getDeck() {
+        return deck;
     }
 
-    public String getDeckName() {
-        return extractFileName(deckPath);
-    }
-
-    private String extractFileName(String path) {
-        return FilenameUtils.removeExtension(FilenameUtils.getName(deckPath));
-    }
-
-    public PDDocument getPdfDoc() {
-        return pdfDoc;
-    }
-
-    public String getPdfPath() {
-        return pdfPath;
-    }
-
-    public String getPdfName() {
-        return extractFileName(pdfPath);
+    public PDDocument getPdfPDDoc() {
+        return pdfPDDoc;
     }
 
     public int getCurrPage() {
@@ -70,11 +55,11 @@ public class ProjectInfo {
     }
 
     public String getImgPath(int pageNum) {
-        return imgPath + getPdfName() + "_" + pageNum + ".png";
+        return imgPath + pdf.getName() + "_" + pageNum + ".png";
     }
 
-    public String getCurrImgPath() {
-        return getImgPath(currPage);
+    public Image getCurrImg() {
+        return new Image("file:" + getImgPath(currPage));
     }
 
     public void setCurrPage(int currPage) {
@@ -83,23 +68,23 @@ public class ProjectInfo {
 
 
     // todo check if needed
-    public String toJson() {
-        return String.format(JSON_TEMPLATE, deckPath, pdfDoc);
-    }
-
-    public String toUrlParameters() {
-        return String.format(URL_PARAMETER_TEMPLATE, deckPath, pdfDoc);
-    }
+//    public String toJson() {
+//        return String.format(JSON_TEMPLATE, deckPath, pdfPDDoc);
+//    }
+//
+//    public String toUrlParameters() {
+//        return String.format(URL_PARAMETER_TEMPLATE, deckPath, pdfPDDoc);
+//    }
 
     @Override
     public String toString() {
-        return "deck:" + getDeckName() + "\n"
-                + "pdf:" + getPdfName() + "\n"
+        return "deck:" + deck.getName() + "\n"
+                + "pdf:" + pdf.getName() + "\n"
                 + "page:" + currPage + "\n\n";
     }
 
     public void saveToFile() throws IOException {
-        FileUtils.writeStringToFile(new File(projHistoryPath), toString());
+        FileUtils.writeStringToFile(projHistory, toString());
     }
 
 }

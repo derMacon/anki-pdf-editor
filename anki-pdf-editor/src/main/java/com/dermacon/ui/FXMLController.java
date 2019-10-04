@@ -48,7 +48,6 @@ public class FXMLController implements Initializable {
 
     private void updateGui() {
         Platform.runLater(() -> {
-            String path = projectController.getCurrPageImage();
 
             // todo img not showing if rendering is too slow
 //            while(!(new File(path).exists())) {
@@ -60,8 +59,7 @@ public class FXMLController implements Initializable {
 //                System.out.println("waiting for img");
 //            }
 
-            Image img = new Image("file:" + path);
-            imgVw_page.setImage(img);
+            imgVw_page.setImage(projectController.getCurrPageImage());
 
             lbl.setText(String.valueOf(projectController.getProjectInfo().getCurrPage()));
         });

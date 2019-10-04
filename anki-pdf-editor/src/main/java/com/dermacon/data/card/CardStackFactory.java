@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 public class CardStackFactory {
 
     public static List<Card> produceStack(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
-        File file = new File(projectInfo.getDeckPath());
-        String fileContent = FileUtils.readFileToString(file, "UTF-8");
+        File deck = projectInfo.getDeck();
+        String fileContent = FileUtils.readFileToString(deck, "UTF-8");
         return produceStack(fileContent);
     }
 

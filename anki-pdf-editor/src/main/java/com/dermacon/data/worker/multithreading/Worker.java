@@ -53,7 +53,7 @@ class Worker implements Runnable {
      */
     public void render(Integer pageNum) throws IOException {
 //        System.out.println(Thread.currentThread().getName() + " processes page " + pageNum);
-        PDDocument pdf = this.projectInfo.getPdfDoc();
+        PDDocument pdf = this.projectInfo.getPdfPDDoc();
         PDFRenderer pdfRenderer = new PDFRenderer(pdf);
         BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNum - 1, DEFAULT_DPI, ImageType.RGB);
         File currPageImg = new File(projectInfo.getImgPath(pageNum));

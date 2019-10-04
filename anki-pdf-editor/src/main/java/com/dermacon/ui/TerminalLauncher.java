@@ -15,8 +15,9 @@ public class TerminalLauncher implements Runnable {
                     + "Type\n"
                     + "  - a to write new cards\n"
                     + "  - e to edit project properties\n"
-                    + "  - wq to save with exit\n"
-                    + "  - w to save without exit\n\n";
+                    + "  - w to push to anki connect\n"
+                    + "  - q to quit without pushing\n"
+                    + "  - wq to push and exit\n\n";
 
     @Override
     public void run() {
@@ -35,10 +36,8 @@ public class TerminalLauncher implements Runnable {
         boolean keepRunning;
 
         try {
-
             UserInterface ui = new TerminalUI();
-
-            System.out.println(String.format(UPDATE_PROJECT_QUERY, ui.displayProjectInfo()));
+            System.out.println(String.format(UPDATE_PROJECT_QUERY, ui.getProjectController()));
             String choice = new Scanner(System.in).nextLine().toLowerCase();
 
             if (choice.equals("a")) {
@@ -46,10 +45,13 @@ public class TerminalLauncher implements Runnable {
                 ui.openPdfViewer();
             } else if (choice.equals("e")) {
                 ui.updateProjectInfo();
-            } else if (choice.equals("wq")) {
+            } else if (choice.equals("wq") || choice.equals("w")) { // todo merge regex
+                ui.push();
                 ui.save();
-            } else if (choice.equals("w")) {
+            } else if (choice.equals("q")) {
                 ui.save();
+            } else {
+                throw new IOException("invalid user input: " + choice);
             }
 
             keepRunning = choice.matches("(e|w|a)");
