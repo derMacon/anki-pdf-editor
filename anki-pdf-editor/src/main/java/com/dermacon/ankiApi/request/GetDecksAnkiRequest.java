@@ -6,9 +6,9 @@ import java.lang.reflect.Type;
 
 public class GetDecksAnkiRequest extends AnkiRequest {
 
-    private static Type RESPONSE_TYPE = GetDecksResponse.class;
+    private static final Type RESPONSE_TYPE = GetDecksResponse.class;
 
-    private static String JSON_TEMPLATE = "{\n" +
+    private static final String JSON_TEMPLATE = "{\n" +
             "\"action\": \"deckNames\",\n" +
             "\"version\": %s\n" +
             "}";

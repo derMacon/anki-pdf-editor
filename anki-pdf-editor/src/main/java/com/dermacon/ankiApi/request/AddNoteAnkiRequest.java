@@ -25,7 +25,7 @@ public class AddNoteAnkiRequest extends AnkiRequest {
             "        \"Back\": \"%s\"\n" +
             "      },\n" +
             "      \"options\": {\n" +
-            "        \"allowDuplicate\": true\n" +
+            "        \"allowDuplicate\": false\n" +
             "      },\n" +
             "      \"tags\": %s\n" +
             "    } \n" +

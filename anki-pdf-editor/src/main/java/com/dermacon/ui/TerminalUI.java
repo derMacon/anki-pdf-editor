@@ -2,8 +2,8 @@ package com.dermacon.ui;
 
 
 import com.dermacon.GuiLauncher;
+import com.dermacon.data.project.AnkiConnector;
 import com.dermacon.data.project.ProjectController;
-import com.dermacon.data.project.DataContainer;
 
 import java.io.IOException;
 
@@ -11,23 +11,25 @@ public class TerminalUI implements UserInterface {
 
     private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim %s";
 
-    private ProjectController controller;
+    private AnkiConnector ankiConnector;
+    private ProjectController projectController;
 
     public TerminalUI() throws IOException {
-        this.controller = new ProjectController();
+        projectController = new ProjectController();
+        ankiConnector = new AnkiConnector();
     }
 
     @Override
     public void openEditor() throws IOException {
         // open vim
-        String pathToDeckFile = controller.getDataContainer().getProjectInfo().getDeck();
-        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
-        Runtime.getRuntime().exec(openNewTerminalCommand);
+//        String pathToDeckFile = projectController.getProjectInfo().getDeckPath();
+//        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
+//        Runtime.getRuntime().exec(openNewTerminalCommand);
     }
 
     @Override
-    public void openPdfViewer() throws IOException {
-        GuiLauncher.main(new String[0]);
+    public void openPdfViewer() {
+        GuiLauncher.launch(projectController);
     }
 
     @Override
@@ -38,12 +40,17 @@ public class TerminalUI implements UserInterface {
     }
 
     @Override
-    public void save() throws IOException {
-        controller.pushToAnki();
+    public void push() throws IOException {
+        ankiConnector.pushToAnki(this.projectController.getProjectInfo());
     }
 
     @Override
-    public DataContainer displayProjectInfo() {
-        return controller.getDataContainer();
+    public void save() throws IOException {
+        projectController.saveProjHistory();
+    }
+
+    @Override
+    public ProjectController getProjectController() {
+        return this.projectController;
     }
 }

@@ -3,8 +3,8 @@ package com.dermacon.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.dermacon.data.project.DataContainer;
-import com.dermacon.apiController.SpringApiController;
+import com.dermacon.data.project.ProjectController;
+import com.dermacon.springApi.SpringApiController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 
 public class FXMLController implements Initializable {
 
-    private DataContainer projectData;
+    private ProjectController projectController;
 
     @FXML
     private Label lbl;
@@ -25,34 +25,44 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SpringApiController.setJFXController(this);
+        updateGui();
     }
 
-    public void setProjectData(DataContainer projectData) {
-        this.projectData = projectData;
-        lbl.setText(projectData.toString());
-        System.out.println(projectData);
+    public void setProjectController(ProjectController projectController) {
+        this.projectController = projectController;
+        lbl.setText(projectController.toString());
+        System.out.println(projectController);
     }
 
     public int turnNextPage() {
-        System.out.println("turn next page");
-        int newPageNum = projectData.turnNextPage();
-
-        Platform.runLater(() -> {
-            imgVw_page.setImage(new Image(projectData.getCurrPageImage()));
-        });
-
+        int newPageNum = projectController.turnNextPage();
+        updateGui();
         return newPageNum;
     }
 
     public int turnPrevPage() {
-        System.out.println("turn prev page");
-        int newPageNum = projectData.turnPrevPage();
-
-        Platform.runLater(() -> {
-            imgVw_page.setImage(new Image(projectData.getCurrPageImage()));
-        });
-
+        int newPageNum = projectController.turnPrevPage();
+        updateGui();
         return newPageNum;
+    }
+
+    private void updateGui() {
+        Platform.runLater(() -> {
+
+            // todo img not showing if rendering is too slow
+//            while(!(new File(path).exists())) {
+//                try {
+//                    Thread.sleep(50);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println("waiting for img");
+//            }
+
+            imgVw_page.setImage(projectController.getCurrPageImage());
+
+            lbl.setText(String.valueOf(projectController.getProjectInfo().getCurrPage()));
+        });
     }
 
 
