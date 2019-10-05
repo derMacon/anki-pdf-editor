@@ -7,13 +7,14 @@ import com.dermacon.ankiApi.response.AnkiResponse;
 import com.dermacon.data.card.Card;
 import com.dermacon.data.card.CardStackFactory;
 import com.dermacon.data.card.IncompleteCardException;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *
+ */
 public class AnkiConnector {
     private static final int ANKI_BOOT_TIME = 2500;
     private static final String API_URL = "http://localhost:8080/";
