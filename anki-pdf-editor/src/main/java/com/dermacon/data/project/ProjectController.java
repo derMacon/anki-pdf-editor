@@ -4,6 +4,7 @@ import com.dermacon.data.worker.multithreading.Manager;
 import com.dermacon.data.worker.multithreading.Renderer;
 import javafx.scene.image.Image;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ProjectController {
@@ -12,9 +13,21 @@ public class ProjectController {
     private Renderer renderer;
 
     public ProjectController() throws IOException {
-        this.projectInfo = new FileBuilder().build();
+        this.projectInfo = new InfoBuilder().parseHistoryFile().build();
         renderer = new Manager(projectInfo);
         renderer.renderPageIntervall();
+    }
+
+    public void setPdf(File pdf) throws IOException {
+        projectInfo = new InfoBuilder()
+                .copy(projectInfo)
+                .setPdf(pdf)
+                .build();
+    }
+
+    public void setDeck(String deck) {
+        System.out.println("new deck: " + deck);
+        // todo
     }
 
     public ProjectInfo getProjectInfo() {

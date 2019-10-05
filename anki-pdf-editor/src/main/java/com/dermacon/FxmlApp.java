@@ -35,7 +35,7 @@ public class FxmlApp extends Application {
 
         Scene scene = new Scene(parent);
         stage.setScene(scene);
-        controller.setStage(stage);
+        controller.setImgVwResponsive(stage);
         stage.show();
     }
 

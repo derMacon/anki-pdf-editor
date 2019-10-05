@@ -27,7 +27,6 @@ public class FXMLController implements Initializable {
     private ImageView imgVw_page;
 
     private ProjectController projectController;
-    private Stage stage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,8 +34,7 @@ public class FXMLController implements Initializable {
         updateGui();
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setImgVwResponsive(Stage stage) {
         imgVw_page.fitWidthProperty().bind(stage.widthProperty());
     }
 

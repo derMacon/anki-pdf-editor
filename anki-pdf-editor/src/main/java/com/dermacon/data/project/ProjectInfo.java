@@ -16,11 +16,11 @@ public class ProjectInfo {
 
     private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
 
-    private final File projHistory;
-    private final File deck;
-    private final File pdf;
-    private final PDDocument pdfPDDoc;
-    private final String imgPath;
+    private File projHistory;
+    private File deck;
+    private File pdf;
+    private PDDocument pdfPDDoc;
+    private String imgPath;
     private int currPage;
 
 
@@ -46,6 +46,10 @@ public class ProjectInfo {
         return deck;
     }
 
+    public File getPdf() {
+        return pdf;
+    }
+
     public PDDocument getPdfPDDoc() {
         return pdfPDDoc;
     }
@@ -60,6 +64,11 @@ public class ProjectInfo {
 
     public Image getCurrImg() {
         return new Image("file:" + getImgPath(currPage));
+    }
+
+    public void setPdf(File pdf) throws IOException {
+        this.pdf = pdf;
+        this.pdfPDDoc = PDDocument.load(pdf);
     }
 
     public void setCurrPage(int currPage) {
