@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
@@ -20,7 +21,7 @@ public class DeckChooser extends JPanel
     private JButton btn;
     private TextField textfld = new TextField("");
 
-    public DeckChooser(String[] decks, Consumer<String> callback) {
+    public DeckChooser(String[] decks, CheckedConsumer<String> callback) {
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         String[] patternExamples = decks;
@@ -67,7 +68,12 @@ public class DeckChooser extends JPanel
             if (textInput.length() == 0) {
                 textInput = currentPattern;
             }
-            callback.accept(textInput);
+            System.err.println(textInput);
+            try {
+                callback.accept(textInput + ".anki"); // todo aua
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             frame.dispose();
         });
 
@@ -104,7 +110,7 @@ public class DeckChooser extends JPanel
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    public static void createAndShowGUI(String[] decks, Consumer<String> callback) {
+    public static void createAndShowGUI(String[] decks, CheckedConsumer<String> callback) {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 

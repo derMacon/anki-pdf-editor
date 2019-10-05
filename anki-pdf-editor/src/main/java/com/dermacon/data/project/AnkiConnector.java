@@ -34,6 +34,7 @@ public class AnkiConnector {
 
 
     public static String[] getPossibleDecks() throws IOException {
+        startAnki();
         PostConnector connector = new PostConnector(8765);
         AnkiResponse r = connector.jsonRequest(new GetDecksAnkiRequest());
         List<String> out = (ArrayList<String>) r.getResult();

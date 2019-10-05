@@ -5,6 +5,8 @@ import com.dermacon.GuiLauncher;
 import com.dermacon.data.project.AnkiConnector;
 import com.dermacon.data.project.ProjectController;
 import com.dermacon.data.project.ProjectInfo;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -58,22 +60,16 @@ public class TerminalUI implements UserInterface {
         }
 
         if (input.equals("1")) {
-            System.out.println("decks:");
-            System.out.println(AnkiConnector.getPossibleDecks());
-//            chooseDeck(AnkiConnector.getPossibleDecks());
+            chooseDeck(AnkiConnector.getPossibleDecks());
         } else {
             projectController.setPdf(openFileChooser());
         }
     }
 
     private void chooseDeck(String[] decks) {
-        Consumer<String> callback = deck -> projectController.setDeck(deck);
-        DeckChooser deckChooser = new DeckChooser(decks, callback);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                deckChooser.createAndShowGUI(decks, callback);
-            }
-        });
+        FXDeckChooser.setDeckNames(decks);
+        FXDeckChooser.setCallback(deckName -> projectController.setDeck(deckName + ".anki"));
+        Application.launch(FXDeckChooser.class, new String[0]);
     }
 
     private File openFileChooser() throws IOException {

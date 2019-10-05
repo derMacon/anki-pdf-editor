@@ -49,11 +49,6 @@ public class InfoBuilder {
 
     public ProjectInfo build() throws IOException {
         initProjectStructure();
-
-        if (!deck.exists() && !deck.isDirectory()) {
-            createDeckFile(deck);
-        }
-
         return new ProjectInfo(deck, pdf, PROJ_HISTORY, IMG_TEMP_DIR,  currPage);
     }
 
@@ -84,15 +79,35 @@ public class InfoBuilder {
         }
     }
 
-
-
+    /**
+     * Sets pdf file instance in the project info component and copies the
+     * given file to the last docs dir, but only if wasn't already copied before.
+     * @param pdf
+     * @return
+     * @throws IOException
+     */
     public InfoBuilder setPdf(File pdf) throws IOException {
-        this.pdf = pdf;
-        File targetFile = new File(PDF_DIR + pdf.getName());
+        return setPdf(pdf.getName());
+    }
+
+    public InfoBuilder setPdf(String pdfName) throws IOException {
+        File targetFile = new File(PDF_DIR + pdfName);
         saveCPFile(pdf, targetFile);
+        this.pdf = targetFile;
         return this;
     }
 
+    public InfoBuilder setDeck(String deckName) throws IOException {
+        deck = new File(DECK_DIR + deckName);
+        if (!deck.exists() && !deck.isDirectory()) {
+            createDeckFile(deck);
+        }
+        return this;
+    }
+
+    public void setCurrPage(String currPage) {
+        this.currPage = Integer.parseInt(currPage);
+    }
 
     /**
      * parse /lastDocs/.projectHistory file
@@ -108,11 +123,11 @@ public class InfoBuilder {
             while (counter < n_lines) {
                 line = object.readLine();
                 if (line.startsWith("deck")) {
-                    deck(line.split(":")[1]);
+                    setDeck(line.split(":")[1]);
                 } else if (line.startsWith("pdf")) {
-                    pdf(line.split(":")[1]);
+                    setPdf((line.split(":")[1]));
                 } else if (line.startsWith("page")) {
-                    currPage(line.split(":")[1]);
+                    setCurrPage(line.split(":")[1]);
                 } else if (!line.isEmpty()) {
                     throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
                 }
@@ -121,18 +136,6 @@ public class InfoBuilder {
         }
 
         return this;
-    }
-
-    private void deck(String deckName) {
-        this.deck = new File(DECK_DIR + deckName);
-    }
-
-    private void pdf(String pdfName) {
-        this.pdf = new File(PDF_DIR + pdfName);
-    }
-
-    private void currPage(String currPage) {
-        this.currPage = Integer.parseInt(currPage);
     }
 
 

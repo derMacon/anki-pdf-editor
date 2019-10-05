@@ -13,8 +13,6 @@ public class Manager implements Renderer {
     private final List<Thread> workers = new LinkedList<>();
     private final ProjectInfo projectInfo;
 
-    private boolean isRunning = false; //todo ???
-
     public Manager(ProjectInfo projectInfo) {
         this.projectInfo = projectInfo;
 
