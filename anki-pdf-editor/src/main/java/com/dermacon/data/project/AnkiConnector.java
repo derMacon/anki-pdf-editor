@@ -2,6 +2,7 @@ package com.dermacon.data.project;
 
 import com.dermacon.ankiApi.PostConnector;
 import com.dermacon.ankiApi.request.AddNoteAnkiRequest;
+import com.dermacon.ankiApi.request.GetDecksAnkiRequest;
 import com.dermacon.ankiApi.request.SyncAnkiRequest;
 import com.dermacon.ankiApi.response.AnkiResponse;
 import com.dermacon.data.card.Card;
@@ -9,6 +10,7 @@ import com.dermacon.data.card.CardStackFactory;
 import com.dermacon.data.card.IncompleteCardException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +31,16 @@ public class AnkiConnector {
 
     private static final int SPRING_API_PORT = 8080;
     private static final int ANKI_API_PORT = 8765;
+
+
+    public static String[] getPossibleDecks() throws IOException {
+        startAnki();
+        PostConnector connector = new PostConnector(8765);
+        AnkiResponse r = connector.jsonRequest(new GetDecksAnkiRequest());
+        List<String> out = (ArrayList<String>) r.getResult();
+        return out.toArray(new String[0]);
+    }
+
 
     public static void pushToAnki(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
         startAnki();

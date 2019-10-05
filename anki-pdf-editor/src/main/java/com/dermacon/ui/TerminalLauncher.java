@@ -24,19 +24,25 @@ public class TerminalLauncher implements Runnable {
         boolean keepRunning;
         System.out.println("Anki-Editor - version 1.0\n");
 
-        do {
-            keepRunning = runQuery();
-        } while (keepRunning);
+        try {
+
+            UserInterface ui = new TerminalUI();
+            do {
+                keepRunning = runQuery(ui);
+            } while (keepRunning);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
         System.out.println("shutdown");
         System.exit(0);
     }
 
-    private boolean runQuery() {
+    private boolean runQuery(UserInterface ui) throws IOException {
         boolean keepRunning;
 
-        try {
-            UserInterface ui = new TerminalUI();
             System.out.println(String.format(UPDATE_PROJECT_QUERY, ui.getProjectController()));
             String choice = new Scanner(System.in).nextLine().toLowerCase();
 
@@ -56,10 +62,6 @@ public class TerminalLauncher implements Runnable {
 
             keepRunning = choice.matches("(e|w|a)");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            keepRunning = false;
-        }
 
         // a shutdown is can only be prevented if the user
         // wants to edit the project info OR wants to

@@ -6,7 +6,7 @@ import org.apache.commons.io.input.ReversedLinesFileReader;
 import java.io.File;
 import java.io.IOException;
 
-public class FileBuilder {
+public class InfoBuilder {
     private static final String VIM_USAGE =
             "************************************************\n"
                     + "*         Anki-Editor - version 1.0            *\n"
@@ -39,19 +39,18 @@ public class FileBuilder {
     private File pdf = new File(DEFAULT_PDF);
     private int currPage = 1;
 
-    public ProjectInfo build() throws IOException {
-        initProjectStructure();
-        if (PROJ_HISTORY.exists()) {
-            parseProjHistory();
-        }
+    public InfoBuilder copy(ProjectInfo oldInstance) {
+        this.deck = oldInstance.getDeck();
+        this.pdf = oldInstance.getPdf();
+        this.currPage = oldInstance.getCurrPage();
 
-        if (!deck.exists() && !deck.isDirectory()) {
-            createDeckFile(deck);
-        }
-
-        return new ProjectInfo(deck, pdf, PROJ_HISTORY, IMG_TEMP_DIR,  currPage);
+        return this;
     }
 
+    public ProjectInfo build() throws IOException {
+        initProjectStructure();
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, IMG_TEMP_DIR,  currPage);
+    }
 
     private void initProjectStructure() throws IOException {
         saveMkDir(LAST_DOCS_DIR);
@@ -59,7 +58,7 @@ public class FileBuilder {
         saveMkDir(PDF_DIR);
         saveMkDir(IMG_TEMP_DIR);
 
-        saveCP(MANUAL_RES_PATH, DEFAULT_PDF);
+        saveCPFile(MANUAL_RES_PATH, DEFAULT_PDF);
     }
 
     private void saveMkDir(String path) {
@@ -69,50 +68,74 @@ public class FileBuilder {
         }
     }
 
-    private void saveCP(String srcPath, String targetPath) throws IOException {
-        File targetFile = new File(targetPath);
-        if (!targetFile.exists() || !targetFile.isDirectory()) {
-            File srcFile = new File(srcPath);
+    private void saveCPFile(String srcPath, String targetPath) throws IOException {
+        saveCPFile(new File(srcPath), new File(targetPath));
+    }
+
+    private void saveCPFile(File srcFile, File targetFile) throws IOException {
+        if (((!targetFile.exists() || !targetFile.isDirectory()))
+                && !targetFile.equals(srcFile)) {
             FileUtils.copyFile(srcFile, targetFile);
         }
     }
 
+    /**
+     * Sets pdf file instance in the project info component and copies the
+     * given file to the last docs dir, but only if wasn't already copied before.
+     * @param pdf
+     * @return
+     * @throws IOException
+     */
+    public InfoBuilder setPdf(File pdf) throws IOException {
+        return setPdf(pdf.getName());
+    }
+
+    public InfoBuilder setPdf(String pdfName) throws IOException {
+        File targetFile = new File(PDF_DIR + pdfName);
+        saveCPFile(pdf, targetFile);
+        this.pdf = targetFile;
+        return this;
+    }
+
+    public InfoBuilder setDeck(String deckName) throws IOException {
+        deck = new File(DECK_DIR + deckName);
+        if (!deck.exists() && !deck.isDirectory()) {
+            createDeckFile(deck);
+        }
+        return this;
+    }
+
+    public void setCurrPage(String currPage) {
+        this.currPage = Integer.parseInt(currPage);
+    }
 
     /**
      * parse /lastDocs/.projectHistory file
      *
      * @throws IOException
      */
-    public void parseProjHistory() throws IOException {
-        ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
-        int counter = 0, n_lines = 4;
-        String line;
+    public InfoBuilder parseHistoryFile() throws IOException {
+        if (PROJ_HISTORY.exists()) {
+            ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
+            int counter = 0, n_lines = 4;
+            String line;
 
-        while (counter < n_lines) {
-            line = object.readLine();
-            if (line.startsWith("deck")) {
-                deck(line.split(":")[1]);
-            } else if (line.startsWith("pdf")) {
-                pdf(line.split(":")[1]);
-            } else if (line.startsWith("page")) {
-                currPage(line.split(":")[1]);
-            } else if(!line.isEmpty()){
-                throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
+            while (counter < n_lines) {
+                line = object.readLine();
+                if (line.startsWith("deck")) {
+                    setDeck(line.split(":")[1]);
+                } else if (line.startsWith("pdf")) {
+                    setPdf((line.split(":")[1]));
+                } else if (line.startsWith("page")) {
+                    setCurrPage(line.split(":")[1]);
+                } else if (!line.isEmpty()) {
+                    throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
+                }
+                counter++;
             }
-            counter++;
         }
-    }
 
-    private void deck(String deckName) {
-        this.deck = new File(DECK_DIR + deckName);
-    }
-
-    private void pdf(String pdfName) {
-        this.pdf = new File(PDF_DIR + pdfName);
-    }
-
-    private void currPage(String currPage) {
-        this.currPage = Integer.parseInt(currPage);
+        return this;
     }
 
 
