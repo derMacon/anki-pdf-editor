@@ -11,10 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class FXMLController implements Initializable {
 
-    private ProjectController projectController;
+    @FXML
+    private BorderPane brdPn_container;
 
     @FXML
     private Label lbl;
@@ -22,10 +26,18 @@ public class FXMLController implements Initializable {
     @FXML
     private ImageView imgVw_page;
 
+    private ProjectController projectController;
+    private Stage stage;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SpringApiController.setJFXController(this);
         updateGui();
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+        imgVw_page.fitWidthProperty().bind(stage.widthProperty());
     }
 
     public void setProjectController(ProjectController projectController) {
