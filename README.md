@@ -11,6 +11,8 @@ All features can also be used via shortcuts. To use this programm the user has t
 
 ### Todo
 * `.projHistory` file overwritten instead of appended
+* udpate manual
+* make instructional gifs for readme 
 * Test initialization of project structure
 * dissable log4j debug messages
 * checkstyle
