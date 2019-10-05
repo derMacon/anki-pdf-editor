@@ -4,6 +4,8 @@ Commandline tool to create anki flash cards via the vim editor. Once started the
 All features can also be used via shortcuts. To use this programm the user has to paste the configuration of the given [.vimrc](./config/vim-shortcuts.txt) into his own and start the prebuild `.jar` file which is available in the release tab of this repository.
 
 ### Resources
+* anki api documentattion: [anki-connect](https://foosoft.net/projects/anki-connect/)
 * [Blocking queue example](https://www.mkyong.com/java/java-blockingqueue-examples/)
 * record screen - `peek`
 * stop screenkey - `pkill -f screenkey`
+
