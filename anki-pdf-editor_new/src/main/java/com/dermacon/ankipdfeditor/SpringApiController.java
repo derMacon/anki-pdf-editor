@@ -12,6 +12,10 @@ public class SpringApiController {
 
     private static FXMLController controller;
 
+    public static void setController(FXMLController controller) {
+        SpringApiController.controller = controller;
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/turnPrevPage")
     public int turnPrevPage() {
         System.out.println("jo");

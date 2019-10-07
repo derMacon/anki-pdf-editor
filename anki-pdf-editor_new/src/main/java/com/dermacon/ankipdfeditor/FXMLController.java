@@ -22,9 +22,14 @@ public class FXMLController implements Initializable {
     @FXML
     private ImageView imgVw_page;
 
+    private int pageNum;
+    private String pdfName;
+    private String img_path;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        SpringApiController.setController(this);
+        // todo init
     }
 
     public FXMLController() {
@@ -35,12 +40,13 @@ public class FXMLController implements Initializable {
     }
 
     public int turnNextPage() {
-        System.out.println("next");
+        System.out.println("next page");
+//        if (pageNum)
         return 42;
     }
 
     public int turnPrevPage() {
-        System.out.println("prev");
+        System.out.println("prev page");
         return 41;
     }
 

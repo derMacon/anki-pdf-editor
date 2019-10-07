@@ -16,10 +16,12 @@ import java.nio.file.Path;
 public class FxmlApp extends Application {
 
     private static final String FXML_NAME = "primary";
-//    private static ProjectController projectController;
+
+//    private static File pdf;
+//    private static File deck;
+//    private static int pageNum;
 
     public void launchPdf() {
-//        projectController = projectController_;
         launch();
     }
 
@@ -41,6 +43,9 @@ public class FxmlApp extends Application {
 
     public static void main(String[] args) {
         launch();
+//        pdf = new File(args[0]);
+//        deck = new File(args[1]);
+
         System.out.println("exit");
     }
 
