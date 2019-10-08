@@ -6,6 +6,7 @@ import org.apache.commons.io.input.ReversedLinesFileReader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class InfoBuilder {
     private static final String VIM_USAGE =
@@ -37,8 +38,9 @@ public class InfoBuilder {
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
     private static final String DEFAULT_PDF = String.format(PDF_FILE, "manual");
 //    private static final String MANUAL_RES_PATH = System.getProperty("user.dir") + "/src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
-    private static final String MANUAL_RES_PATH = "src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
-    private static final String VIMRC_RES_PATH = "src/main/resources/com/dermacon/ankipdfeditor/.vimrc";
+
+    private static final String MANUAL_RES_PATH = "/com/dermacon/ankipdfeditor/manual.pdf";
+    private static final String VIMRC_RES_PATH = "/com/dermacon/ankipdfeditor/.vimrc";
 
 
     private File deck = new File(DEFAULT_DECK);
@@ -65,9 +67,10 @@ public class InfoBuilder {
         saveMkDir(IMG_TEMP_DIR);
         saveMkDir(VIMRC_DIR);
 
-        saveCPFile(MANUAL_RES_PATH, DEFAULT_PDF);
-        saveCPFile(VIMRC_RES_PATH, VIMRC_DIR + ".vimrc");
+        copyResource(MANUAL_RES_PATH, DEFAULT_PDF);
+        copyResource(VIMRC_RES_PATH, VIMRC_DIR + ".vimrc");
     }
+
 
     private void saveMkDir(String path) {
         File dir = new File(path);
@@ -76,11 +79,12 @@ public class InfoBuilder {
         }
     }
 
-    private void saveCPFile(String srcPath, String targetPath) throws IOException {
-        saveCPFile(new File(srcPath), new File(targetPath));
+    private void copyResource(String resourcePath, String targetPath) throws IOException {
+        InputStream in = getClass().getResourceAsStream(resourcePath);
+        FileUtils.copyInputStreamToFile(in, new File(targetPath));
     }
 
-    private void saveCPFile(File srcFile, File targetFile) throws IOException {
+    private void copyResource(File srcFile, File targetFile) throws IOException {
         if (((!targetFile.exists() || !targetFile.isDirectory()))
                 && !targetFile.equals(srcFile)) {
             FileUtils.copyFile(srcFile, targetFile);
@@ -100,7 +104,7 @@ public class InfoBuilder {
 
     public InfoBuilder setPdf(String pdfName) throws IOException {
         File targetFile = new File(PDF_DIR + pdfName);
-        saveCPFile(pdf, targetFile);
+        copyResource(pdf, targetFile);
         this.pdf = targetFile;
         return this;
     }

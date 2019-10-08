@@ -1,19 +1,21 @@
 package com.dermacon.ankipdfeditor;
 
 import com.dermacon.ankipdfeditor.ui.TerminalLauncher;
+import org.apache.commons.io.FileUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.File;
+import java.io.*;
 
 @SpringBootApplication
 public class AnkiPdfEditorApplication {
 
-	private static final String MANUAL_RES_PATH = "src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		SpringApplication.run(AnkiPdfEditorApplication.class, args);
-//		System.out.println(new File(MANUAL_RES_PATH).exists());
 		new TerminalLauncher().run();
+//		InputStream in = AnkiPdfEditorApplication.class.getResourceAsStream("/.vimrc");
+//		FileUtils.copyInputStreamToFile(in, new File("/home/silasUser/Documents/projects/codecademy_revenue_reactExample/temp.txt"));
+////		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+////		System.out.println(reader.readLine());
 	}
 }
