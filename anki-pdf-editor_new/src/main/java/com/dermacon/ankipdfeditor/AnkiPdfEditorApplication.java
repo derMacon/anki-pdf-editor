@@ -1,8 +1,6 @@
 package com.dermacon.ankipdfeditor;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.dermacon.ankipdfeditor.ui.TerminalLauncher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,6 +9,6 @@ public class AnkiPdfEditorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnkiPdfEditorApplication.class, args);
-		FxmlApp.main(args);
+		new TerminalLauncher().run();
 	}
 }
