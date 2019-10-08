@@ -53,7 +53,6 @@ class Worker implements Runnable {
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
     public void render(Integer pageNum) throws IOException {
-        System.out.println(pageNum);
         System.out.println(Thread.currentThread().getName() + " processes page " + pageNum);
         PDDocument pdf = this.projectInfo.getPdfPDDoc();
         PDFRenderer pdfRenderer = new PDFRenderer(pdf);

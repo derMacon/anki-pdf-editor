@@ -1,5 +1,6 @@
 package com.dermacon.ankipdfeditor;
 
+import com.dermacon.ankipdfeditor.data.project.ProjectController;
 import com.dermacon.ankipdfeditor.springApi.SpringApiController;
 import com.dermacon.ankipdfeditor.ui.FXMLController;
 import javafx.application.Application;
@@ -17,11 +18,10 @@ public class FxmlApp extends Application {
 
     private static final String FXML_NAME = "primary";
 
-//    private static File pdf;
-//    private static File deck;
-//    private static int pageNum;
+    private static ProjectController projectController;
 
-    public void launchPdf() {
+    public void launchPdf(ProjectController projectController_) {
+        projectController = projectController_;
         launch();
     }
 
@@ -32,7 +32,7 @@ public class FxmlApp extends Application {
         Parent parent = fxmlLoader.load();
 
         FXMLController controller = fxmlLoader.getController();
-//        controller.setProjectController(this.projectController);
+        controller.setProjectController(this.projectController);
         SpringApiController.setJFXController(controller);
 
         Scene scene = new Scene(parent);

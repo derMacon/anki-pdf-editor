@@ -35,7 +35,8 @@ public class TerminalUI implements UserInterface {
 
     @Override
     public void openPdfViewer() {
-        FxmlApp.main(new String[0]);
+//        FxmlApp.main(new String[0]);
+        new FxmlApp().launchPdf(projectController);
 //        GuiLauncher.launch(projectController);
     }
 

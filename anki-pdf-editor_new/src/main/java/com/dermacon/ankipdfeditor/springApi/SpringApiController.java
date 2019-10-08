@@ -13,28 +13,17 @@ public class SpringApiController {
 
     private static FXMLController controller;
 
-    public static void setController(FXMLController controller) {
-        SpringApiController.controller = controller;
+    public static void setJFXController(FXMLController controller_) {
+        controller = controller_;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/turnPrevPage")
     public int turnPrevPage() {
-        System.out.println("jo");
-        controller.turnPrevPage();
-        return 42;
+        return controller.turnPrevPage();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/turnNextPage")
     public int turnNextPage() {
-        System.out.println("jojo");
-        controller.turnNextPage();
-        return 43;
+        return controller.turnNextPage();
     }
-
-    public static void setJFXController(FXMLController contr){
-        controller = contr;
-    }
-
-
-
 }

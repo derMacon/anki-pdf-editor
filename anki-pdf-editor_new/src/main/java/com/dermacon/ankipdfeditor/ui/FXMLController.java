@@ -1,5 +1,6 @@
 package com.dermacon.ankipdfeditor.ui;
 
+import com.dermacon.ankipdfeditor.data.project.ProjectController;
 import com.dermacon.ankipdfeditor.springApi.SpringApiController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -23,32 +24,35 @@ public class FXMLController implements Initializable {
     @FXML
     private ImageView imgVw_page;
 
-    private int pageNum;
-    private String pdfName;
-    private String img_path;
+    private ProjectController projectController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SpringApiController.setController(this);
-        // todo init
-    }
-
-    public FXMLController() {
+        SpringApiController.setJFXController(this);
+        updateGui();
     }
 
     public void setImgVwResponsive(Stage stage) {
         imgVw_page.fitWidthProperty().bind(stage.widthProperty());
     }
 
+    public void setProjectController(ProjectController projectController) {
+        this.projectController = projectController;
+        lbl.setText(projectController.toString());
+        System.out.println(projectController);
+    }
+
     public int turnNextPage() {
-        System.out.println("next page");
-//        if (pageNum)
-        return 42;
+        System.out.println("next");
+        int newPageNum = projectController.turnNextPage();
+        updateGui();
+        return newPageNum;
     }
 
     public int turnPrevPage() {
-        System.out.println("prev page");
-        return 41;
+        int newPageNum = projectController.turnPrevPage();
+        updateGui();
+        return newPageNum;
     }
 
     private void updateGui() {
@@ -64,9 +68,9 @@ public class FXMLController implements Initializable {
 //                System.out.println("waiting for img");
 //            }
 
-//            imgVw_page.setImage(projectController.getCurrPageImage());
-//
-//            lbl.setText(String.valueOf(projectController.getProjectInfo().getCurrPage()));
+            imgVw_page.setImage(projectController.getCurrPageImage());
+
+            lbl.setText(String.valueOf(projectController.getProjectInfo().getCurrPage()));
         });
     }
 

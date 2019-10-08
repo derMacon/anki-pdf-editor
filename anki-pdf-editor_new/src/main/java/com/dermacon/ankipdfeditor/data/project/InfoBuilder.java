@@ -34,7 +34,8 @@ public class InfoBuilder {
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
     private static final String DEFAULT_PDF = String.format(PDF_FILE, "manual");
-    private static final String MANUAL_RES_PATH = System.getProperty("user.dir") + "/src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
+//    private static final String MANUAL_RES_PATH = System.getProperty("user.dir") + "/src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
+    private static final String MANUAL_RES_PATH = "src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
 
     private File deck = new File(DEFAULT_DECK);
     private File pdf = new File(DEFAULT_PDF);
