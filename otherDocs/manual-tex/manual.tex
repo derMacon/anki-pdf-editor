@@ -1,0 +1,63 @@
+\documentclass[xcolor=dvipanames]{beamer}
+\usetheme{Madrid}
+
+\title{Anki-Pdf-Editor}
+\subtitle{React + Spring}
+\author{derMacon}
+
+% to make a list of frames possible: 
+% https://tex.stackexchange.com/questions/56512/is-there-any-way-to-produce-list-of-frames-with-beamer
+\makeatletter
+\newcommand\listofframes{\@starttoc{lbf}}
+\makeatother
+\addtobeamertemplate{frametitle}{}{%
+  \addcontentsline{lbf}{section}{\protect\makebox[2em][l]{%
+    \protect\usebeamercolor[fg]{structure}\textbullet\hfill}%
+  \insertframetitle\par}%
+}
+
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}
+		\listofframes
+	\end{frame}
+		
+	\begin{frame}
+		\frametitle{Introduction}
+		This webapp displays a pdf-reader containing an editor to create digital index cards. These cards can then be reviewed with the open source program ankidroid. The whole purpose of this project was to design a more efficient workflow for creating those cards, since it always took quite some time to screenshot the required parts of the pdf document. To solve this issue I implemented a button / shortcut to directly copy the current page displayed in the pdf-viewer to the card.
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Usage}
+		\begin{itemize}
+			\item To open run the programm run the command `java -jar \emph{NameOfJar}`. Once run, Ankidroid itself, the spring boot server and the react frontend should open automatically. 
+		
+			\item The Tomcat Server (Spring boot) will run on Port 8080 and the React frontend on Port 3000.
+			
+			\item To open a new Pdf document or select a new project open the dropdown menu on the \emph{new} button and select the corresponding item.
+			
+			\item To search for a word in the pdf // todo
+			
+			\item To paste the current page in one of the textareas (front-/backside) select the place where you want the image to appear and click the paste image button.
+			
+		\end{itemize}	
+		
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Shortcuts}
+		// todo
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Installation / Requirements}
+		\begin{itemize}
+			\item linux OS
+			\item Ankiconnect Addon
+		\end{itemize}
+	\end{frame}
+	
+\end{document}
