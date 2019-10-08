@@ -31,11 +31,15 @@ public class InfoBuilder {
     private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/";
     private static final String PDF_FILE = PDF_DIR + "%s.pdf";
 
+    private static final String VIMRC_DIR = LAST_DOCS_DIR + "config/";
+
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
     private static final String DEFAULT_PDF = String.format(PDF_FILE, "manual");
 //    private static final String MANUAL_RES_PATH = System.getProperty("user.dir") + "/src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
     private static final String MANUAL_RES_PATH = "src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
+    private static final String VIMRC_RES_PATH = "src/main/resources/com/dermacon/ankipdfeditor/.vimrc";
+
 
     private File deck = new File(DEFAULT_DECK);
     private File pdf = new File(DEFAULT_PDF);
@@ -59,8 +63,10 @@ public class InfoBuilder {
         saveMkDir(DECK_DIR);
         saveMkDir(PDF_DIR);
         saveMkDir(IMG_TEMP_DIR);
+        saveMkDir(VIMRC_DIR);
 
         saveCPFile(MANUAL_RES_PATH, DEFAULT_PDF);
+        saveCPFile(VIMRC_RES_PATH, VIMRC_DIR + ".vimrc");
     }
 
     private void saveMkDir(String path) {
@@ -108,7 +114,7 @@ public class InfoBuilder {
     }
 
     public void setCurrPage(String currPage) {
-        this.currPage = Integer.parseInt(currPage);
+        this.currPage = Integer.parseInt(currPage.trim());
     }
 
     /**

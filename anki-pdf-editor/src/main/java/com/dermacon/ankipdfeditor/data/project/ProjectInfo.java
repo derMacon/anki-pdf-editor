@@ -88,8 +88,8 @@ public class ProjectInfo {
     @Override
     public String toString() {
         return "deck: " + deck.getName() + "\n"
-                + "pdf:  " + pdf.getName() + "\n"
-                + "page: " + currPage + "\n\n";
+                + "pdf: " + pdf.getName() + "\n"
+                + "page:  " + currPage + "\n\n";
     }
 
     public void saveToFile() throws IOException {
