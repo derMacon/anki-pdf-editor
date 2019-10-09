@@ -72,7 +72,10 @@ public class InfoBuilder {
         copyResource(MANUAL_RES_PATH, DEFAULT_PDF);
         copyResource(VIMRC_RES_PATH, CONFIG_DIR + ".vimrc");
 
-        createDeckFile(deck);
+        // todo maybe: setDeck(deck.getName());
+        if (!deck.exists()) {
+            createDeckFile(deck);
+        }
     }
 
 
@@ -121,6 +124,7 @@ public class InfoBuilder {
     }
 
     public InfoBuilder setDeck(String deckName) throws IOException {
+        System.out.println("hier");
         deck = new File(DECK_DIR + deckName);
         if (!deck.exists() && !deck.isDirectory()) {
             createDeckFile(deck);
@@ -145,14 +149,16 @@ public class InfoBuilder {
 
             while (counter < n_lines) {
                 line = object.readLine();
-                if (line.startsWith("deck")) {
-                    setDeck(line.split(":")[1]);
-                } else if (line.startsWith("pdf")) {
-                    setPdf((line.split(":")[1]));
-                } else if (line.startsWith("page")) {
-                    setCurrPage(line.split(":")[1]);
-                } else if (!line.isEmpty()) {
-                    throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
+                if (line != null) {
+                    if (line.startsWith("deck")) {
+                        setDeck(line.split(":")[1].trim());
+                    } else if (line.startsWith("pdf")) {
+                        setPdf((line.split(":")[1].trim()));
+                    } else if (line.startsWith("page")) {
+                        setCurrPage(line.split(":")[1].trim());
+                    } else if (!line.isEmpty()) {
+                        throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
+                    }
                 }
                 counter++;
             }
@@ -162,6 +168,7 @@ public class InfoBuilder {
     }
 
     private void createDeckFile(File deckFile) throws IOException {
+        System.out.println("createDeckFile");
         int lineLength = VIM_USAGE.split("\n")[0].length();
         String deckDescription = formatDeckdescr(deckFile.getName(),lineLength);
         FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription);

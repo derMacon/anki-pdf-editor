@@ -61,11 +61,13 @@ public class TerminalLauncher implements Runnable {
         } else if (choice.equals("wq") || choice.equals("w")) { // todo merge regex
             ui.push();
             ui.save();
-        } else if (choice.equals("q")) {
-            ui.save();
-        } else {
-            throw new IOException("invalid user input: " + choice);
         }
+        if (choice.equals("q")) {
+            ui.save();
+        }
+
+        // todo
+//        throw new IOException("invalid user input: " + choice);
 
         keepRunning = choice.matches("(e|w|a)");
 
