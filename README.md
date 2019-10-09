@@ -31,7 +31,7 @@ input:
 // todo insert gif
 
 ### Tab fields
-![tabFields](./otherDocs/instructional-gifs/tabFields.gif)
+   ![tabFields](./otherDocs/instructional-gifs/tabFields.gif)
 
 ### Edit properties
 // todo insert gif
