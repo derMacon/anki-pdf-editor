@@ -65,7 +65,6 @@ public class PostConnector {
             }
             output = response.toString();
         }
-        System.out.println("out: " + output);
         return output;
 
     }

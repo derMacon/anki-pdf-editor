@@ -25,7 +25,7 @@ input:
 ```
 
 ### Create new Card
-// todo insert gif
+![addNewCard](./otherDocs/instructional-gifs/addNewCard.gif)
 
 ### Edit properties
 // todo insert gif
@@ -33,14 +33,17 @@ input:
 
 
 ### Resources
-* anki api documentattion: [anki-connect](https://foosoft.net/projects/anki-connect/)
+* anki api documentation: [anki-connect](https://foosoft.net/projects/anki-connect/)
 * [Blocking queue example](https://www.mkyong.com/java/java-blockingqueue-examples/)
 * record screen - `peek`
 * stop screenkey - `pkill -f screenkey`
 * [session specfic .vimrc](https://superuser.com/questions/489930/using-a-session-specific-vimrc)
 
 ### Todo
-* `.projHistory` file overwritten instead of appended
+* update vimrc with 
+    - tabbing option
+    - page tag instead of page num
+    - curr page with `,p`
 * udpate manual
 * make instructional gifs for readme 
 * checkstyle

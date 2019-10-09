@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ProjectInfo {
 
-//    private final static String ENTRY_DELIMITER = ""
+    private final static String BORDER_TOKEN = "*";
 
     private final static String JSON_TEMPLATE = "{\n" +
             "\"deck\": \"%s\",\n" +
@@ -99,6 +99,37 @@ public class ProjectInfo {
         return "deck: " + deck.getName() + "\n"
                 + "pdf:  " + pdf.getName() + "\n"
                 + "page: " + currPage + "\n";
+    }
+
+    public String toFormattedString() {
+        String deckStr = "deck: " + deck.getName();
+        String pdfStr = "pdf:  " + pdf.getName();
+        String pageStr = "page: " + currPage;
+
+        int lineLength = Integer.max(deckStr.length(), pdfStr.length()) + 4;
+        return generateLine("", lineLength)
+                + generateLine(deckStr, lineLength)
+                + generateLine(pdfStr, lineLength)
+                + generateLine(pageStr, lineLength)
+                + generateLine("", lineLength);
+    }
+
+    public static String generateLine(String originalLine, int lineLength) {
+        assert (originalLine.length() + 4) <= lineLength;
+        if (originalLine.isEmpty()) {
+            StringBuilder out = new StringBuilder();
+            for (int i = 0; i < lineLength; i++) {
+                out.append(BORDER_TOKEN);
+            }
+            return out.toString() + "\n";
+        }
+
+        int offset = lineLength - (originalLine.length() + 4);
+        for (int i = 0; i < offset; i++) {
+            originalLine += " ";
+        }
+
+        return BORDER_TOKEN + " " + originalLine + " " + BORDER_TOKEN + "\n";
     }
 
     public void saveToFile() throws IOException {

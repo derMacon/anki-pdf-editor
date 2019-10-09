@@ -18,6 +18,8 @@ public class InfoBuilder {
                     + "*  - type p to paste the current page number   *\n"
                     + "*  - type z to turn to the next page           *\n"
                     + "*  - type Z to turn to the previous page       *\n"
+                    + "*  - type ,t to tab to the next field          *\n"
+                    + "*  - type ,T to tab to the previous field      *\n"
                     + "*                                              *\n"
                     + "*  hint:                                       *\n"
                     + "*  - If page is not available with simply      *\n"
@@ -124,7 +126,6 @@ public class InfoBuilder {
     }
 
     public InfoBuilder setDeck(String deckName) throws IOException {
-        System.out.println("hier");
         deck = new File(DECK_DIR + deckName);
         if (!deck.exists() && !deck.isDirectory()) {
             createDeckFile(deck);
@@ -144,7 +145,7 @@ public class InfoBuilder {
     public InfoBuilder parseHistoryFile() throws IOException {
         if (PROJ_HISTORY.exists()) {
             ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
-            int counter = 0, n_lines = 4;
+            int counter = 0, n_lines = 3;
             String line;
 
             while (counter < n_lines) {

@@ -14,7 +14,8 @@ public class TerminalLauncher implements Runnable {
     public static final String DELIMITER_SEC =  "  ------------------------\n";
 
     private static final String UPDATE_PROJECT_QUERY =
-            "current project:\n%s"
+            DELIMITER_MAIN
+                    +"current project:\n%s"
                     + DELIMITER_MAIN
                     + "type\n"
                     + "  - a to write new cards\n"
@@ -49,7 +50,7 @@ public class TerminalLauncher implements Runnable {
     private boolean runQuery(UserInterface ui) throws IOException {
         boolean keepRunning;
 
-        String greetings = String.format(UPDATE_PROJECT_QUERY, ui.getProjectController().getProjectInfo().toString());
+        String greetings = String.format(UPDATE_PROJECT_QUERY, ui.getProjectController().getProjectInfo().toFormattedString());
         System.out.print(greetings);
         String choice = new Scanner(System.in).nextLine().toLowerCase();
 
