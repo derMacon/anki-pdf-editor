@@ -1,7 +1,7 @@
 # Anki-Pdf-Editor
 Commandline tool to create anki flash cards via the vim editor. Once started the programm will display a selected pdf document in which the user can navigate throughout vim itself. If a anki-card should contain a specific pdf page of the displayed document on either the front- or the backside of a note it can be passed in a simplyfied version where the pagenumber is written between tags. 
 
-All features can be used via shortcuts. For that the program opens a costum [.vimrc](./config/vim-shortcuts.txt).
+All features can be used via shortcuts. For that the program opens a costum [.vimrc](./anki-pdf-editor/src/main/resources/com/dermacon/ankipdfeditor/.vimrc).
 
 ## Requirements
 * Ankidroid 2.1 (or newer)
