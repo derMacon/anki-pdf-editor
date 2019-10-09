@@ -33,8 +33,9 @@ public class InfoBuilder {
     private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/";
     private static final String PDF_FILE = PDF_DIR + "%s.pdf";
 
-    private static final String VIMRC_DIR = LAST_DOCS_DIR + "config/";
+    private static final String CONFIG_DIR = LAST_DOCS_DIR + "config/";
 
+    private static final File SESSION_VIMRC = new File(CONFIG_DIR + ".vimrc");
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
     private static final String DEFAULT_PDF = String.format(PDF_FILE, "manual");
@@ -58,7 +59,7 @@ public class InfoBuilder {
 
     public ProjectInfo build() throws IOException {
         initProjectStructure();
-        return new ProjectInfo(deck, pdf, PROJ_HISTORY, IMG_TEMP_DIR,  currPage);
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR,  currPage);
     }
 
     private void initProjectStructure() throws IOException {
@@ -66,10 +67,12 @@ public class InfoBuilder {
         saveMkDir(DECK_DIR);
         saveMkDir(PDF_DIR);
         saveMkDir(IMG_TEMP_DIR);
-        saveMkDir(VIMRC_DIR);
+        saveMkDir(CONFIG_DIR);
 
         copyResource(MANUAL_RES_PATH, DEFAULT_PDF);
-        copyResource(VIMRC_RES_PATH, VIMRC_DIR + ".vimrc");
+        copyResource(VIMRC_RES_PATH, CONFIG_DIR + ".vimrc");
+
+        createDeckFile(deck);
     }
 
 
@@ -158,13 +161,10 @@ public class InfoBuilder {
         return this;
     }
 
-
     private void createDeckFile(File deckFile) throws IOException {
         int lineLength = VIM_USAGE.split("\n")[0].length();
         String deckDescription = formatDeckdescr(deckFile.getName(),lineLength);
         FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription);
-//        System.out.println("file wrote");
-//        System.out.println(deckFile);
     }
 
     private static String formatDeckdescr(String input, int lineLen) {

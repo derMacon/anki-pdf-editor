@@ -26,9 +26,3 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 \<CR>
 \<CR><Esc>o<Esc>dG?front<Enter>A
 
-" ---- WIP, add multiple cards at once ----
-"function! AddCardTemplate(count)
-"	return "i42"
-"endfunction
-
-":map ,t :call AddCardTemplate(42)<CR>

@@ -5,8 +5,6 @@ import com.dermacon.ankipdfeditor.FxmlApp;
 import com.dermacon.ankipdfeditor.data.project.AnkiConnector;
 import com.dermacon.ankipdfeditor.data.project.ProjectController;
 import javafx.application.Application;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,7 +15,7 @@ import java.util.Scanner;
 public class TerminalUI implements UserInterface {
 
 //    private static final String NEW_TERMINAL_COMMAND = "xterm vim %s";
-    private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim %s";
+    private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim -N -u %s %s";
 
     private AnkiConnector ankiConnector;
     private ProjectController projectController;
@@ -31,15 +29,14 @@ public class TerminalUI implements UserInterface {
     public void openEditor() throws IOException {
         // open vim
         String pathToDeckFile = projectController.getProjectInfo().getDeck().getPath();
-        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
+        String pathToVimrc = projectController.getProjectInfo().getSessionVimrc().getPath();
+        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToVimrc, pathToDeckFile);
         Runtime.getRuntime().exec(openNewTerminalCommand);
     }
 
     @Override
     public void openPdfViewer() {
-//        FxmlApp.main(new String[0]);
         new FxmlApp().launchPdf(projectController);
-//        GuiLauncher.launch(projectController);
     }
 
     @Override

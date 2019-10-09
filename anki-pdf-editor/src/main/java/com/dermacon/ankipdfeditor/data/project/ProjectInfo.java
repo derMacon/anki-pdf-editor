@@ -16,7 +16,9 @@ public class ProjectInfo {
 
     private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
 
-    private File projHistory;
+    private final File sessionVimrc;
+    private final File projHistory;
+
     private File deck;
     private File pdf;
     private PDDocument pdfPDDoc;
@@ -33,11 +35,12 @@ public class ProjectInfo {
      * @param currPage
      * @throws IOException
      */
-    ProjectInfo(File deck, File pdf, File projHistory, String imgPath, int currPage) throws IOException {
+    ProjectInfo(File deck, File pdf, File projHistory, File sessionVimrc, String imgPath, int currPage) throws IOException {
         this.deck = deck;
         this.pdf = pdf;
         this.pdfPDDoc = PDDocument.load(new File(pdf.getPath()));
         this.projHistory = projHistory;
+        this.sessionVimrc = sessionVimrc;
         this.imgPath = imgPath;
         this.currPage = currPage;
     }
@@ -48,6 +51,10 @@ public class ProjectInfo {
 
     public File getPdf() {
         return pdf;
+    }
+
+    public File getSessionVimrc() {
+        return sessionVimrc;
     }
 
     public PDDocument getPdfPDDoc() {
