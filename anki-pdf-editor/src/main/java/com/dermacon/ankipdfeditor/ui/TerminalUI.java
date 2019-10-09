@@ -5,6 +5,8 @@ import com.dermacon.ankipdfeditor.FxmlApp;
 import com.dermacon.ankipdfeditor.data.project.AnkiConnector;
 import com.dermacon.ankipdfeditor.data.project.ProjectController;
 import javafx.application.Application;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -42,11 +44,14 @@ public class TerminalUI implements UserInterface {
 
     @Override
     public void updateProjectInfo() throws IOException {
-        // todo
-        System.out.println("todo");
-        // controller.setProjectInfo(...);
-
-        System.out.print("choose:\n1: deck\n2: pdf\n\ninput: ");
+        System.out.print(
+                TerminalLauncher.DELIMITER_MAIN
+                + "Type:\n"
+                + "  * 1: deck\n"
+                + "  * 2: pdf\n"
+                + TerminalLauncher.DELIMITER_SEC
+                + "input: "
+        );
         Scanner scanner = new Scanner(System.in);
 
         String input = scanner.nextLine();

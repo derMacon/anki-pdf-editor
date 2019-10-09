@@ -9,7 +9,6 @@ com/dermacon/ankipdfeditor/data/worker/multithreading/Renderer.class
 com/dermacon/ankipdfeditor/data/worker/parser/ImageResizer.class
 com/dermacon/ankipdfeditor/data/worker/multithreading/Worker.class
 com/dermacon/ankipdfeditor/ui/FXDeckChooser.class
-com/dermacon/ankipdfeditor/ui/DeckChooser.class
 com/dermacon/ankipdfeditor/ankiApi/PostConnector.class
 com/dermacon/ankipdfeditor/data/worker/multithreading/Assignments.class
 com/dermacon/ankipdfeditor/ui/TerminalLauncher.class

@@ -9,9 +9,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class InfoBuilder {
+
     private static final String VIM_USAGE =
             "************************************************\n"
-                    + "*         Anki-Editor - version 1.0            *\n"
+                    + "*       Anki-Vim-Editor - version 1.0          *\n"
                     + "*              In normal mode:                 *\n"
                     + "*  - type ,c to add a template for a new card  *\n"
                     + "*  - type p to paste the current page number   *\n"
@@ -23,7 +24,7 @@ public class InfoBuilder {
                     + "*    typing p try ,p                           *\n"
                     + "************************************************\n\n";
 
-    private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
+    private static final String LAST_DOCS_DIR = System.getProperty("user.dir") + "/lastDocs/";
     private static final String IMG_TEMP_DIR = LAST_DOCS_DIR + "img_temp/";
 
     private static final String DECK_DIR = LAST_DOCS_DIR + "decks/";
@@ -37,8 +38,8 @@ public class InfoBuilder {
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
     private static final String DEFAULT_PDF = String.format(PDF_FILE, "manual");
-//    private static final String MANUAL_RES_PATH = System.getProperty("user.dir") + "/src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
 
+    // these resource path descriptions are only valid with context of the classpath
     private static final String MANUAL_RES_PATH = "/com/dermacon/ankipdfeditor/manual.pdf";
     private static final String VIMRC_RES_PATH = "/com/dermacon/ankipdfeditor/.vimrc";
 
@@ -79,6 +80,13 @@ public class InfoBuilder {
         }
     }
 
+    /**
+     * read resource: https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
+     * copy inputstream: https://www.baeldung.com/convert-input-stream-to-a-file
+     * @param resourcePath
+     * @param targetPath
+     * @throws IOException
+     */
     private void copyResource(String resourcePath, String targetPath) throws IOException {
         InputStream in = getClass().getResourceAsStream(resourcePath);
         FileUtils.copyInputStreamToFile(in, new File(targetPath));

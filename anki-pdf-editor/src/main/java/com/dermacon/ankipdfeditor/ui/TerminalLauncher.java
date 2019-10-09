@@ -10,14 +10,20 @@ import java.util.Scanner;
  */
 public class TerminalLauncher implements Runnable {
 
+    public static final String DELIMITER_MAIN = "==========================\n";
+    public static final String DELIMITER_SEC =  "  ------------------------\n";
+
     private static final String UPDATE_PROJECT_QUERY =
-            "Current project:\n%s"
-                    + "Type\n"
+            "current project:\n%s"
+                    + DELIMITER_MAIN
+                    + "type\n"
                     + "  - a to write new cards\n"
                     + "  - e to edit project properties\n"
                     + "  - w to push to anki connect\n"
                     + "  - q to quit without pushing\n"
-                    + "  - wq to push and exit\n\n";
+                    + "  - wq to push and exit\n"
+                    + DELIMITER_SEC
+                    + "input: ";
 
     @Override
     public void run() {
@@ -32,11 +38,11 @@ public class TerminalLauncher implements Runnable {
             } while (keepRunning);
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(DELIMITER_MAIN + e.getMessage());
+//            e.printStackTrace();
         }
 
-        System.out.println("shutdown");
+        System.out.println(DELIMITER_MAIN + "shutdown");
         System.exit(0);
     }
 
@@ -44,7 +50,7 @@ public class TerminalLauncher implements Runnable {
         boolean keepRunning;
 
         String greetings = String.format(UPDATE_PROJECT_QUERY, ui.getProjectController().getProjectInfo().toString());
-        System.out.println(greetings);
+        System.out.print(greetings);
         String choice = new Scanner(System.in).nextLine().toLowerCase();
 
         if (choice.equals("a")) {

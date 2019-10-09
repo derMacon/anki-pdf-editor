@@ -89,7 +89,7 @@ public class ProjectInfo {
     public String toString() {
         return "deck: " + deck.getName() + "\n"
                 + "pdf: " + pdf.getName() + "\n"
-                + "page:  " + currPage + "\n\n";
+                + "page:  " + currPage + "\n";
     }
 
     public void saveToFile() throws IOException {
