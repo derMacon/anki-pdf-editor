@@ -27,6 +27,9 @@ input:
 ### Create new Card
 ![addNewCard](./otherDocs/instructional-gifs/addNewCard.gif)
 
+### Tab fields
+![tabFields](./otherDocs/instructional-gifs/tabFields.gif)
+
 ### Edit properties
 // todo insert gif
 
@@ -41,7 +44,6 @@ input:
 
 ### Todo
 * update vimrc with 
-    - tabbing option
     - page tag instead of page num
     - curr page with `,p`
 * udpate manual
