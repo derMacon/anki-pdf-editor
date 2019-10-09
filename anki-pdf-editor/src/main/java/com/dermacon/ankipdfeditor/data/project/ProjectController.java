@@ -26,7 +26,6 @@ public class ProjectController {
     }
 
     public void setDeck(String deck) throws IOException {
-        System.out.println("new deck: " + deck);
         projectInfo = new InfoBuilder()
                 .copy(projectInfo)
                 .setDeck(deck)

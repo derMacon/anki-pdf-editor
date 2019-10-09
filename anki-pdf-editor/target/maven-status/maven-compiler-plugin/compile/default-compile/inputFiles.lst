@@ -27,7 +27,6 @@
 /home/silasUser/Documents/projects/codecademy_revenue_reactExample/anki-pdf-editor/src/main/java/com/dermacon/ankipdfeditor/data/worker/multithreading/Renderer.java
 /home/silasUser/Documents/projects/codecademy_revenue_reactExample/anki-pdf-editor/src/main/java/com/dermacon/ankipdfeditor/springApi/SpringApiController.java
 /home/silasUser/Documents/projects/codecademy_revenue_reactExample/anki-pdf-editor/src/main/java/com/dermacon/ankipdfeditor/ankiApi/response/GetDecksResponse.java
-/home/silasUser/Documents/projects/codecademy_revenue_reactExample/anki-pdf-editor/src/main/java/com/dermacon/ankipdfeditor/ui/DeckChooser.java
 /home/silasUser/Documents/projects/codecademy_revenue_reactExample/anki-pdf-editor/src/main/java/com/dermacon/ankipdfeditor/ui/CheckedConsumer.java
 /home/silasUser/Documents/projects/codecademy_revenue_reactExample/anki-pdf-editor/src/main/java/com/dermacon/ankipdfeditor/data/worker/parser/HtmlParser.java
 /home/silasUser/Documents/projects/codecademy_revenue_reactExample/anki-pdf-editor/src/main/java/com/dermacon/ankipdfeditor/ankiApi/response/AddNoteResponse.java

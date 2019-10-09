@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class TerminalUI implements UserInterface {
 
 //    private static final String NEW_TERMINAL_COMMAND = "xterm vim %s";
-    private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim %s";
+    private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim -N -u %s %s";
 
     private AnkiConnector ankiConnector;
     private ProjectController projectController;
@@ -29,24 +29,26 @@ public class TerminalUI implements UserInterface {
     public void openEditor() throws IOException {
         // open vim
         String pathToDeckFile = projectController.getProjectInfo().getDeck().getPath();
-        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToDeckFile);
+        String pathToVimrc = projectController.getProjectInfo().getSessionVimrc().getPath();
+        String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToVimrc, pathToDeckFile);
         Runtime.getRuntime().exec(openNewTerminalCommand);
     }
 
     @Override
     public void openPdfViewer() {
-//        FxmlApp.main(new String[0]);
         new FxmlApp().launchPdf(projectController);
-//        GuiLauncher.launch(projectController);
     }
 
     @Override
     public void updateProjectInfo() throws IOException {
-        // todo
-        System.out.println("todo");
-        // controller.setProjectInfo(...);
-
-        System.out.print("choose:\n1: deck\n2: pdf\n\ninput: ");
+        System.out.print(
+                TerminalLauncher.DELIMITER_MAIN
+                + "Type:\n"
+                + "  * 1: deck\n"
+                + "  * 2: pdf\n"
+                + TerminalLauncher.DELIMITER_SEC
+                + "input: "
+        );
         Scanner scanner = new Scanner(System.in);
 
         String input = scanner.nextLine();

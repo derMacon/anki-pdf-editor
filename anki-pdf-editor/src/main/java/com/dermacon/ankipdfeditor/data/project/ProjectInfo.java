@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class ProjectInfo {
 
+    private final static String BORDER_TOKEN = "*";
+
     private final static String JSON_TEMPLATE = "{\n" +
             "\"deck\": \"%s\",\n" +
             "\"pdf\": \"%s\"\n" +
@@ -16,7 +18,9 @@ public class ProjectInfo {
 
     private final static String URL_PARAMETER_TEMPLATE = "deck=%s&pdf=%s";
 
-    private File projHistory;
+    private final File sessionVimrc;
+    private final File projHistory;
+
     private File deck;
     private File pdf;
     private PDDocument pdfPDDoc;
@@ -33,11 +37,12 @@ public class ProjectInfo {
      * @param currPage
      * @throws IOException
      */
-    ProjectInfo(File deck, File pdf, File projHistory, String imgPath, int currPage) throws IOException {
+    ProjectInfo(File deck, File pdf, File projHistory, File sessionVimrc, String imgPath, int currPage) throws IOException {
         this.deck = deck;
         this.pdf = pdf;
         this.pdfPDDoc = PDDocument.load(new File(pdf.getPath()));
         this.projHistory = projHistory;
+        this.sessionVimrc = sessionVimrc;
         this.imgPath = imgPath;
         this.currPage = currPage;
     }
@@ -48,6 +53,10 @@ public class ProjectInfo {
 
     public File getPdf() {
         return pdf;
+    }
+
+    public File getSessionVimrc() {
+        return sessionVimrc;
     }
 
     public PDDocument getPdfPDDoc() {
@@ -89,7 +98,38 @@ public class ProjectInfo {
     public String toString() {
         return "deck: " + deck.getName() + "\n"
                 + "pdf:  " + pdf.getName() + "\n"
-                + "page: " + currPage + "\n\n";
+                + "page: " + currPage + "\n";
+    }
+
+    public String toFormattedString() {
+        String deckStr = "deck: " + deck.getName();
+        String pdfStr = "pdf:  " + pdf.getName();
+        String pageStr = "page: " + currPage;
+
+        int lineLength = Integer.max(deckStr.length(), pdfStr.length()) + 4;
+        return generateLine("", lineLength)
+                + generateLine(deckStr, lineLength)
+                + generateLine(pdfStr, lineLength)
+                + generateLine(pageStr, lineLength)
+                + generateLine("", lineLength);
+    }
+
+    public static String generateLine(String originalLine, int lineLength) {
+        assert (originalLine.length() + 4) <= lineLength;
+        if (originalLine.isEmpty()) {
+            StringBuilder out = new StringBuilder();
+            for (int i = 0; i < lineLength; i++) {
+                out.append(BORDER_TOKEN);
+            }
+            return out.toString() + "\n";
+        }
+
+        int offset = lineLength - (originalLine.length() + 4);
+        for (int i = 0; i < offset; i++) {
+            originalLine += " ";
+        }
+
+        return BORDER_TOKEN + " " + originalLine + " " + BORDER_TOKEN + "\n";
     }
 
     public void saveToFile() throws IOException {

@@ -6,23 +6,27 @@ import org.apache.commons.io.input.ReversedLinesFileReader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class InfoBuilder {
+
     private static final String VIM_USAGE =
             "************************************************\n"
-                    + "*         Anki-Editor - version 1.0            *\n"
+                    + "*       Anki-Vim-Editor - version 1.0          *\n"
                     + "*              In normal mode:                 *\n"
                     + "*  - type ,c to add a template for a new card  *\n"
                     + "*  - type p to paste the current page number   *\n"
                     + "*  - type z to turn to the next page           *\n"
                     + "*  - type Z to turn to the previous page       *\n"
+                    + "*  - type ,t to tab to the next field          *\n"
+                    + "*  - type ,T to tab to the previous field      *\n"
                     + "*                                              *\n"
                     + "*  hint:                                       *\n"
                     + "*  - If page is not available with simply      *\n"
                     + "*    typing p try ,p                           *\n"
                     + "************************************************\n\n";
 
-    private static final String LAST_DOCS_DIR = new File(System.getProperty("user.dir")).getParent() + "/lastDocs/";
+    private static final String LAST_DOCS_DIR = System.getProperty("user.dir") + "/lastDocs/";
     private static final String IMG_TEMP_DIR = LAST_DOCS_DIR + "img_temp/";
 
     private static final String DECK_DIR = LAST_DOCS_DIR + "decks/";
@@ -31,11 +35,17 @@ public class InfoBuilder {
     private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/";
     private static final String PDF_FILE = PDF_DIR + "%s.pdf";
 
+    private static final String CONFIG_DIR = LAST_DOCS_DIR + "config/";
+
+    private static final File SESSION_VIMRC = new File(CONFIG_DIR + ".vimrc");
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
     private static final String DEFAULT_PDF = String.format(PDF_FILE, "manual");
-//    private static final String MANUAL_RES_PATH = System.getProperty("user.dir") + "/src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
-    private static final String MANUAL_RES_PATH = "src/main/resources/com/dermacon/ankipdfeditor/manual.pdf";
+
+    // these resource path descriptions are only valid with context of the classpath
+    private static final String MANUAL_RES_PATH = "/com/dermacon/ankipdfeditor/manual.pdf";
+    private static final String VIMRC_RES_PATH = "/com/dermacon/ankipdfeditor/.vimrc";
+
 
     private File deck = new File(DEFAULT_DECK);
     private File pdf = new File(DEFAULT_PDF);
@@ -51,7 +61,7 @@ public class InfoBuilder {
 
     public ProjectInfo build() throws IOException {
         initProjectStructure();
-        return new ProjectInfo(deck, pdf, PROJ_HISTORY, IMG_TEMP_DIR,  currPage);
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR,  currPage);
     }
 
     private void initProjectStructure() throws IOException {
@@ -59,9 +69,17 @@ public class InfoBuilder {
         saveMkDir(DECK_DIR);
         saveMkDir(PDF_DIR);
         saveMkDir(IMG_TEMP_DIR);
+        saveMkDir(CONFIG_DIR);
 
-        saveCPFile(MANUAL_RES_PATH, DEFAULT_PDF);
+        copyResource(MANUAL_RES_PATH, DEFAULT_PDF);
+        copyResource(VIMRC_RES_PATH, CONFIG_DIR + ".vimrc");
+
+        // todo maybe: setDeck(deck.getName());
+        if (!deck.exists()) {
+            createDeckFile(deck);
+        }
     }
+
 
     private void saveMkDir(String path) {
         File dir = new File(path);
@@ -70,11 +88,19 @@ public class InfoBuilder {
         }
     }
 
-    private void saveCPFile(String srcPath, String targetPath) throws IOException {
-        saveCPFile(new File(srcPath), new File(targetPath));
+    /**
+     * read resource: https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
+     * copy inputstream: https://www.baeldung.com/convert-input-stream-to-a-file
+     * @param resourcePath
+     * @param targetPath
+     * @throws IOException
+     */
+    private void copyResource(String resourcePath, String targetPath) throws IOException {
+        InputStream in = getClass().getResourceAsStream(resourcePath);
+        FileUtils.copyInputStreamToFile(in, new File(targetPath));
     }
 
-    private void saveCPFile(File srcFile, File targetFile) throws IOException {
+    private void copyResource(File srcFile, File targetFile) throws IOException {
         if (((!targetFile.exists() || !targetFile.isDirectory()))
                 && !targetFile.equals(srcFile)) {
             FileUtils.copyFile(srcFile, targetFile);
@@ -94,7 +120,7 @@ public class InfoBuilder {
 
     public InfoBuilder setPdf(String pdfName) throws IOException {
         File targetFile = new File(PDF_DIR + pdfName);
-        saveCPFile(pdf, targetFile);
+        copyResource(pdf, targetFile);
         this.pdf = targetFile;
         return this;
     }
@@ -108,7 +134,7 @@ public class InfoBuilder {
     }
 
     public void setCurrPage(String currPage) {
-        this.currPage = Integer.parseInt(currPage);
+        this.currPage = Integer.parseInt(currPage.trim());
     }
 
     /**
@@ -119,19 +145,21 @@ public class InfoBuilder {
     public InfoBuilder parseHistoryFile() throws IOException {
         if (PROJ_HISTORY.exists()) {
             ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
-            int counter = 0, n_lines = 4;
+            int counter = 0, n_lines = 3;
             String line;
 
             while (counter < n_lines) {
                 line = object.readLine();
-                if (line.startsWith("deck")) {
-                    setDeck(line.split(":")[1]);
-                } else if (line.startsWith("pdf")) {
-                    setPdf((line.split(":")[1]));
-                } else if (line.startsWith("page")) {
-                    setCurrPage(line.split(":")[1]);
-                } else if (!line.isEmpty()) {
-                    throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
+                if (line != null) {
+                    if (line.startsWith("deck")) {
+                        setDeck(line.split(":")[1].trim());
+                    } else if (line.startsWith("pdf")) {
+                        setPdf((line.split(":")[1].trim()));
+                    } else if (line.startsWith("page")) {
+                        setCurrPage(line.split(":")[1].trim());
+                    } else if (!line.isEmpty()) {
+                        throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
+                    }
                 }
                 counter++;
             }
@@ -140,13 +168,11 @@ public class InfoBuilder {
         return this;
     }
 
-
     private void createDeckFile(File deckFile) throws IOException {
+        System.out.println("createDeckFile");
         int lineLength = VIM_USAGE.split("\n")[0].length();
         String deckDescription = formatDeckdescr(deckFile.getName(),lineLength);
         FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription);
-//        System.out.println("file wrote");
-//        System.out.println(deckFile);
     }
 
     private static String formatDeckdescr(String input, int lineLen) {

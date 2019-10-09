@@ -5,9 +5,11 @@ import com.dermacon.ankipdfeditor.springApi.SpringApiController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -28,6 +30,8 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        lbl.setAlignment(Pos.CENTER);
+        lbl.setFont(new Font("Cambria", 25));
         SpringApiController.setJFXController(this);
         updateGui();
     }
@@ -43,7 +47,6 @@ public class FXMLController implements Initializable {
     }
 
     public int turnNextPage() {
-        System.out.println("next");
         int newPageNum = projectController.turnNextPage();
         updateGui();
         return newPageNum;

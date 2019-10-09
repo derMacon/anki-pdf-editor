@@ -65,11 +65,15 @@ public class AddNoteAnkiRequest extends AnkiRequest {
     public String toJson() {
         return String.format(JSON_TEMPLATE,
                 String.valueOf(this.version),
-                card.getDeckName(),
+                removeExtension(card.getDeckName()),
                 card.getFrontSide(),
                 card.getBackSide(),
                 arrayToJson(card.getTags())
         );
+    }
+
+    private static String removeExtension(String fullFileName) {
+        return fullFileName.substring(0, fullFileName.lastIndexOf('.'));
     }
 
     /**
