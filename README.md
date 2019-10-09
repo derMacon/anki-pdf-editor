@@ -43,7 +43,5 @@ input:
 * `.projHistory` file overwritten instead of appended
 * udpate manual
 * make instructional gifs for readme 
-* Test initialization of project structure
-* dissable log4j debug messages
 * checkstyle
 

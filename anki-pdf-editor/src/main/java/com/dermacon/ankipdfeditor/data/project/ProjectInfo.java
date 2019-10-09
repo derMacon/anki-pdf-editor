@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class ProjectInfo {
 
+//    private final static String ENTRY_DELIMITER = ""
+
     private final static String JSON_TEMPLATE = "{\n" +
             "\"deck\": \"%s\",\n" +
             "\"pdf\": \"%s\"\n" +
@@ -95,8 +97,8 @@ public class ProjectInfo {
     @Override
     public String toString() {
         return "deck: " + deck.getName() + "\n"
-                + "pdf: " + pdf.getName() + "\n"
-                + "page:  " + currPage + "\n";
+                + "pdf:  " + pdf.getName() + "\n"
+                + "page: " + currPage + "\n";
     }
 
     public void saveToFile() throws IOException {
