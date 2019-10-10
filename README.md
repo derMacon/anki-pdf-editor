@@ -48,11 +48,14 @@ input:
 // todo insert gif
 
 ### Todo
+* copy updated manual to maven resources 
 * backend should render line with div tags
 * update vimrc with 
     - page tag instead of page num
     - curr page with `,p`
 * make instructional gifs for readme 
+* check if files in anki-pdf-editor are necessary for build (maybe add to .gitignore)
+* delete unnecessary tex files (add to gitignore)
 * publish build
 * checkstyle
 
