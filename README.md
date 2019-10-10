@@ -21,7 +21,8 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * unix os (Vim)
 
 ## Usage
-* download jar from release tab and execute via `java -jar ./path/to/jar`
+* Download jar from release tab and execute via `java -jar ./path/to/jar`
+* Recommended: execute at the same directory to avoid initializing the project directories any where they should not be. 
 
 ### Top-level menu
 ```
@@ -35,22 +36,11 @@ type
 input: 
 ```
 
-### Create new Card
-![addNewCard](./otherDocs/instructional-gifs/addNewCard.gif)
-
-### Insert page
-// todo insert gif
-
-### Tab fields
-   ![tabFields](./otherDocs/instructional-gifs/tabFields.gif)
-
-### Edit properties
-// todo insert gif
+### Workflow example
+![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
-* make instructional gifs for readme 
 * check if files in anki-pdf-editor are necessary for build (maybe add to .gitignore)
-* publish build
 * checkstyle
 
 ### Reminder

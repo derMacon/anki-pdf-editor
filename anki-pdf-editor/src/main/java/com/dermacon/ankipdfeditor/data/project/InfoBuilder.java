@@ -18,12 +18,12 @@ public class InfoBuilder {
                     + "*  - type p to paste the current page number   *\n"
                     + "*  - type z to turn to the next page           *\n"
                     + "*  - type Z to turn to the previous page       *\n"
-                    + "*  - type ,t to tab to the next field          *\n"
-                    + "*  - type ,T to tab to the previous field      *\n"
                     + "*                                              *\n"
                     + "*  hint:                                       *\n"
                     + "*  - If page is not available with simply      *\n"
                     + "*    typing p try ,p                           *\n"
+                    + "*  - To tab between fields use tab or shift    *\n"
+                    + "*    plus tab                                  *\n"
                     + "************************************************\n\n";
 
     private static final String LAST_DOCS_DIR = System.getProperty("user.dir") + "/lastDocs/";
