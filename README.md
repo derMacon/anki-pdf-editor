@@ -48,8 +48,6 @@ input:
 // todo insert gif
 
 ### Todo
-* copy updated manual to maven resources 
-* backend should render line with div tags
 * update vimrc with 
     - page tag instead of page num
     - curr page with `,p`

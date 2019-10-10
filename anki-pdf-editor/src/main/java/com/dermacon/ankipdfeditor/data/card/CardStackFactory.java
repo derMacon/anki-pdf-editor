@@ -69,30 +69,4 @@ public class CardStackFactory {
         );
     }
 
-//    public static Card interpretCard(String deckname, String cardBlock) throws IncompleteCardException {
-//        String front = null;
-//        String back = null;
-//        String[] tags = new String[] {};
-//        for(String line : cardBlock.split("\\n *\\n")) {
-//            if (line.length() > 0 && !line.startsWith("*") && !line.startsWith("-")) {
-//
-//                 if (line.startsWith("front:")) {
-//                    front = line.replace("front: ", "");
-//                 } else if (line.startsWith("back:")) {
-//                    back = line.replace("back: ", "");
-//                } else if (line.startsWith("tags:")) {
-//                    line = line.replace("tags: ", "");
-//                    tags = line.split(" ");
-//                }
-//
-//            }
-//        }
-//
-//        if (front == null || deckname == null || front == null || back == null) {
-//            throw new IncompleteCardException("one of the fields is empty:\n" + cardBlock);
-//        }
-//
-//        return new Card(deckname, front, back, tags);
-//    }
-
 }
