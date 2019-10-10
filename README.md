@@ -9,7 +9,7 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * `z` / `Z`: turn next / previous page; Copy the current page tag to the default register (accessed via `p`)
 * `,c`: Append new card template to anki file
 * `,p`: Reload page tag, pastes the current page tag to cursor position
-* `,t` / `,T`: tab between fields
+* ***tab*** / ***shift*** + ***tab***: tab between fields
 
 ### vim default 
 ![vim-cheat-sheet](./otherDocs/manual-tex/img/vim-cheat-sheet.jpg)
