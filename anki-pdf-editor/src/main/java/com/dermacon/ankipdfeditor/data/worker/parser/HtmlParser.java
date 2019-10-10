@@ -18,6 +18,7 @@ public class HtmlParser {
     private static final String TEMP_IMG_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/png/";
     private static final String HOME_DIR = System.getProperty("user.home");
     private static final String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
+    private static final String HTML_LINE_FORMAT = "<div>%s</div>";
 
     private static final int DEFAULT_WIDTH = 930;
     private static final int DEFAULT_HEIGHT = 650;
@@ -29,7 +30,7 @@ public class HtmlParser {
 
     private PDDocument doc;
     private String pdfName;
-    private final String FILE_TEMPLATE = TEMP_IMG_PAGES + pdfName + "_%s.png";
+    private final String FILE_TEMPLATE = TEMP_IMG_PAGES + pdfName + "_%s.png"; // todo ?
 
     public HtmlParser(String path) throws IOException {
         this(new File(path));
@@ -45,15 +46,15 @@ public class HtmlParser {
         return pdfName;
     }
 
-    public Card parseImgTag(final Card input) throws IOException {
-        return new Card(input.getDeckName(),
-                parseImg(input.getFrontSide()),
-                parseImg(input.getBackSide()),
-                input.getTags()
-        );
+    public String parseHtml(String side) throws IOException {
+        StringBuilder out = new StringBuilder();
+        for (String line : side.split("\n")) {
+            out.append(String.format(HTML_LINE_FORMAT, line));
+        }
+        return parseImg(out.toString());
     }
 
-    public String parseImg(String side) throws IOException {
+    private String parseImg(String side) throws IOException {
         int[] nums = extractAllNumbers(side);
 //        Arrays.stream(nums).forEach(this::renderImageInTemp);
         for (int curr : nums) {

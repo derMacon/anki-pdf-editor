@@ -21,12 +21,12 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 
 "key: ',' + 'c'
 " create a new card in the current file
-:nmap ,c G?----<Enter>2o<Esc>ifront: <CR>
-\<CR><BS>back:  <CR>
-\<CR><BS>tags:  <CR>
+:nmap ,c G?----<Enter>2o<Esc>ifront:<CR><CR>
+\<CR><BS>back:<CR><CR>
+\<CR><BS>tags:<CR><CR>
 \<CR><BS>-----------------
 \<CR><BS>
-\<CR><Esc>o<Esc>dG?front<Enter>A
+\<CR><Esc>o<Esc>dG?front<Enter>ja
 
 " treat wrapped lines as visual lines
 noremap j gj

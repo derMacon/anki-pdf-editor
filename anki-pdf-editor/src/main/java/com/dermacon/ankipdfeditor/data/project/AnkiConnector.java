@@ -2,6 +2,7 @@ package com.dermacon.ankipdfeditor.data.project;
 
 import com.dermacon.ankipdfeditor.ankiApi.PostConnector;
 import com.dermacon.ankipdfeditor.ankiApi.request.AddNoteAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.AnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.GetDecksAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.SyncAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.response.AnkiResponse;
@@ -41,15 +42,17 @@ public class AnkiConnector {
         return out.toArray(new String[0]);
     }
 
-
     public static void pushToAnki(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
         startAnki();
-        List<Card> cardStack = CardStackFactory.produceStack(projectInfo);
+        List<Card> cardStack = new CardStackFactory(projectInfo).produceStack();
         // not possible as stream since an exception will be thrown
         // for some reason the postconnector instance is not reusable...
         AnkiResponse response;
         List<Card> problematicCards = new LinkedList<>();
         for(Card curr : cardStack) {
+            AnkiRequest request = new AddNoteAnkiRequest(curr);
+            System.out.println("card: " + curr);
+            System.out.println(request.toJson());
             response = new PostConnector(ANKI_API_PORT).jsonRequest(new AddNoteAnkiRequest(curr));
             if (response.getError() != null) {
                 problematicCards.add(curr);
