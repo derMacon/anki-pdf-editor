@@ -45,6 +45,10 @@ public class FXMLController implements Initializable {
         lbl.setText(projectController.toString());
     }
 
+    public int getCurrPage() {
+        return this.projectController.getProjectInfo().getCurrPage();
+    }
+
     public int turnNextPage() {
         int newPageNum = projectController.turnNextPage();
         updateGui();

@@ -53,7 +53,6 @@ input:
     - curr page with `,p`
 * make instructional gifs for readme 
 * check if files in anki-pdf-editor are necessary for build (maybe add to .gitignore)
-* delete unnecessary tex files (add to gitignore)
 * publish build
 * checkstyle
 

@@ -18,9 +18,9 @@ public class TerminalLauncher implements Runnable {
                     +"current project:\n%s"
                     + DELIMITER_MAIN
                     + "type\n"
-                    + "  - a to write new cards\n"
                     + "  - e to edit project properties\n"
                     + "  - w to push to anki connect\n"
+                    + "  - a to write new cards (with push)\n"
                     + "  - q to quit without pushing\n"
                     + "  - wq to push and exit\n"
                     + DELIMITER_SEC
@@ -54,29 +54,35 @@ public class TerminalLauncher implements Runnable {
         System.out.print(greetings);
         String choice = new Scanner(System.in).nextLine().toLowerCase();
 
+        if (!choice.matches("(e|w|a|q|wq)")) {
+            throw new IOException("invalid user input: " + choice);
+        }
+
         if (choice.equals("a")) {
             ui.openEditor();
             ui.openPdfViewer();
-        } else if (choice.equals("e")) {
+        }
+
+        if (choice.equals("e")) {
             ui.updateProjectInfo();
-        } else if (choice.equals("wq") || choice.equals("w")) { // todo merge regex
-            ui.push();
-            ui.save();
         }
+
+        if (choice.equals("wq")
+                || choice.equals("w")
+                || choice.equals("a")
+        ) { // todo merge regex
+            ui.pushToAnki();
+            ui.saveProjHistory();
+        }
+
         if (choice.equals("q")) {
-            ui.save();
+            ui.saveProjHistory();
         }
-
-        // todo
-//        throw new IOException("invalid user input: " + choice);
-
-        keepRunning = choice.matches("(e|w)");
-
 
         // a shutdown is can only be prevented if the user
         // wants to edit the project info OR wants to
         // save his work
-        return keepRunning;
+        return choice.matches("(e|w)");
     }
 
 

@@ -2,6 +2,10 @@
 " * Version: 1.0
 " * Author: github/dermacon
 
+" costum syntax highlighting
+:colorscheme elflord
+:match Constant /\v(*)/
+:2match Keyword /\v(front:|back:|tags:)/
 
 " key: z or shift + z
 " turn page - copy response to default register
