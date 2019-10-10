@@ -35,7 +35,7 @@ public class FXDeckChooser extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("ComboBoxSample");
+        stage.setTitle("Deck Selector");
         Scene scene = new Scene(new Group(), 400, 100);
 
         final ComboBox emailComboBox = new ComboBox();

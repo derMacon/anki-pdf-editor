@@ -43,10 +43,6 @@ public class FxmlApp extends Application {
 
     public static void main(String[] args) {
         launch();
-//        pdf = new File(args[0]);
-//        deck = new File(args[1]);
-
-        System.out.println("exit");
     }
 
 }

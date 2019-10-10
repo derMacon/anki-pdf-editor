@@ -43,7 +43,6 @@ public class FXMLController implements Initializable {
     public void setProjectController(ProjectController projectController) {
         this.projectController = projectController;
         lbl.setText(projectController.toString());
-        System.out.println(projectController);
     }
 
     public int turnNextPage() {
