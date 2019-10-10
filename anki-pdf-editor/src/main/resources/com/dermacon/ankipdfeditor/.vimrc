@@ -2,10 +2,10 @@
 " * Version: 1.0
 " * Author: github/dermacon
 
-
-" each new paragraph has an appropriate indent
-set tabstop=7
-:inoremap <CR> <CR><Tab>
+" costum syntax highlighting
+:colorscheme elflord
+:match Constant /\v(*)/
+:2match Keyword /\v(front:|back:|tags:)/
 
 " key: z or shift + z
 " turn page - copy response to default register
@@ -21,20 +21,25 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 
 "key: ',' + 'c'
 " create a new card in the current file
-:nmap ,c G?----<Enter>2o<Esc>ifront: <CR>
-\<CR><BS>back:  <CR>
-\<CR><BS>tags:  <CR>
+:nmap ,c G?----<Enter>2o<Esc>ifront:<CR><CR>
+\<CR><BS>back:<CR><CR>
+\<CR><BS>tags:<CR><CR>
 \<CR><BS>-----------------
 \<CR><BS>
-\<CR><Esc>o<Esc>dG?front<Enter>A
+\<CR><Esc>o<Esc>dG?front<Enter>ja
 
 " treat wrapped lines as visual lines
 noremap j gj
 noremap k gk
 
-" key: ,t or ,T
+" key: tab / shift + tab
 " press n or N to repeat command
 " tab between fields
-:nmap ,t /:<CR>$
-:nmap ,T /:<CR>NN$
+:inoremap <Tab> <Esc>/:<CR>jI
+:nnoremap <Tab> /:<CR>j0
+
+:inoremap <S-Tab> <Esc>/:<CR>NNjI
+:nnoremap <S-Tab> /:<CR>NNj0
+
+
 

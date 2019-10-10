@@ -43,6 +43,7 @@ public class AddNoteAnkiRequest extends AnkiRequest {
             + "}\n"
             + "}";
 
+
     /**
      * Card object that should be transmitted.
      */

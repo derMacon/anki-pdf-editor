@@ -88,12 +88,12 @@ public class TerminalUI implements UserInterface {
         return output;
     }
     @Override
-    public void push() throws IOException {
+    public void pushToAnki() throws IOException {
         ankiConnector.pushToAnki(this.projectController.getProjectInfo());
     }
 
     @Override
-    public void save() throws IOException {
+    public void saveProjHistory() throws IOException {
         projectController.saveProjHistory();
     }
 

@@ -9,7 +9,7 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * `z` / `Z`: turn next / previous page; Copy the current page tag to the default register (accessed via `p`)
 * `,c`: Append new card template to anki file
 * `,p`: Reload page tag, pastes the current page tag to cursor position
-* `,t` / `,T`: tab between fields
+* ***tab*** / ***shift*** + ***tab***: tab between fields
 
 ### vim default 
 ![vim-cheat-sheet](./otherDocs/manual-tex/img/vim-cheat-sheet.jpg)
@@ -21,7 +21,8 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * unix os (Vim)
 
 ## Usage
-* download jar from release tab and execute via `java -jar ./path/to/jar`
+* Download jar from release tab and execute via `java -jar ./path/to/jar`
+* Recommended: execute at the same directory to avoid initializing the project directories any where they should not be. 
 
 ### Top-level menu
 ```
@@ -35,25 +36,11 @@ type
 input: 
 ```
 
-### Create new Card
-![addNewCard](./otherDocs/instructional-gifs/addNewCard.gif)
-
-### Insert page
-// todo insert gif
-
-### Tab fields
-   ![tabFields](./otherDocs/instructional-gifs/tabFields.gif)
-
-### Edit properties
-// todo insert gif
+### Workflow example
+![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
-* backend should render line with div tags
-* update vimrc with 
-    - page tag instead of page num
-    - curr page with `,p`
-* make instructional gifs for readme 
-* publish build
+* check if files in anki-pdf-editor are necessary for build (maybe add to .gitignore)
 * checkstyle
 
 ### Reminder

@@ -1,6 +1,7 @@
 package com.dermacon.ankipdfeditor.data.card;
 
 import com.dermacon.ankipdfeditor.data.project.ProjectInfo;
+import com.dermacon.ankipdfeditor.data.worker.parser.HtmlParser;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -12,10 +13,12 @@ import java.util.regex.Pattern;
 
 public class CardStackFactory {
 
-    public static List<Card> produceStack(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
-        File deck = projectInfo.getDeck();
-        String fileContent = FileUtils.readFileToString(deck, "UTF-8");
-        return produceStack(fileContent);
+    private ProjectInfo projectInfo;
+    private HtmlParser imgParser;
+
+    public CardStackFactory(ProjectInfo projectInfo) throws IOException {
+        this.projectInfo = projectInfo;
+        this.imgParser = new HtmlParser(projectInfo.getPdf());
     }
 
     /**
@@ -25,10 +28,12 @@ public class CardStackFactory {
      * 3. back: [text]
      * 4. tags: [multiple tags]
      * 5. delimiter: line beginning with -
-     * @param editorOutput
      * @return
      */
-    public static List<Card> produceStack(String editorOutput) throws IncompleteCardException {
+    public List<Card> produceStack() throws IncompleteCardException, IOException {
+        File deck = projectInfo.getDeck();
+        String editorOutput = FileUtils.readFileToString(deck, "UTF-8");
+
         editorOutput = editorOutput.trim();
         String deckname = parseDeckname(editorOutput);
         String[] arr = editorOutput.split("\n-+\n");
@@ -49,30 +54,20 @@ public class CardStackFactory {
         return deckName;
     }
 
-    private static Card interpretCard(String deckname, String cardBlock) throws IncompleteCardException {
-        String front = null;
-        String back = null;
-        String[] tags = new String[] {};
-        for(String line : cardBlock.split(System.getProperty("line.separator"))) {
-            if (line.length() > 0 && !line.startsWith("*") && !line.startsWith("-")) {
+    public Card interpretCard(String deckname, String cardBlock) throws IncompleteCardException, IOException {
+        Pattern pattern = Pattern.compile("front:(.*)back:(.*)tags:(.*)", Pattern.DOTALL);
+//        Pattern pattern = Pattern.compile("front:(.*)back:(.*)tags:(.*)\n-", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(cardBlock);
 
-                 if (line.startsWith("front:")) {
-                    front = line.replace("front: ", "");
-                 } else if (line.startsWith("back:")) {
-                    back = line.replace("back: ", "");
-                } else if (line.startsWith("tags:")) {
-                    line = line.replace("tags: ", "");
-                    tags = line.split(" ");
-                }
-
-            }
-        }
-
-        if (front == null || deckname == null || front == null || back == null) {
+        if (!matcher.find()) {
             throw new IncompleteCardException("one of the fields is empty:\n" + cardBlock);
         }
 
-        return new Card(deckname, front, back, tags);
+        return new Card(deckname,
+                imgParser.parseHtml(matcher.group(1).trim()),
+                imgParser.parseHtml(matcher.group(2).trim()),
+                matcher.group(3).trim().split(" ")
+        );
     }
 
 }
