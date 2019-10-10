@@ -3,10 +3,6 @@
 " * Author: github/dermacon
 
 
-" each new paragraph has an appropriate indent
-set tabstop=7
-:inoremap <CR> <CR><Tab>
-
 " key: z or shift + z
 " turn page - copy response to default register
 :nmap z :let @" = system("curl -s http://localhost:8080/turnNextPage")<CR>

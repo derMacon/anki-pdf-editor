@@ -55,7 +55,7 @@ public class CardStackFactory {
     }
 
     public Card interpretCard(String deckname, String cardBlock) throws IncompleteCardException, IOException {
-        Pattern pattern = Pattern.compile("front:(.*)back:(.*)tags:(.*)-*", Pattern.DOTALL);
+        Pattern pattern = Pattern.compile("front:(.*)back:(.*)tags:(.*)\n-", Pattern.DOTALL);
         Matcher matcher = pattern.matcher(cardBlock);
 
         if (!matcher.find()) {
@@ -65,7 +65,6 @@ public class CardStackFactory {
         return new Card(deckname,
                 imgParser.parseHtml(matcher.group(1).trim()),
                 imgParser.parseHtml(matcher.group(2).trim()),
-//                new String[]{""}
                 matcher.group(3).trim().split(" ")
         );
     }
