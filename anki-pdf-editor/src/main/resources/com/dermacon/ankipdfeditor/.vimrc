@@ -32,9 +32,14 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 noremap j gj
 noremap k gk
 
-" key: ,t or ,T
+" key: tab / shift + tab
 " press n or N to repeat command
 " tab between fields
-:nmap ,t /:<CR>$
-:nmap ,T /:<CR>NN$
+:inoremap <Tab> <Esc>/:<CR>jI
+:nnoremap <Tab> /:<CR>j0
+
+:inoremap <S-Tab> <Esc>/:<CR>NNjI
+:nnoremap <S-Tab> /:<CR>NNj0
+
+
 

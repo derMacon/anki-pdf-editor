@@ -48,9 +48,6 @@ input:
 // todo insert gif
 
 ### Todo
-* update vimrc with 
-    - page tag instead of page num
-    - curr page with `,p`
 * make instructional gifs for readme 
 * check if files in anki-pdf-editor are necessary for build (maybe add to .gitignore)
 * publish build
