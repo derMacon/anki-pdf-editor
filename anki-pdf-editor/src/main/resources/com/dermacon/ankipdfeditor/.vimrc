@@ -2,6 +2,11 @@
 " * Version: 1.0
 " * Author: github/dermacon
 
+
+" each new paragraph has an appropriate indent
+set tabstop=7
+:inoremap <CR> <CR><Tab>
+
 " key: z or shift + z
 " turn page - copy response to default register
 :nmap z :let @" = system("curl -s http://localhost:8080/turnNextPage")<CR>
@@ -17,10 +22,10 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 "key: ',' + 'c'
 " create a new card in the current file
 :nmap ,c G?----<Enter>2o<Esc>ifront: <CR>
-\<CR>back:  <CR>
-\<CR>tags:  <CR>
-\<CR>-----------------
-\<CR>
+\<CR><BS>back:  <CR>
+\<CR><BS>tags:  <CR>
+\<CR><BS>-----------------
+\<CR><BS>
 \<CR><Esc>o<Esc>dG?front<Enter>A
 
 " treat wrapped lines as visual lines

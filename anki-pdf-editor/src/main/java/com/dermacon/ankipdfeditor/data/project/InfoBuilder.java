@@ -169,7 +169,6 @@ public class InfoBuilder {
     }
 
     private void createDeckFile(File deckFile) throws IOException {
-        System.out.println("createDeckFile");
         int lineLength = VIM_USAGE.split("\n")[0].length();
         String deckDescription = formatDeckdescr(deckFile.getName(),lineLength);
         FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription);

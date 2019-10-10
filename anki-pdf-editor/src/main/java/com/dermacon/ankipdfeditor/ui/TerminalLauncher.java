@@ -70,7 +70,7 @@ public class TerminalLauncher implements Runnable {
         // todo
 //        throw new IOException("invalid user input: " + choice);
 
-        keepRunning = choice.matches("(e|w|a)");
+        keepRunning = choice.matches("(e|w)");
 
 
         // a shutdown is can only be prevented if the user

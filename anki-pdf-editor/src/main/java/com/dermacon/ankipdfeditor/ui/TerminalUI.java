@@ -78,8 +78,6 @@ public class TerminalUI implements UserInterface {
         int returnVal = chooser.showOpenDialog(null);
         File output = null;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
-                    chooser.getSelectedFile().getName());
             output = chooser.getSelectedFile();
         }
 

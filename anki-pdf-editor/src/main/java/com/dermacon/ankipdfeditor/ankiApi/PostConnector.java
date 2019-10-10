@@ -47,9 +47,6 @@ public class PostConnector {
 
     public String jsonRequest(String jsonInputString) throws IOException {
 
-        System.out.println("url: " + url);
-        System.out.println("input str: " + jsonInputString);
-
         try (OutputStream os = this.connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);
@@ -105,8 +102,6 @@ public class PostConnector {
                     content.append(System.lineSeparator());
                 }
             }
-
-            System.out.println(content.toString());
 
         } finally {
 

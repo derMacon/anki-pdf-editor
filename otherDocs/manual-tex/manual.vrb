@@ -1,0 +1,10 @@
+\begin{lstlisting}
+type
+  - a to write new cards
+  - e to edit project properties
+  - w to push to anki connect
+  - q to quit without pushing
+  - wq to push and exit
+  ------------------------
+input:
+   \end{lstlisting}
