@@ -72,6 +72,8 @@ public class AnkiConnector {
         }
     }
 
+//    private static void pushCard()
+
     private static void startAnki() throws IOException {
         Runtime.getRuntime().exec(ANKI_START_COMMAND);
         try {
