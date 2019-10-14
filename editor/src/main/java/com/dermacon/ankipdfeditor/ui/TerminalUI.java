@@ -104,8 +104,17 @@ public class TerminalUI implements UserInterface {
 
     @Override
     public void showExportOptions() throws IOException {
-        Scanner scanner = new Scanner(System.in);
+        String formatingChoice = formatSelection();
+        String deckChoice = deckSelection();
 
+
+        // todo actual export process
+
+        System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
+    }
+
+    private String formatSelection() {
+        Scanner scanner = new Scanner(System.in);
         System.out.print(
                 TerminalLauncher.DELIMITER_MAIN
                         + "format:\n"
@@ -121,6 +130,10 @@ public class TerminalUI implements UserInterface {
             formatOption = scanner.nextLine();
         }
 
+        return formatOption;
+    }
+
+    private String deckSelection() throws IOException {
         StringBuilder deckCollection = new StringBuilder(TerminalLauncher.DELIMITER_MAIN + "deck selection:\n");
         String[] decknames = AnkiConnector.getPossibleDecks();
         String deckname_format = "  * %d: %s\n";
@@ -130,14 +143,13 @@ public class TerminalUI implements UserInterface {
         deckCollection.append(TerminalLauncher.DELIMITER_SEC + "input: ");
         System.out.print(deckCollection);
 
+        Scanner scanner = new Scanner(System.in);
         int deckoption = Integer.parseInt(scanner.nextLine());
         while(deckoption <= 0 || deckoption > decknames.length) {
             System.out.print("try again\ninput: ");
             deckoption = Integer.parseInt(scanner.nextLine());
         }
 
-        // todo actual export process
-
-        System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
+        return decknames[deckoption];
     }
 }
