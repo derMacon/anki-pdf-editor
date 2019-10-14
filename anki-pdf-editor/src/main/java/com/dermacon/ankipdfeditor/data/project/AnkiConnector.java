@@ -41,7 +41,7 @@ public class AnkiConnector {
     }
 
     public static void pushToAnki(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
-//        startAnki();
+        startAnki();
 
         // create deck if necessary
         String deckname = projectInfo.getDeck().getName();
@@ -50,14 +50,13 @@ public class AnkiConnector {
         }
 
         // generate cards that should be pushed
-//        List<Card> cardStack = new CardStackFactory(projectInfo).produceStack();
-//        pushCard(cardStack);
+        List<Card> cardStack = new CardStackFactory(projectInfo).produceStack();
+        pushCard(cardStack);
     }
 
     private static void createDeck(String deckname) throws IOException {
         PostConnector connector = new PostConnector(ANKI_API_PORT);
         AnkiRequest request = new CreateDeckAnkiRequest(deckname);
-        System.out.println(request.toJson());
         AnkiResponse response = connector.jsonRequest(request);
 
         if (response.getError() != null) {

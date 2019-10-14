@@ -42,7 +42,7 @@ public class FxmlApp extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(); // todo duplicate???
     }
 
 }
