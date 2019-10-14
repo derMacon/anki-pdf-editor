@@ -36,4 +36,10 @@ public abstract class AnkiRequest {
      */
     public abstract Type getResponseType();
 
+
+    protected static String removeExtension(String fullFileName) {
+        return fullFileName.substring(0, fullFileName.lastIndexOf('.'));
+    }
+
+
 }

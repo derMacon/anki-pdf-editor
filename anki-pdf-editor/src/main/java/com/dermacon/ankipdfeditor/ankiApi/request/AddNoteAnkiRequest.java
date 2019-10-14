@@ -73,10 +73,6 @@ public class AddNoteAnkiRequest extends AnkiRequest {
         );
     }
 
-    private static String removeExtension(String fullFileName) {
-        return fullFileName.substring(0, fullFileName.lastIndexOf('.'));
-    }
-
     /**
      * Parses the given object array to a transmittable json array.
      * @param arr array to parse

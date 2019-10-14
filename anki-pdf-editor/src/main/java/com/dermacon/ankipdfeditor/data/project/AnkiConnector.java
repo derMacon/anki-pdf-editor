@@ -1,10 +1,7 @@
 package com.dermacon.ankipdfeditor.data.project;
 
 import com.dermacon.ankipdfeditor.ankiApi.PostConnector;
-import com.dermacon.ankipdfeditor.ankiApi.request.AddNoteAnkiRequest;
-import com.dermacon.ankipdfeditor.ankiApi.request.AnkiRequest;
-import com.dermacon.ankipdfeditor.ankiApi.request.GetDecksAnkiRequest;
-import com.dermacon.ankipdfeditor.ankiApi.request.SyncAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.*;
 import com.dermacon.ankipdfeditor.ankiApi.response.AnkiResponse;
 import com.dermacon.ankipdfeditor.data.card.Card;
 import com.dermacon.ankipdfeditor.data.card.CardStackFactory;
@@ -12,6 +9,7 @@ import com.dermacon.ankipdfeditor.data.card.IncompleteCardException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,8 +41,44 @@ public class AnkiConnector {
     }
 
     public static void pushToAnki(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
-        startAnki();
-        List<Card> cardStack = new CardStackFactory(projectInfo).produceStack();
+//        startAnki();
+
+        // create deck if necessary
+        String deckname = projectInfo.getDeck().getName();
+        if (!deckExists(deckname)) {
+            createDeck(deckname);
+        }
+
+        // generate cards that should be pushed
+//        List<Card> cardStack = new CardStackFactory(projectInfo).produceStack();
+//        pushCard(cardStack);
+    }
+
+    private static void createDeck(String deckname) throws IOException {
+        PostConnector connector = new PostConnector(ANKI_API_PORT);
+        AnkiRequest request = new CreateDeckAnkiRequest(deckname);
+        System.out.println(request.toJson());
+        AnkiResponse response = connector.jsonRequest(request);
+
+        if (response.getError() != null) {
+            throw new IOException("Cannot create deck with name: " + deckname);
+        }
+    }
+
+    private static boolean deckExists(String deckname) {
+        boolean out;
+        try {
+            AnkiRequest request = new GetDecksAnkiRequest();
+            AnkiResponse response = new PostConnector(ANKI_API_PORT).jsonRequest(request);
+            List<String> res = (ArrayList<String>) response.getResult();
+            out = res.stream().anyMatch(deckname::equals);
+        } catch (IOException e) {
+            out = false;
+        }
+        return out;
+    }
+
+    private static void pushCard(List<Card> cardStack) throws IOException {
         // not possible as stream since an exception will be thrown
         // for some reason the postconnector instance is not reusable...
         AnkiResponse response;
@@ -70,9 +104,8 @@ public class AnkiConnector {
                             + problematicCards.toString()
             );
         }
-    }
 
-//    private static void pushCard()
+    }
 
     private static void startAnki() throws IOException {
         Runtime.getRuntime().exec(ANKI_START_COMMAND);
