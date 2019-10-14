@@ -43,7 +43,7 @@ public class TerminalUI implements UserInterface {
     public void updateProjectInfo() throws IOException {
         System.out.print(
                 TerminalLauncher.DELIMITER_MAIN
-                + "Type:\n"
+                + "type:\n"
                 + "  * 1: deck\n"
                 + "  * 2: pdf\n"
                 + TerminalLauncher.DELIMITER_SEC
@@ -100,5 +100,44 @@ public class TerminalUI implements UserInterface {
     @Override
     public ProjectController getProjectController() {
         return this.projectController;
+    }
+
+    @Override
+    public void showExportOptions() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print(
+                TerminalLauncher.DELIMITER_MAIN
+                        + "format:\n"
+                        + "  * 1: pdf (WIP)\n"
+                        + "  * 2: html (WIP)\n"
+                        + TerminalLauncher.DELIMITER_SEC
+                        + "input: "
+        );
+
+        String formatOption = scanner.nextLine();
+        while (!formatOption.matches("1|2")) {
+            System.out.print("try again: ");
+            formatOption = scanner.nextLine();
+        }
+
+        StringBuilder deckCollection = new StringBuilder(TerminalLauncher.DELIMITER_MAIN + "deck selection:\n");
+        String[] decknames = AnkiConnector.getPossibleDecks();
+        String deckname_format = "  * %d: %s\n";
+        for (int i = 0; i < decknames.length; i++) {
+            deckCollection.append(String.format(deckname_format, i + 1, decknames[i]));
+        }
+        deckCollection.append(TerminalLauncher.DELIMITER_SEC + "input: ");
+        System.out.print(deckCollection);
+
+        int deckoption = Integer.parseInt(scanner.nextLine());
+        while(deckoption <= 0 || deckoption > decknames.length) {
+            System.out.print("try again\ninput: ");
+            deckoption = Integer.parseInt(scanner.nextLine());
+        }
+
+        // todo actual export process
+
+        System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
     }
 }

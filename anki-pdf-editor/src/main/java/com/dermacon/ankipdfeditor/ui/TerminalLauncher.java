@@ -19,10 +19,11 @@ public class TerminalLauncher implements Runnable {
                     + DELIMITER_MAIN
                     + "type\n"
                     + "  - e to edit project properties\n"
-                    + "  - w to push to anki connect\n"
                     + "  - a to write new cards (with push)\n"
+                    + "  - w to push to anki connect\n"
                     + "  - q to quit without pushing\n"
                     + "  - wq to push and exit\n"
+                    + "  - x to export a specified deck\n"
                     + DELIMITER_SEC
                     + "input: ";
 
@@ -54,7 +55,7 @@ public class TerminalLauncher implements Runnable {
         System.out.print(greetings);
         String choice = new Scanner(System.in).nextLine().toLowerCase();
 
-        if (!choice.matches("(e|w|a|q|wq)")) {
+        if (!choice.matches("(e|w|a|q|wq|x)")) {
             throw new IOException("invalid user input: " + choice);
         }
 
@@ -77,6 +78,10 @@ public class TerminalLauncher implements Runnable {
 
         if (choice.equals("q")) {
             ui.saveProjHistory();
+        }
+
+        if (choice.equals("x")) {
+            ui.showExportOptions();
         }
 
         // a shutdown is can only be prevented if the user
