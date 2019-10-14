@@ -34,7 +34,7 @@ public class AnkiConnector {
 
     public static String[] getPossibleDecks() throws IOException {
         startAnki();
-        PostConnector connector = new PostConnector(8765);
+        PostConnector connector = new PostConnector(ANKI_API_PORT);
         AnkiResponse r = connector.jsonRequest(new GetDecksAnkiRequest());
         List<String> out = (ArrayList<String>) r.getResult();
         return out.toArray(new String[0]);
@@ -65,16 +65,12 @@ public class AnkiConnector {
     }
 
     private static boolean deckExists(String deckname) {
-        boolean out;
         try {
-            AnkiRequest request = new GetDecksAnkiRequest();
-            AnkiResponse response = new PostConnector(ANKI_API_PORT).jsonRequest(request);
-            List<String> res = (ArrayList<String>) response.getResult();
-            out = res.stream().anyMatch(deckname::equals);
+            String[] res = getPossibleDecks();
+            return Arrays.stream(res).anyMatch(deckname::equals);
         } catch (IOException e) {
-            out = false;
+            return false;
         }
-        return out;
     }
 
     private static void pushCard(List<Card> cardStack) throws IOException {
