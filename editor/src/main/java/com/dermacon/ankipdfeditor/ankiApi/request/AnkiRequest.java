@@ -1,7 +1,5 @@
 package com.dermacon.ankipdfeditor.ankiApi.request;
 
-import java.lang.reflect.Type;
-
 /**
  * Transmittable anki request.
  */
@@ -29,12 +27,6 @@ public abstract class AnkiRequest {
      * @return json representation
      */
     public abstract String toJson();
-
-    /**
-     * Returns the response type of the request.
-     * @return the response type of the request
-     */
-    public abstract Type getResponseType();
 
 
     protected static String removeExtension(String fullFileName) {

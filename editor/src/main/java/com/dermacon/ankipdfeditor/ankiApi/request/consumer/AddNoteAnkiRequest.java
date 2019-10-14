@@ -1,21 +1,13 @@
-package com.dermacon.ankipdfeditor.ankiApi.request;
+package com.dermacon.ankipdfeditor.ankiApi.request.consumer;
 
-import com.dermacon.ankipdfeditor.ankiApi.response.AddNoteResponse;
+import com.dermacon.ankipdfeditor.ankiApi.request.AnkiRequest;
 import com.dermacon.ankipdfeditor.data.card.Card;
 import org.json.JSONArray;
-
-import java.lang.reflect.Type;
-
 
 /**
  * Anki request to push a card object to the anki api.
  */
-public class AddNoteAnkiRequest extends AnkiRequest {
-
-    /**
-     * Response type of the request.
-     */
-    private static final Type RESPONSE_TYPE = AddNoteResponse.class;
+public class AddNoteAnkiRequest extends ConsumingRequest {
 
     /**
      * Json template for the request.
@@ -55,11 +47,6 @@ public class AddNoteAnkiRequest extends AnkiRequest {
      */
     public AddNoteAnkiRequest(final Card card) {
         this.card = card;
-    }
-
-    @Override
-    public Type getResponseType() {
-        return RESPONSE_TYPE;
     }
 
     @Override
