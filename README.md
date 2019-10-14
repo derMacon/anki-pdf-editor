@@ -9,7 +9,7 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * `z` / `Z`: turn next / previous page; Copy the current page tag to the default register (accessed via `p`)
 * `,c`: Append new card template to anki file
 * `,p`: Reload page tag, pastes the current page tag to cursor position
-* ***tab*** / ***shift*** + ***tab***: tab between fields
+* *tab* / *shift* + *tab*: tab between fields
 
 ### vim default 
 ![vim-cheat-sheet](./otherDocs/manual-tex/img/vim-cheat-sheet.jpg)
@@ -32,6 +32,7 @@ type
   - w to push to anki connect
   - q to quit without pushing
   - wq to push and exit
+  - x to export a specified deck
   ------------------------
 input: 
 ```
@@ -40,7 +41,9 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
-* check if files in anki-pdf-editor are necessary for build (maybe add to .gitignore)
+* export option
+    - pdf: generate beamer file -> use pandoc for pdf generation
+    - html: can be used on a simple github pages website
 * checkstyle
 
 ### Reminder

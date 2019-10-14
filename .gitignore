@@ -9,14 +9,20 @@
 *.toc
 *.vrb
 
+# IDE
 */.idea/
 *.iml
 *.swp
-
 */img_temp/
 */META-INF/
 */lastDocs/
 */target/
+
+# maven
+*/.mvn/
+*/mvnw*
+*/mvnw.cmd
+
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
