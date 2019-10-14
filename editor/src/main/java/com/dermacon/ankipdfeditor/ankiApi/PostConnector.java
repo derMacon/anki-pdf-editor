@@ -3,9 +3,11 @@ package com.dermacon.ankipdfeditor.ankiApi;
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.ConsumingRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.FindNotesRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.GetDecksAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.function.NotesInfoRequest;
 import com.dermacon.ankipdfeditor.ankiApi.response.AnkiStatusReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.IDLstReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.NotesInfoReply;
 import com.google.gson.Gson;
 
 import java.io.*;
@@ -84,6 +86,11 @@ public class PostConnector {
     public NameLstStatusReply jsonRequest(GetDecksAnkiRequest request) throws IOException {
         String jsonResponse = jsonRequest(request.toJson());
         return gson.fromJson(jsonResponse, NameLstStatusReply.class);
+    }
+
+    public NotesInfoReply jsonRequest(NotesInfoRequest request) throws IOException {
+        String jsonResponse = jsonRequest(request.toJson());
+        return gson.fromJson(jsonResponse, NotesInfoReply.class);
     }
 
 

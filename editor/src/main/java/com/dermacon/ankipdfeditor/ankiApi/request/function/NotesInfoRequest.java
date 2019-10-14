@@ -8,6 +8,12 @@ public class NotesInfoRequest extends FunctionalRequest {
             + "\"params\": {\"notes\": [%s]}"
             + "}";
 
+    private final int nodeId;
+
+    public NotesInfoRequest(int nodeId) {
+        this.nodeId = nodeId;
+    }
+
     @Override
     public String toJson() {
         return String.format(JSON_TEMPLATE, this.version);

@@ -30,7 +30,11 @@ public abstract class AnkiRequest {
 
 
     protected static String removeExtension(String fullFileName) {
-        return fullFileName.substring(0, fullFileName.lastIndexOf('.'));
+        int idx = fullFileName.lastIndexOf('.');
+        if (idx > 0) {
+            fullFileName = fullFileName.substring(0, idx);
+        }
+        return fullFileName;
     }
 
 

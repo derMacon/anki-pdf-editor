@@ -2,15 +2,18 @@ package com.dermacon.ankipdfeditor.ankiApi.response.function;
 
 import com.dermacon.ankipdfeditor.ankiApi.response.AnkiStatusReply;
 
+import java.util.ArrayList;
+
 public class IDLstReply extends AnkiStatusReply {
 
-    private Integer[] result;
+    private ArrayList<Long> result;
+//    private Integer[] result;
 
-    public IDLstReply(Integer[] result, String error) {
+    public IDLstReply(ArrayList<Long> result, String error) {
         super(error);
     }
 
-    public Integer[] getResult() {
+    public ArrayList<Long> getResult() {
         return result;
     }
 }

@@ -11,12 +11,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CardStackFactory {
+/**
+ * Generates a stack of notes / cards based on a given projectinfo component.
+ */
+public class CardStackFileFactory {
 
     private ProjectInfo projectInfo;
     private HtmlParser imgParser;
 
-    public CardStackFactory(ProjectInfo projectInfo) throws IOException {
+    public CardStackFileFactory(ProjectInfo projectInfo) throws IOException {
         this.projectInfo = projectInfo;
         this.imgParser = new HtmlParser(projectInfo.getPdf());
     }

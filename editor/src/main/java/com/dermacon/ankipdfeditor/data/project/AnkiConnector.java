@@ -1,16 +1,19 @@
 package com.dermacon.ankipdfeditor.data.project;
 
 import com.dermacon.ankipdfeditor.ankiApi.PostConnector;
-import com.dermacon.ankipdfeditor.ankiApi.request.*;
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.AddNoteAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.ConsumingRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.CreateDeckAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.SyncAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.function.FindNotesRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.GetDecksAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.function.NotesInfoRequest;
 import com.dermacon.ankipdfeditor.ankiApi.response.AnkiStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.IDLstReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstStatusReply;
 import com.dermacon.ankipdfeditor.data.card.Card;
-import com.dermacon.ankipdfeditor.data.card.CardStackFactory;
+import com.dermacon.ankipdfeditor.data.card.CardStackBuilder;
+import com.dermacon.ankipdfeditor.data.card.CardStackFileFactory;
 import com.dermacon.ankipdfeditor.data.card.IncompleteCardException;
 
 import java.io.IOException;
@@ -39,11 +42,35 @@ public class AnkiConnector {
     private static final int ANKI_API_PORT = 8765;
 
 
-    public static String[] getPossibleDecks() throws IOException {
+    public static String[] getDeckNames() throws IOException {
         startAnki();
         PostConnector connector = new PostConnector(ANKI_API_PORT);
         NameLstStatusReply r = connector.jsonRequest(new GetDecksAnkiRequest());
         return r.getResult();
+    }
+
+    /**
+     * Extracts a card array from the given deck name.
+     * 1. Get the note ID from each card in the deck
+     * 2. Get the note info using the note ID
+     * @param deckname
+     * @return
+     * @throws IOException
+     */
+    public static List<Card> getCardsFromDeck(String deckname) throws IOException {
+        FindNotesRequest request = new FindNotesRequest(deckname);
+        IDLstReply reply = new PostConnector(ANKI_API_PORT).jsonRequest(request);
+
+        CardStackBuilder builder = new CardStackBuilder();
+        for(Long currId : reply.getResult()) {
+//            for(Integer currId : reply.getResult()) {
+//            builder.addCard(new PostConnector(ANKI_API_PORT)
+//                    .jsonRequest(new NotesInfoRequest(currId))
+//                    .getResult());
+            System.out.println(currId);
+        }
+
+        return builder.getStack();
     }
 
     public static void pushToAnki(ProjectInfo projectInfo) throws IOException, IncompleteCardException {
@@ -56,13 +83,14 @@ public class AnkiConnector {
         }
 
         // generate cards that should be pushed
-        List<Card> cardStack = new CardStackFactory(projectInfo).produceStack();
+        List<Card> cardStack = new CardStackFileFactory(projectInfo).produceStack();
         pushCard(cardStack);
     }
 
+
     private static boolean deckExists(String deckname) {
         try {
-            String[] res = getPossibleDecks();
+            String[] res = getDeckNames();
             return Arrays.stream(res).anyMatch(deckname::equals);
         } catch (IOException e) {
             return false;

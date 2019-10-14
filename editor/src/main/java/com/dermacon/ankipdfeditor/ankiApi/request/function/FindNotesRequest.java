@@ -3,7 +3,7 @@ package com.dermacon.ankipdfeditor.ankiApi.request.function;
 public class FindNotesRequest extends FunctionalRequest {
 
     private static final String JSON_TEMPLATE = "{\n"
-            + "\"action\": \"createDeck\",\n"
+            + "\"action\": \"findNotes\",\n"
             + "\"version\": %s,\n"
             + "\"params\": {\"query\": \"deck:%s\"}"
             + "}";
