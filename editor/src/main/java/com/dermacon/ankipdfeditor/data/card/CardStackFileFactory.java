@@ -33,7 +33,7 @@ public class CardStackFileFactory {
      * 5. delimiter: line beginning with -
      * @return
      */
-    public List<Card> produceStack() throws IncompleteCardException, IOException {
+    public List<Card> produceStack() throws IncompleteSyntaxException, IOException {
         File deck = projectInfo.getDeck();
         String editorOutput = FileUtils.readFileToString(deck, "UTF-8");
 
@@ -57,7 +57,17 @@ public class CardStackFileFactory {
         return deckName;
     }
 
-    public Card interpretCard(String deckname, String cardBlock) throws IncompleteCardException, IOException {
+    /**
+     * Generates a single card form a given deck name and the
+     * previously generated card block.
+     * @param deckname deck name of the corresponding deck
+     * @param cardBlock card block containing the card data in typical
+     *                  property notation "front:(.*)back:(.*)tags:(.*)"
+     * @return card containing the given information
+     * @throws IncompleteSyntaxException thrown when the cardblock has an incorrect syntax
+     * @throws IOException thrown when the image render process is not working as intended
+     */
+    public Card interpretCard(String deckname, String cardBlock) throws IncompleteSyntaxException, IOException {
         // remove delimiter
         cardBlock = cardBlock.replaceAll("\n-+$", "");
 
@@ -65,7 +75,7 @@ public class CardStackFileFactory {
         Matcher matcher = pattern.matcher(cardBlock);
 
         if (!matcher.find()) {
-            throw new IncompleteCardException("one of the fields is empty:\n" + cardBlock);
+            throw new IncompleteSyntaxException("one of the fields is empty:\n" + cardBlock);
         }
 
         return new Card(deckname,
