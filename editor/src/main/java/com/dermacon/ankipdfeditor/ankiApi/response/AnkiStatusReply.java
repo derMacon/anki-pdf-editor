@@ -3,7 +3,7 @@ package com.dermacon.ankipdfeditor.ankiApi.response;
 public abstract class AnkiStatusReply {
     private String error;
 
-    public AnkiStatusReply(String error) {
+    public AnkiStatusReply(Object result, String error) {
         this.error = error;
     }
 

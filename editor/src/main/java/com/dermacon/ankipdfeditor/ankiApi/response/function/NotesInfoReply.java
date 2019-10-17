@@ -8,7 +8,7 @@ public class NotesInfoReply extends AnkiStatusReply {
 
     // todo
     public NotesInfoReply(Object result, String error) {
-        super(error);
+        super(result, error);
     }
 
     public Object getResult() {

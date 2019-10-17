@@ -7,7 +7,7 @@ public class NameLstStatusReply extends AnkiStatusReply {
     private final String[] result;
 
     public NameLstStatusReply(String[] result, String error) {
-        super(error);
+        super(result, error);
         this.result = result;
     }
 

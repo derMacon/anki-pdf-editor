@@ -41,6 +41,14 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* cannot add new card when deck wasn't created first
+* add german umlaute
+* add formatting such as heading, bold, cursiv, etc.
+* when creating next card stay in normal mode
+* pdf with different scaling cannot be rendered properly, see script vom 'systemanalyse'
+* add scaling option to pdf
+* selected pdf overwriten with manual
+* jfx multiple instanciations -> must be solved somehow
 * update instructional gif
 * export option
     - pdf: generate beamer file -> use pandoc for pdf generation

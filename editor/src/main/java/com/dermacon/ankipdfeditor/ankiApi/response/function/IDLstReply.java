@@ -10,7 +10,7 @@ public class IDLstReply extends AnkiStatusReply {
 //    private Integer[] result;
 
     public IDLstReply(ArrayList<Long> result, String error) {
-        super(error);
+        super(result, error);
     }
 
     public ArrayList<Long> getResult() {

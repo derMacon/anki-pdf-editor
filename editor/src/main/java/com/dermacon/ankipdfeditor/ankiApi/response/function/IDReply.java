@@ -7,7 +7,7 @@ public class IDReply extends AnkiStatusReply {
     private Integer result;
 
     public IDReply(Integer result, String error) {
-        super(error);
+        super(result, error);
     }
 
     public Integer getResult() {

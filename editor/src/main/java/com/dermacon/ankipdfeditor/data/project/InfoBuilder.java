@@ -163,7 +163,7 @@ public class InfoBuilder {
 
     public InfoBuilder setPdf(String pdfName) throws IOException {
         File targetFile = new File(PDF_DIR + pdfName);
-        copyResource(pdf, targetFile);
+//        copyResource(pdf, targetFile);
         this.pdf = targetFile;
         return this;
     }
