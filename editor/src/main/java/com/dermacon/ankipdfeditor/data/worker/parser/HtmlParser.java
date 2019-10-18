@@ -21,8 +21,11 @@ public class HtmlParser {
     private static final String HTML_LINE_FORMAT = "<div>%s</div>";
 
     // QXGA resolution -> needs at least 192 dpi
-    private static final int DEFAULT_WIDTH = 2048;
-    private static final int DEFAULT_HEIGHT = 1536;
+//    private static final int DEFAULT_WIDTH = 2048;
+//    private static final int DEFAULT_HEIGHT = 1536;
+
+    private static final int DEFAULT_WIDTH = 930;
+    private static final int DEFAULT_HEIGHT = 650;
 
     /**
      * Default output resolution of the images (in dots per inch)
