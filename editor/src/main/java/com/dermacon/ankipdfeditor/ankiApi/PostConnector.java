@@ -4,9 +4,10 @@ import com.dermacon.ankipdfeditor.ankiApi.request.consumer.ConsumingRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.FindNotesRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.GetDecksAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.NotesInfoRequest;
-import com.dermacon.ankipdfeditor.ankiApi.response.AnkiStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.AnkiReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.consumer.ConsumerReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.IDLstReply;
-import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.NotesInfoReply;
 import com.google.gson.Gson;
 
@@ -73,9 +74,9 @@ public class PostConnector {
      * @return
      * @throws IOException
      */
-    public AnkiStatusReply jsonRequest(ConsumingRequest request) throws IOException {
+    public AnkiReply jsonRequest(ConsumingRequest request) throws IOException {
         String jsonResponse = jsonRequest(request.toJson());
-        return gson.fromJson(jsonResponse, AnkiStatusReply.class);
+        return gson.fromJson(jsonResponse, ConsumerReply.class);
     }
 
     public IDLstReply jsonRequest(FindNotesRequest request) throws IOException {
@@ -83,9 +84,9 @@ public class PostConnector {
         return gson.fromJson(jsonResponse, IDLstReply.class);
     }
 
-    public NameLstStatusReply jsonRequest(GetDecksAnkiRequest request) throws IOException {
+    public NameLstReply jsonRequest(GetDecksAnkiRequest request) throws IOException {
         String jsonResponse = jsonRequest(request.toJson());
-        return gson.fromJson(jsonResponse, NameLstStatusReply.class);
+        return gson.fromJson(jsonResponse, NameLstReply.class);
     }
 
     public NotesInfoReply jsonRequest(NotesInfoRequest request) throws IOException {

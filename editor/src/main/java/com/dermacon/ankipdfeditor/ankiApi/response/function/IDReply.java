@@ -1,13 +1,13 @@
 package com.dermacon.ankipdfeditor.ankiApi.response.function;
 
-import com.dermacon.ankipdfeditor.ankiApi.response.AnkiStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.AnkiReply;
 
-public class IDReply extends AnkiStatusReply {
+public class IDReply extends AnkiReply {
 
     private Integer result;
 
     public IDReply(Integer result, String error) {
-        super(result, error);
+        super(error);
     }
 
     public Integer getResult() {

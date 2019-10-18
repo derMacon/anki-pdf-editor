@@ -5,12 +5,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="brdPn_container" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="brdPn_container" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="952.0" prefWidth="1286.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <Label fx:id="lbl" prefHeight="55.0" prefWidth="237.0" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <ImageView fx:id="imgVw_page" fitHeight="782.0" fitWidth="1146.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fx:id="imgVw_page" fitHeight="1198.0" fitWidth="1507.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin></ImageView>

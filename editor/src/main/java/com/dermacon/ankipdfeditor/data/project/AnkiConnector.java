@@ -7,9 +7,9 @@ import com.dermacon.ankipdfeditor.ankiApi.request.consumer.CreateDeckAnkiRequest
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.SyncAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.FindNotesRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.GetDecksAnkiRequest;
-import com.dermacon.ankipdfeditor.ankiApi.response.AnkiStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.AnkiReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.IDLstReply;
-import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstReply;
 import com.dermacon.ankipdfeditor.data.card.Card;
 import com.dermacon.ankipdfeditor.data.card.CardStackBuilder;
 import com.dermacon.ankipdfeditor.data.card.CardStackFileFactory;
@@ -49,7 +49,7 @@ public class AnkiConnector {
     public static String[] getDeckNames() throws IOException {
         startAnki();
         PostConnector connector = new PostConnector(ANKI_API_PORT);
-        NameLstStatusReply r = connector.jsonRequest(new GetDecksAnkiRequest());
+        NameLstReply r = connector.jsonRequest(new GetDecksAnkiRequest());
         return r.getResult();
     }
 
@@ -131,7 +131,7 @@ public class AnkiConnector {
     private static void createDeck(String deckname) throws IOException {
         PostConnector connector = new PostConnector(ANKI_API_PORT);
         ConsumingRequest request = new CreateDeckAnkiRequest(deckname);
-        AnkiStatusReply response = connector.jsonRequest(request);
+        AnkiReply response = connector.jsonRequest(request);
 
         if (response.getError() != null) {
             throw new IOException("Cannot create deck with name: " + deckname);
@@ -149,7 +149,7 @@ public class AnkiConnector {
     private static void pushCard(List<Card> cardStack) throws IOException {
         // not possible as stream since an exception will be thrown
         // for some reason the postconnector instance is not reusable...
-        AnkiStatusReply response;
+        AnkiReply response;
         List<Card> problematicCards = new LinkedList<>();
         for(Card curr : cardStack) {
             ConsumingRequest request = new AddNoteAnkiRequest(curr);

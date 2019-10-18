@@ -1,14 +1,14 @@
 package com.dermacon.ankipdfeditor.ankiApi.response.function;
 
-import com.dermacon.ankipdfeditor.ankiApi.response.AnkiStatusReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.AnkiReply;
 
-public class NotesInfoReply extends AnkiStatusReply {
+public class NotesInfoReply extends AnkiReply {
 
     private Object result;
 
     // todo
     public NotesInfoReply(Object result, String error) {
-        super(result, error);
+        super(error);
     }
 
     public Object getResult() {

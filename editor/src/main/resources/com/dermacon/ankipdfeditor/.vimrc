@@ -1,36 +1,37 @@
 " ----------------- Anki-Editor -------------------
-" * Version: 1.0
+" * Version: 1.1
 " * Author: github/dermacon
+" * Repo: anki-pdf-editor
+
+" ________ general ________
+" treat wrapped lines as visual lines
+noremap j gj
+noremap k gk
 
 " costum syntax highlighting
 :colorscheme elflord
 :match Constant /\v(*)/
 :2match Keyword /\v(front:|back:|tags:)/
 
+
+" _______ commands _______
+
 " key: z or shift + z
 " turn page - copy response to default register
 :nmap z :let @" = system("curl -s http://localhost:8080/turnNextPage")<CR>
 :nmap Z :let @" = system("curl -s http://localhost:8080/turnPrevPage")<CR>
 
-" key: ',' + 'p'
-" prints the api response to the current cursor position
-" if default reg was overwritten by the user, otherwise
-" just use p to print the current page number tag
+" key: '['
+" prints the current page tag to the current cursor position
 let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
-:nmap ,p "=system(apiUrl)<C-M>p
+:nmap [ "=system(apiUrl)<C-M>p
 
-"key: ',' + 'c'
+"key: ']'
 " create a new card in the current file
-:nmap ,c G?----<Enter>2o<Esc>ifront:<CR><CR>
+" copies the tags from the last card
+:nmap ] /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR><CR>
 \<CR><BS>back:<CR><CR>
-\<CR><BS>tags:<CR><CR>
-\<CR><BS>-----------------
-\<CR><BS>
-\<CR><Esc>o<Esc>dG?front<Enter>ja
-
-" treat wrapped lines as visual lines
-noremap j gj
-noremap k gk
+\<CR><BS>tags:<Esc>p?front:<CR>o
 
 " key: tab / shift + tab
 " press n or N to repeat command
@@ -40,6 +41,4 @@ noremap k gk
 
 :inoremap <S-Tab> <Esc>/:<CR>NNjI
 :nnoremap <S-Tab> /:<CR>NNj0
-
-
 
