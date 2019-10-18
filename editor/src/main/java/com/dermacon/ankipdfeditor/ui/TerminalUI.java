@@ -26,6 +26,31 @@ public class TerminalUI implements UserInterface {
     }
 
     @Override
+    public void pushToAnki() throws IOException {
+        AnkiConnector.pushToAnki(this.projectController.getProjectInfo());
+    }
+
+    @Override
+    public void saveProjHistory() throws IOException {
+        projectController.saveProjHistory();
+    }
+
+    @Override
+    public ProjectController getProjectController() {
+        return this.projectController;
+    }
+
+    @Override
+    public void exportStack() throws IOException {
+        List<Card> stack = deckSelection();
+        Formating formatingChoice = formatSelection();
+
+        generateExportFile(stack, formatingChoice);
+
+        System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
+    }
+
+    @Override
     public void openEditor() throws IOException {
         // open vim
         String pathToDeckFile = projectController.getProjectInfo().getDeck().getPath();
@@ -58,13 +83,19 @@ public class TerminalUI implements UserInterface {
         }
 
         if (input.equals("1")) {
-            chooseDeck(AnkiConnector.getDeckNames());
+            chooseDeck();
         } else {
             projectController.setPdf(openFileChooser());
         }
     }
 
-    private void chooseDeck(String[] decks) {
+    private void chooseDeck() throws IOException {
+        String deckname = userSelection(displayOptions());
+        projectController.setDeck(deckname + ".anki");
+    }
+
+    // todo maybe delete this
+    private void openDeckChooser(String[] decks) {
         FXDeckChooser.setDeckNames(decks);
         FXDeckChooser.setCallback(deckName -> projectController.setDeck(deckName + ".anki"));
         Application.launch(FXDeckChooser.class, new String[0]);
@@ -87,30 +118,7 @@ public class TerminalUI implements UserInterface {
 
         return output;
     }
-    @Override
-    public void pushToAnki() throws IOException {
-        AnkiConnector.pushToAnki(this.projectController.getProjectInfo());
-    }
 
-    @Override
-    public void saveProjHistory() throws IOException {
-        projectController.saveProjHistory();
-    }
-
-    @Override
-    public ProjectController getProjectController() {
-        return this.projectController;
-    }
-
-    @Override
-    public void exportStack() throws IOException {
-        List<Card> stack = deckSelection();
-        Formating formatingChoice = formatSelection();
-
-        generateExportFile(stack, formatingChoice);
-
-        System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
-    }
 
     private enum Formating {
         HTML, PDF

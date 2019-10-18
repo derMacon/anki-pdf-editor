@@ -90,5 +90,4 @@ public class TerminalLauncher implements Runnable {
         return choice.matches("(e|w)");
     }
 
-
 }

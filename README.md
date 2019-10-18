@@ -41,15 +41,15 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
-* escape " => otherwise Anki api cannot respond to request
-* add german umlaute
+* new cards should be appended to stack not prepended
+* make images resize in anki
 * anki gui - fix html 
 * selected pdf overwriten with manual
-* jfx multiple instanciations -> must be solved somehow
 * update instructional gif
 * export option
     - pdf: generate beamer file -> use pandoc for pdf generation
     - html: can be used on a simple github pages website
+* deactivate debug when pushing to api
 * checkstyle
 
 ### Reminder
