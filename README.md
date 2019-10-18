@@ -1,7 +1,7 @@
 # Anki-Pdf-Editor
 Commandline tool to create anki flash cards via the vim editor. Once started the programm will display a selected pdf document in which the user can navigate throughout vim itself. If a anki-card should contain a specific pdf page of the displayed document on either the front- or the backside of a note it can be passed in a simplyfied version where the pagenumber is written between tags. 
 
-All features can be used via shortcuts. For that the program opens a costum [.vimrc](./anki-pdf-editor/src/main/resources/com/dermacon/ankipdfeditor/.vimrc). For further information see the [manual](./otherDocs/manual-tex/manual.pdf).
+All features can be used via shortcuts. For that the program opens a costum [.vimrc](./editor/src/main/resources/com/dermacon/ankipdfeditor/.vimrc). For further information see the [manual](./otherDocs/manual-tex/manual.pdf).
 
 ## Shortcut overview
 
@@ -22,7 +22,7 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 
 ## Usage
 * Download jar from release tab and execute via `java -jar ./path/to/jar`
-* Recommended: execute at the same directory to avoid initializing the project directories any where they should not be. 
+* Recommended: execute in the same directory to avoid initializing the project directories any where they should not be. 
 
 ### Top-level menu
 ```
@@ -41,9 +41,15 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* new cards should be appended to stack not prepended
+* make images resize in anki
+* anki gui - fix html 
+* selected pdf overwriten with manual
+* update instructional gif
 * export option
     - pdf: generate beamer file -> use pandoc for pdf generation
     - html: can be used on a simple github pages website
+* deactivate debug when pushing to api
 * checkstyle
 
 ### Reminder

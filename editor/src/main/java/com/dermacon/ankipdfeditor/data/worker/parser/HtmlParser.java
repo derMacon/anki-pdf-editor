@@ -20,13 +20,17 @@ public class HtmlParser {
     private static final String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
     private static final String HTML_LINE_FORMAT = "<div>%s</div>";
 
+    // QXGA resolution -> needs at least 192 dpi
+//    private static final int DEFAULT_WIDTH = 2048;
+//    private static final int DEFAULT_HEIGHT = 1536;
+
     private static final int DEFAULT_WIDTH = 930;
     private static final int DEFAULT_HEIGHT = 650;
 
     /**
      * Default output resolution of the images (in dots per inch)
      */
-    public static int DEFAULT_DPI = 150;
+    public static int DEFAULT_DPI = 300;
 
     private PDDocument doc;
     private String pdfName;
@@ -56,14 +60,36 @@ public class HtmlParser {
 
     private String parseImg(String side) throws IOException {
         int[] nums = extractAllNumbers(side);
-//        Arrays.stream(nums).forEach(this::renderImageInTemp);
         for (int curr : nums) {
             renderImageInTemp(curr);
         }
+        return mapGermanUmlaute(generateImgHtmlTag(side));
+    }
+
+    private String generateImgHtmlTag(String side) {
         return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>");
     }
 
     /**
+     * Maps
+     * "a to ä / "A to Ä
+     * "u to ü / "U to Ü
+     * "o to Ö / "O to Ö
+     *
+     * @param side
+     * @return
+     */
+    private String mapGermanUmlaute(String side) {
+        return side.replaceAll("\"a", "ä")
+                .replaceAll("\"A", "Ä")
+                .replaceAll("\"u", "ü")
+                .replaceAll("\"U", "Ü")
+                .replaceAll("\"o", "ö")
+                .replaceAll("\"O", "Ö");
+    }
+
+    /**
+     * todo delete... not used, workers themselves render the images.
      * Renders an image of the given page given that the page is actually existent in the underlying pdf document
      *
      * @param pageNum page num which the user selected

@@ -14,13 +14,14 @@ import java.util.function.DoubleToIntFunction;
 
 class Worker implements Runnable {
 
-    private static final int DEFAULT_WIDTH = 930;
-    private static final int DEFAULT_HEIGHT = 650;
+    // QXGA resolution -> needs at least 192 dpi (calculator: http://dpi.lv/)
+    private static final int DEFAULT_WIDTH = 2048;
+    private static final int DEFAULT_HEIGHT = 1536;
 
     /**
      * Default output resolution of the images (in dots per inch)
      */
-    private static int DEFAULT_DPI = 150;
+    private static int DEFAULT_DPI = 200;
 
     private final Assignments assignments;
     private final ProjectInfo projectInfo;

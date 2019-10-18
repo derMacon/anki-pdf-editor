@@ -2,6 +2,7 @@ package com.dermacon.ankipdfeditor.ui;
 
 
 import com.dermacon.ankipdfeditor.FxmlApp;
+import com.dermacon.ankipdfeditor.data.card.Card;
 import com.dermacon.ankipdfeditor.data.project.AnkiConnector;
 import com.dermacon.ankipdfeditor.data.project.ProjectController;
 import javafx.application.Application;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class TerminalUI implements UserInterface {
@@ -17,12 +19,35 @@ public class TerminalUI implements UserInterface {
 //    private static final String NEW_TERMINAL_COMMAND = "xterm vim %s";
     private static final String NEW_TERMINAL_COMMAND = "gnome-terminal -- vim -N -u %s %s";
 
-    private AnkiConnector ankiConnector;
     private ProjectController projectController;
 
     public TerminalUI() throws IOException {
         projectController = new ProjectController();
-        ankiConnector = new AnkiConnector();
+    }
+
+    @Override
+    public void pushToAnki() throws IOException {
+        AnkiConnector.pushToAnki(this.projectController.getProjectInfo());
+    }
+
+    @Override
+    public void saveProjHistory() throws IOException {
+        projectController.saveProjHistory();
+    }
+
+    @Override
+    public ProjectController getProjectController() {
+        return this.projectController;
+    }
+
+    @Override
+    public void exportStack() throws IOException {
+        List<Card> stack = deckSelection();
+        Formating formatingChoice = formatSelection();
+
+        generateExportFile(stack, formatingChoice);
+
+        System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
     }
 
     @Override
@@ -58,13 +83,19 @@ public class TerminalUI implements UserInterface {
         }
 
         if (input.equals("1")) {
-            chooseDeck(AnkiConnector.getPossibleDecks());
+            chooseDeck();
         } else {
             projectController.setPdf(openFileChooser());
         }
     }
 
-    private void chooseDeck(String[] decks) {
+    private void chooseDeck() throws IOException {
+        String deckname = userSelection(displayOptions());
+        projectController.setDeck(deckname + ".anki");
+    }
+
+    // todo maybe delete this
+    private void openDeckChooser(String[] decks) {
         FXDeckChooser.setDeckNames(decks);
         FXDeckChooser.setCallback(deckName -> projectController.setDeck(deckName + ".anki"));
         Application.launch(FXDeckChooser.class, new String[0]);
@@ -87,25 +118,19 @@ public class TerminalUI implements UserInterface {
 
         return output;
     }
-    @Override
-    public void pushToAnki() throws IOException {
-        ankiConnector.pushToAnki(this.projectController.getProjectInfo());
+
+
+    private enum Formating {
+        HTML, PDF
     }
 
-    @Override
-    public void saveProjHistory() throws IOException {
-        projectController.saveProjHistory();
+    private void generateExportFile(List<Card> stack, Formating formating) {
+        // todo
+        System.out.println("todo - generateExportFile");
     }
 
-    @Override
-    public ProjectController getProjectController() {
-        return this.projectController;
-    }
-
-    @Override
-    public void showExportOptions() throws IOException {
+    private Formating formatSelection() {
         Scanner scanner = new Scanner(System.in);
-
         System.out.print(
                 TerminalLauncher.DELIMITER_MAIN
                         + "format:\n"
@@ -115,14 +140,24 @@ public class TerminalUI implements UserInterface {
                         + "input: "
         );
 
-        String formatOption = scanner.nextLine();
-        while (!formatOption.matches("1|2")) {
+        int choice = Integer.parseInt(scanner.nextLine());
+        while (choice > 0 && choice <= Formating.values().length) {
             System.out.print("try again: ");
-            formatOption = scanner.nextLine();
+            choice = Integer.parseInt(scanner.nextLine());
         }
 
+        return Formating.values()[choice - 1];
+    }
+
+    private List<Card> deckSelection() throws IOException {
+        String[] decknames = displayOptions();
+        String deckname = userSelection(decknames);
+        return AnkiConnector.getCardsFromDeck(deckname);
+    }
+
+    private String[] displayOptions() throws IOException {
         StringBuilder deckCollection = new StringBuilder(TerminalLauncher.DELIMITER_MAIN + "deck selection:\n");
-        String[] decknames = AnkiConnector.getPossibleDecks();
+        String[] decknames = AnkiConnector.getDeckNames();
         String deckname_format = "  * %d: %s\n";
         for (int i = 0; i < decknames.length; i++) {
             deckCollection.append(String.format(deckname_format, i + 1, decknames[i]));
@@ -130,14 +165,16 @@ public class TerminalUI implements UserInterface {
         deckCollection.append(TerminalLauncher.DELIMITER_SEC + "input: ");
         System.out.print(deckCollection);
 
+        return decknames;
+    }
+
+    private String userSelection(String[] decknames) {
+        Scanner scanner = new Scanner(System.in);
         int deckoption = Integer.parseInt(scanner.nextLine());
         while(deckoption <= 0 || deckoption > decknames.length) {
             System.out.print("try again\ninput: ");
             deckoption = Integer.parseInt(scanner.nextLine());
         }
-
-        // todo actual export process
-
-        System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
+        return decknames[deckoption];
     }
 }

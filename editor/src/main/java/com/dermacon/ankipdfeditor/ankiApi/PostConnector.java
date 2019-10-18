@@ -1,17 +1,21 @@
 package com.dermacon.ankipdfeditor.ankiApi;
 
-import com.dermacon.ankipdfeditor.ankiApi.request.AnkiRequest;
-import com.dermacon.ankipdfeditor.ankiApi.response.AnkiResponse;
+import com.dermacon.ankipdfeditor.ankiApi.request.consumer.ConsumingRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.function.FindNotesRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.function.GetDecksAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.function.NotesInfoRequest;
+import com.dermacon.ankipdfeditor.ankiApi.response.AnkiReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.consumer.ConsumerReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.IDLstReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.NotesInfoReply;
 import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 public class PostConnector {
-
-    private static final Integer DEFAULT_PORT = 8765;
 
     private String url = null;
     private HttpURLConnection connection = null;
@@ -38,14 +42,11 @@ public class PostConnector {
      * Usefull resources:
      * - StackOverflow: https://stackoverflow.com/questions/7181534/http-post-using-json-in-java
      *
+     * @param jsonInputString
+     * @return
      * @throws IOException
      */
-    public AnkiResponse jsonRequest(AnkiRequest request) throws IOException {
-        String jsonResponse = jsonRequest(request.toJson());
-        return gson.fromJson(jsonResponse, request.getResponseType());
-    }
-
-    public String jsonRequest(String jsonInputString) throws IOException {
+    private String jsonRequest(String jsonInputString) throws IOException {
 
         try (OutputStream os = this.connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
@@ -63,50 +64,83 @@ public class PostConnector {
             output = response.toString();
         }
         return output;
-
     }
 
     /**
-     * http://zetcode.com/java/getpostrequest/
-     *
-     * @param urlParameters
+     * Consuming request only gets a status reply as a reply. Since it's only
+     * necessary to check if the anki api processed it, it's adequate to just
+     * return the supertype to access the error field when checking.
+     * @param request
+     * @return
      * @throws IOException
      */
-    public void urlRequest(String urlParameters) throws IOException {
-        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-
-        try {
-
-            URL myurl = new URL(url);
-            connection = (HttpURLConnection) myurl.openConnection();
-
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("User-Agent", "Java client");
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-            try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-                wr.write(postData);
-            }
-
-            StringBuilder content;
-
-            try (BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()))) {
-
-                String line;
-                content = new StringBuilder();
-
-                while ((line = in.readLine()) != null) {
-                    content.append(line);
-                    content.append(System.lineSeparator());
-                }
-            }
-
-        } finally {
-
-            connection.disconnect();
-        }
+    public AnkiReply jsonRequest(ConsumingRequest request) throws IOException {
+        String jsonResponse = jsonRequest(request.toJson());
+        return gson.fromJson(jsonResponse, ConsumerReply.class);
     }
+
+    public IDLstReply jsonRequest(FindNotesRequest request) throws IOException {
+        String jsonResponse = jsonRequest(request.toJson());
+        return gson.fromJson(jsonResponse, IDLstReply.class);
+    }
+
+    public NameLstReply jsonRequest(GetDecksAnkiRequest request) throws IOException {
+        String jsonResponse = jsonRequest(request.toJson());
+        return gson.fromJson(jsonResponse, NameLstReply.class);
+    }
+
+    public NotesInfoReply jsonRequest(NotesInfoRequest request) throws IOException {
+        String jsonResponse = jsonRequest(request.toJson());
+        return gson.fromJson(jsonResponse, NotesInfoReply.class);
+    }
+
+
+
+
+
+
+    // todo maybe delete
+//    /**
+//     * http://zetcode.com/java/getpostrequest/
+//     *
+//     * @param urlParameters
+//     * @throws IOException
+//     */
+//    public void urlRequest(String urlParameters) throws IOException {
+//        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+//
+//        try {
+//
+//            URL myurl = new URL(url);
+//            connection = (HttpURLConnection) myurl.openConnection();
+//
+//            connection.setDoOutput(true);
+//            connection.setRequestMethod("POST");
+//            connection.setRequestProperty("User-Agent", "Java client");
+//            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//
+//            try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+//                wr.write(postData);
+//            }
+//
+//            StringBuilder content;
+//
+//            try (BufferedReader in = new BufferedReader(
+//                    new InputStreamReader(connection.getInputStream()))) {
+//
+//                String line;
+//                content = new StringBuilder();
+//
+//                while ((line = in.readLine()) != null) {
+//                    content.append(line);
+//                    content.append(System.lineSeparator());
+//                }
+//            }
+//
+//        } finally {
+//
+//            connection.disconnect();
+//        }
+//    }
 
 }

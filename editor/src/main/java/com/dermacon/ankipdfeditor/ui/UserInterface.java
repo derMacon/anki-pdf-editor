@@ -13,5 +13,5 @@ public interface UserInterface {
     void pushToAnki() throws IOException;
     void saveProjHistory() throws IOException;
     ProjectController getProjectController();
-    void showExportOptions() throws IOException;
+    void exportStack() throws IOException;
 }

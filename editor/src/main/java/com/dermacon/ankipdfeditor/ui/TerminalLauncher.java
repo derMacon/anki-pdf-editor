@@ -81,7 +81,7 @@ public class TerminalLauncher implements Runnable {
         }
 
         if (choice.equals("x")) {
-            ui.showExportOptions();
+            ui.exportStack();
         }
 
         // a shutdown is can only be prevented if the user
@@ -89,6 +89,5 @@ public class TerminalLauncher implements Runnable {
         // save his work
         return choice.matches("(e|w)");
     }
-
 
 }

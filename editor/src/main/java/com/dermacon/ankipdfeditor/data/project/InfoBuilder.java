@@ -8,8 +8,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Generates a project info component.
+ */
 public class InfoBuilder {
 
+    /**
+     * Text that will be written to the beginning of any new .anki file.
+     */
     private static final String VIM_USAGE =
             "************************************************\n"
                     + "*       Anki-Vim-Editor - version 1.0          *\n"
@@ -26,15 +32,32 @@ public class InfoBuilder {
                     + "*    plus tab                                  *\n"
                     + "************************************************\n\n";
 
+    /**
+     * Directory where all property related files / directories are located
+     */
     private static final String LAST_DOCS_DIR = System.getProperty("user.dir") + "/lastDocs/";
+
+    /**
+     * Directory where any rendered images will be located.
+     */
     private static final String IMG_TEMP_DIR = LAST_DOCS_DIR + "img_temp/";
 
+    /**
+     * Directory where all .anki files are located.
+     */
     private static final String DECK_DIR = LAST_DOCS_DIR + "decks/";
     private static final String DECK_FILE = DECK_DIR + "%s.anki";
 
+    /**
+     * Directory where all .pdf files are located.
+     */
     private static final String PDF_DIR = LAST_DOCS_DIR + "pdf/";
     private static final String PDF_FILE = PDF_DIR + "%s.pdf";
 
+    /**
+     * Directory where all config files are located
+     * example: session .vimrc
+     */
     private static final String CONFIG_DIR = LAST_DOCS_DIR + "config/";
 
     private static final File SESSION_VIMRC = new File(CONFIG_DIR + ".vimrc");
@@ -47,10 +70,22 @@ public class InfoBuilder {
     private static final String VIMRC_RES_PATH = "/com/dermacon/ankipdfeditor/.vimrc";
 
 
+    /**
+     * .anki file to which the user is actively writing to.
+     */
     private File deck = new File(DEFAULT_DECK);
     private File pdf = new File(DEFAULT_PDF);
     private int currPage = 1;
 
+    /**
+     * Initiates a new InfoBuilder instance with a given project
+     * info component. Especially useful when the properties need
+     * to be modified and the original instance should not be effected.
+     * @param oldInstance project info instance from which the builder
+     *                    should be instanciated.
+     * @return Builder instance containing the information of the given
+     * projectinfo instance.
+     */
     public InfoBuilder copy(ProjectInfo oldInstance) {
         this.deck = oldInstance.getDeck();
         this.pdf = oldInstance.getPdf();
@@ -59,6 +94,14 @@ public class InfoBuilder {
         return this;
     }
 
+    /**
+     * - If the project structure (directories starting with ./lastDocs/.../) are not existent
+     * this function instanciates them.
+     * - Returns a new ProjectInfo instance containing either the default values or their
+     * overwritten conterparts.
+     * @return new ProjectInfo instance
+     * @throws IOException if the project structure cannot be initialized.
+     */
     public ProjectInfo build() throws IOException {
         initProjectStructure();
         return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR,  currPage);
@@ -120,7 +163,7 @@ public class InfoBuilder {
 
     public InfoBuilder setPdf(String pdfName) throws IOException {
         File targetFile = new File(PDF_DIR + pdfName);
-        copyResource(pdf, targetFile);
+//        copyResource(pdf, targetFile);
         this.pdf = targetFile;
         return this;
     }
