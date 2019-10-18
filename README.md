@@ -41,10 +41,9 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* escape " => otherwise Anki api cannot respond to request
 * add german umlaute
 * anki gui - fix html 
-* when creating next card stay in normal mode
-* pdf with different scaling cannot be rendered properly, see script vom 'systemanalyse', make scaling bigger
 * selected pdf overwriten with manual
 * jfx multiple instanciations -> must be solved somehow
 * update instructional gif

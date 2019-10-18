@@ -60,7 +60,29 @@ public class HtmlParser {
         for (int curr : nums) {
             renderImageInTemp(curr);
         }
+        return mapGermanUmlaute(generateImgHtmlTag(side));
+    }
+
+    private String generateImgHtmlTag(String side) {
         return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>");
+    }
+
+    /**
+     * Maps
+     * "a to ä / "A to Ä
+     * "u to ü / "U to Ü
+     * "o to Ö / "O to Ö
+     *
+     * @param side
+     * @return
+     */
+    private String mapGermanUmlaute(String side) {
+        return side.replaceAll("\"a", "ä")
+                .replaceAll("\"A", "Ä")
+                .replaceAll("\"u", "ü")
+                .replaceAll("\"U", "Ü")
+                .replaceAll("\"o", "ö")
+                .replaceAll("\"O", "Ö");
     }
 
     /**
@@ -72,7 +94,6 @@ public class HtmlParser {
      * @throws IOException Exception that will be thrown if the selected pdf document cannot be read
      */
     private void renderImageInTemp(Integer pageNum) throws IOException {
-        System.out.println("jo");
         PDFRenderer pdfRenderer = new PDFRenderer(this.doc);
         BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNum - 1, DEFAULT_DPI, ImageType.RGB);
         String path = ANKI_IMG_PAGES + pdfName + "_" + pageNum + ".png";
