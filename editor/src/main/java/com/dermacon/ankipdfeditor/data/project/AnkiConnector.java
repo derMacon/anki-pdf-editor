@@ -73,9 +73,8 @@ public class AnkiConnector {
             // todo
             NotesInfoReply response = new PostConnector(ANKI_API_PORT)
                     .jsonRequest(new NotesInfoRequest(currId));
-//            String json = ((ArrayList<String>)response).get(0);
-//            builder.addCard(json);
-            System.out.println(currId);
+            builder.addCard(response);
+            System.out.println(response);
         }
 
         return builder.getStack();

@@ -24,6 +24,9 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * Download jar from release tab and execute via `java -jar ./path/to/jar`
 * Recommended: execute in the same directory to avoid initializing the project directories any where they should not be. 
 
+## Problems
+The user since anki connect does not provide an possibility to reschedule (set the due date) for new cards newly created cards maybe are not appended to the stack but put somewhere in the middle. To fix this the user has to reschedule old cards with a due date before the created cards. This problem only arises if the user switches between the gui variant and this editor since the anki api is able to save the current due date / id. 
+
 ### Top-level menu
 ```
 type
@@ -42,7 +45,6 @@ input:
 
 ### Todo
 * update manual / Readme
-* new cards should be appended to stack not prepended
 * anki gui - fix html 
 * update instructional gif
 * export option
@@ -59,9 +61,3 @@ input:
 * [session specfic .vimrc](https://superuser.com/questions/489930/using-a-session-specific-vimrc)
 * [vim-cheat-sheet](https://www.slideshare.net/alfrescoqa/vivimcheatsheetpdf)
 
-
-
-{"result": [{"noteId": 1571308945631, "tags": ["Betriebssysteme::Einf\u00fchrung"], "fields": {"Front": {"value": "<div>Charakterisieren Sie das BIOS und nennen Sie die wichtigsten Aufgaben. Wofuer steht die Abkuerzung ueberhaupt?</div>", "order": 0}, "Back": {"value": "<div><img src=betriebssysteme_skript_12.png></div>", "order": 1}}, "modelName": "Basic", "cards": [1571308945633]}], "error": null}
-
-
-fields": {"Front": {"value": "<div></div>"}}
