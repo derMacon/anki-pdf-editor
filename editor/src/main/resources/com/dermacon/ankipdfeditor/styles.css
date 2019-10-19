@@ -1,3 +1,5 @@
+/* raw design: https://dev.to/ananyaneogi/create-a-dark-light-mode-switch-with-css-variables-34l8 */
+
 @import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700|Sansita+One);
 
 :root {
@@ -19,6 +21,26 @@ h1 {
     font-family: "Sansita One", serif;
     font-size: 2rem;
     margin-bottom: 1vh;
+}
+
+.front {
+    text-align: center;
+}
+
+.back {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.back span {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+
+    padding-top:    10px;
+    padding-right:  10px;
+    padding-bottom: 10px;
+    padding-left:   10px;
 }
 
 .card {
@@ -49,3 +71,4 @@ h1 {
     display: block;
     margin-bottom: 4vh;
 }
+

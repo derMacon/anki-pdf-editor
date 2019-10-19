@@ -26,7 +26,7 @@ public class HtmlExporter extends Exporter {
                     + "  %s\n"
                     + "</div>\n"
                     + "<div class=\"back\">\n"
-                    + "  %s\n"
+                    + "  <span>%s</span>\n"
                     + "</div>\n"
                     + "<div class=\"tags\">\n"
                     + "  %s\n"
