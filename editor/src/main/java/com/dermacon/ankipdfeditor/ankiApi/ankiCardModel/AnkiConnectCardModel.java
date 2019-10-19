@@ -18,6 +18,14 @@ public class AnkiConnectCardModel {
         this.cards = cards;
     }
 
+    public Map<String, Field> getFields() {
+        return fields;
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
     @Override
     public String toString() {
         return "noteId: " + this.noteId

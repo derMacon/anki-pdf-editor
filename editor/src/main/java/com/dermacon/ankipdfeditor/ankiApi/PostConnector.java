@@ -70,6 +70,7 @@ public class PostConnector {
      * Consuming request only gets a status reply as a reply. Since it's only
      * necessary to check if the anki api processed it, it's adequate to just
      * return the supertype to access the error field when checking.
+     *
      * @param request
      * @return
      * @throws IOException
@@ -91,64 +92,7 @@ public class PostConnector {
 
     public NotesInfoReply jsonRequest(NotesInfoRequest request) throws IOException {
         String jsonResponse = jsonRequest(request.toJson());
-//        String jsonResponse = "{\"result\": [" +
-//                "{\"noteId\": 1571308945631, " +
-//                "\"tags\": [\"Betriebssysteme::Einf\\u00fchrung\"], " +
-//                "\"fields\": {\"Front\": {\"value\": \"content\", \"order\": 0}, \"Back\": {\"value\": \"<div></div>\", \"order\": 1}}, " +
-//                "\"modelName\": \"Basic\", " +
-//                "\"cards\": [1571308945633]" +
-//                "}], " +
-//                "\"error\": null}";
         return gson.fromJson(jsonResponse, NotesInfoReply.class);
     }
-
-
-
-
-
-
-    // todo maybe delete
-//    /**
-//     * http://zetcode.com/java/getpostrequest/
-//     *
-//     * @param urlParameters
-//     * @throws IOException
-//     */
-//    public void urlRequest(String urlParameters) throws IOException {
-//        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-//
-//        try {
-//
-//            URL myurl = new URL(url);
-//            connection = (HttpURLConnection) myurl.openConnection();
-//
-//            connection.setDoOutput(true);
-//            connection.setRequestMethod("POST");
-//            connection.setRequestProperty("User-Agent", "Java client");
-//            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//
-//            try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-//                wr.write(postData);
-//            }
-//
-//            StringBuilder content;
-//
-//            try (BufferedReader in = new BufferedReader(
-//                    new InputStreamReader(connection.getInputStream()))) {
-//
-//                String line;
-//                content = new StringBuilder();
-//
-//                while ((line = in.readLine()) != null) {
-//                    content.append(line);
-//                    content.append(System.lineSeparator());
-//                }
-//            }
-//
-//        } finally {
-//
-//            connection.disconnect();
-//        }
-//    }
 
 }

@@ -9,6 +9,14 @@ public class Field {
         this.order = order;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
     @Override
     public String toString() {
         return "value: " + value

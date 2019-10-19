@@ -68,7 +68,7 @@ public class AnkiConnector {
         FindNotesRequest request = new FindNotesRequest(deckname);
         IDLstReply reply = new PostConnector(ANKI_API_PORT).jsonRequest(request);
 
-        CardStackBuilder builder = new CardStackBuilder();
+        CardStackBuilder builder = new CardStackBuilder(deckname);
         for(Long currId : reply.getResult()) {
             // todo
             NotesInfoReply response = new PostConnector(ANKI_API_PORT)
