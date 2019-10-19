@@ -23,6 +23,7 @@ public class ProjectInfo {
 
     private File deck;
     private File pdf;
+    private File export;
     private PDDocument pdfPDDoc;
     private String imgPath;
     private int currPage;
@@ -47,8 +48,12 @@ public class ProjectInfo {
         this.currPage = currPage;
     }
 
-    public File getDeck() {
+    public File getDeckFile() {
         return deck;
+    }
+
+    public File getDeckDir() {
+        return deck.getParentFile();
     }
 
     public File getPdf() {

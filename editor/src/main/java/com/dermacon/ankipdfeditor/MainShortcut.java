@@ -1,8 +1,5 @@
 package com.dermacon.ankipdfeditor;
 
-import com.dermacon.ankipdfeditor.ankiApi.PostConnector;
-import com.dermacon.ankipdfeditor.ankiApi.request.function.NotesInfoRequest;
-import com.dermacon.ankipdfeditor.ankiApi.response.function.NotesInfoReply;
 import com.dermacon.ankipdfeditor.data.card.Card;
 import com.dermacon.ankipdfeditor.data.project.AnkiConnector;
 

@@ -2,16 +2,17 @@ package com.dermacon.ankipdfeditor.ui;
 
 
 import com.dermacon.ankipdfeditor.FxmlApp;
-import com.dermacon.ankipdfeditor.data.card.Card;
 import com.dermacon.ankipdfeditor.data.project.AnkiConnector;
 import com.dermacon.ankipdfeditor.data.project.ProjectController;
+import com.dermacon.ankipdfeditor.export.Exporter;
+import com.dermacon.ankipdfeditor.export.ExporterFactory;
+import com.dermacon.ankipdfeditor.export.Formating;
 import javafx.application.Application;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 public class TerminalUI implements UserInterface {
@@ -42,10 +43,10 @@ public class TerminalUI implements UserInterface {
 
     @Override
     public void exportStack() throws IOException {
-        List<Card> stack = deckSelection();
+        String deck = deckSelection();
         Formating formatingChoice = formatSelection();
 
-        generateExportFile(stack, formatingChoice);
+        generateExportFile(deck, formatingChoice);
 
         System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
     }
@@ -53,7 +54,7 @@ public class TerminalUI implements UserInterface {
     @Override
     public void openEditor() throws IOException {
         // open vim
-        String pathToDeckFile = projectController.getProjectInfo().getDeck().getPath();
+        String pathToDeckFile = projectController.getProjectInfo().getDeckFile().getPath();
         String pathToVimrc = projectController.getProjectInfo().getSessionVimrc().getPath();
         String openNewTerminalCommand = String.format(NEW_TERMINAL_COMMAND, pathToVimrc, pathToDeckFile);
         Runtime.getRuntime().exec(openNewTerminalCommand);
@@ -119,14 +120,10 @@ public class TerminalUI implements UserInterface {
         return output;
     }
 
-
-    private enum Formating {
-        HTML, PDF
-    }
-
-    private void generateExportFile(List<Card> stack, Formating formating) {
-        // todo
-        System.out.println("todo - generateExportFile");
+    private void generateExportFile(String deckname, Formating formating) throws IOException {
+        File deckDir = projectController.getProjectInfo().getDeckDir();
+        Exporter exporter = ExporterFactory.createExporter(deckDir, formating);
+        exporter.createOutput(deckname);
     }
 
     private Formating formatSelection() {
@@ -149,10 +146,10 @@ public class TerminalUI implements UserInterface {
         return Formating.values()[choice - 1];
     }
 
-    private List<Card> deckSelection() throws IOException {
+    private String deckSelection() throws IOException {
         String[] decknames = displayOptions();
         String deckname = userSelection(decknames);
-        return AnkiConnector.getCardsFromDeck(deckname);
+        return deckname;
     }
 
     private String[] displayOptions() throws IOException {

@@ -18,7 +18,6 @@ import com.dermacon.ankipdfeditor.data.card.CardStackFileFactory;
 import com.dermacon.ankipdfeditor.data.card.IncompleteSyntaxException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -99,7 +98,7 @@ public class AnkiConnector {
         startAnki();
 
         // create deck if necessary
-        String deckname = projectInfo.getDeck().getName();
+        String deckname = projectInfo.getDeckFile().getName();
         if (!deckExists(deckname)) {
             createDeck(deckname);
         }

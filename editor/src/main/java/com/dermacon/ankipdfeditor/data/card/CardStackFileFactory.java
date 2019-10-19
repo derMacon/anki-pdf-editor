@@ -1,7 +1,7 @@
 package com.dermacon.ankipdfeditor.data.card;
 
 import com.dermacon.ankipdfeditor.data.project.ProjectInfo;
-import com.dermacon.ankipdfeditor.data.worker.parser.HtmlParser;
+import com.dermacon.ankipdfeditor.data.worker.parser.HtmlCardParser;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -17,11 +17,11 @@ import java.util.regex.Pattern;
 public class CardStackFileFactory {
 
     private ProjectInfo projectInfo;
-    private HtmlParser imgParser;
+    private HtmlCardParser imgParser;
 
     public CardStackFileFactory(ProjectInfo projectInfo) throws IOException {
         this.projectInfo = projectInfo;
-        this.imgParser = new HtmlParser(projectInfo.getPdf());
+        this.imgParser = new HtmlCardParser(projectInfo.getPdf());
     }
 
     /**
@@ -34,7 +34,7 @@ public class CardStackFileFactory {
      * @return
      */
     public List<Card> produceStack() throws IncompleteSyntaxException, IOException {
-        File deck = projectInfo.getDeck();
+        File deck = projectInfo.getDeckFile();
         String editorOutput = FileUtils.readFileToString(deck, "UTF-8");
 
         editorOutput = editorOutput.trim();

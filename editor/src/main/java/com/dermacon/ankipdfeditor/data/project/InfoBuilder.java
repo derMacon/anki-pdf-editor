@@ -60,6 +60,11 @@ public class InfoBuilder {
      */
     private static final String CONFIG_DIR = LAST_DOCS_DIR + "config/";
 
+    /**
+     * Directory where all exported files will be saved to
+     */
+    private static final String EXPORT_DIR = LAST_DOCS_DIR + "export/";
+
     private static final File SESSION_VIMRC = new File(CONFIG_DIR + ".vimrc");
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
@@ -87,7 +92,7 @@ public class InfoBuilder {
      * projectinfo instance.
      */
     public InfoBuilder copy(ProjectInfo oldInstance) {
-        this.deck = oldInstance.getDeck();
+        this.deck = oldInstance.getDeckFile();
         this.pdf = oldInstance.getPdf();
         this.currPage = oldInstance.getCurrPage();
 
@@ -113,6 +118,7 @@ public class InfoBuilder {
         saveMkDir(PDF_DIR);
         saveMkDir(IMG_TEMP_DIR);
         saveMkDir(CONFIG_DIR);
+        saveMkDir(EXPORT_DIR);
 
         copyResource(MANUAL_RES_PATH, DEFAULT_PDF);
         copyResource(VIMRC_RES_PATH, CONFIG_DIR + ".vimrc");

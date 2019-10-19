@@ -1,6 +1,5 @@
 package com.dermacon.ankipdfeditor.data.worker.parser;
 
-import com.dermacon.ankipdfeditor.data.card.Card;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
@@ -12,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class HtmlParser {
+public class HtmlCardParser {
 
     private static final String TEMP_PDF_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/pdf/";
     private static final String TEMP_IMG_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/png/";
@@ -32,11 +31,11 @@ public class HtmlParser {
     private String pdfName;
     private final String FILE_TEMPLATE = TEMP_IMG_PAGES + pdfName + "_%s.png"; // todo ?
 
-    public HtmlParser(String path) throws IOException {
+    public HtmlCardParser(String path) throws IOException {
         this(new File(path));
     }
 
-    public HtmlParser(File file) throws IOException {
+    public HtmlCardParser(File file) throws IOException {
         assert file != null && file.isFile();
         this.doc = PDDocument.load(file);
         this.pdfName = FilenameUtils.removeExtension(file.getName());
