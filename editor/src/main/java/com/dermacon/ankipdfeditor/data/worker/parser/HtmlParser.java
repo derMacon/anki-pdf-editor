@@ -20,17 +20,13 @@ public class HtmlParser {
     private static final String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
     private static final String HTML_LINE_FORMAT = "<div>%s</div>";
 
-    // QXGA resolution -> needs at least 192 dpi
-//    private static final int DEFAULT_WIDTH = 2048;
-//    private static final int DEFAULT_HEIGHT = 1536;
-
     private static final int DEFAULT_WIDTH = 930;
     private static final int DEFAULT_HEIGHT = 650;
 
     /**
      * Default output resolution of the images (in dots per inch)
      */
-    public static int DEFAULT_DPI = 300;
+    public static int DEFAULT_DPI = 150;
 
     private PDDocument doc;
     private String pdfName;
@@ -89,7 +85,6 @@ public class HtmlParser {
     }
 
     /**
-     * todo delete... not used, workers themselves render the images.
      * Renders an image of the given page given that the page is actually existent in the underlying pdf document
      *
      * @param pageNum page num which the user selected
@@ -101,7 +96,9 @@ public class HtmlParser {
         BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNum - 1, DEFAULT_DPI, ImageType.RGB);
         String path = ANKI_IMG_PAGES + pdfName + "_" + pageNum + ".png";
         File currPageImg = new File(path);
-        ImageIOUtil.writeImage(bim, currPageImg.getPath(), DEFAULT_DPI);
+        if (!currPageImg.exists()) {
+            ImageIOUtil.writeImage(bim, currPageImg.getPath(), DEFAULT_DPI);
+        }
         ImageResizer.resizeImage(currPageImg.getPath(), currPageImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 

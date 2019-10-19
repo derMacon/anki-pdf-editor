@@ -141,7 +141,7 @@ public class TerminalUI implements UserInterface {
         );
 
         int choice = Integer.parseInt(scanner.nextLine());
-        while (choice > 0 && choice <= Formating.values().length) {
+        while (choice <= 0 || choice > Formating.values().length) {
             System.out.print("try again: ");
             choice = Integer.parseInt(scanner.nextLine());
         }
@@ -175,6 +175,6 @@ public class TerminalUI implements UserInterface {
             System.out.print("try again\ninput: ");
             deckoption = Integer.parseInt(scanner.nextLine());
         }
-        return decknames[deckoption];
+        return decknames[deckoption - 1];
     }
 }

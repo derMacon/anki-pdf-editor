@@ -68,10 +68,7 @@ public class TerminalLauncher implements Runnable {
             ui.updateProjectInfo();
         }
 
-        if (choice.equals("wq")
-                || choice.equals("w")
-                || choice.equals("a")
-        ) { // todo merge regex
+        if (choice.matches("wq|w|a")) {
             ui.pushToAnki();
             ui.saveProjHistory();
         }

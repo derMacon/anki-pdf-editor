@@ -90,7 +90,13 @@ public class PostConnector {
     }
 
     public NotesInfoReply jsonRequest(NotesInfoRequest request) throws IOException {
-        String jsonResponse = jsonRequest(request.toJson());
+//        String jsonResponse = jsonRequest(request.toJson());
+        String jsonResponse = "{\"result\": [" +
+                "{\"noteId\": 1571308945631, " +
+                "\"tags\": [\"Betriebssysteme::Einf\\u00fchrung\"]}], " +
+//                "\"fields\": {\"Front\": \"value\"}" +
+                "" +
+                "\"error\": null}";
         return gson.fromJson(jsonResponse, NotesInfoReply.class);
     }
 

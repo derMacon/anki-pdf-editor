@@ -7,15 +7,18 @@ import com.dermacon.ankipdfeditor.ankiApi.request.consumer.CreateDeckAnkiRequest
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.SyncAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.FindNotesRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.GetDecksAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.function.NotesInfoRequest;
 import com.dermacon.ankipdfeditor.ankiApi.response.AnkiReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.IDLstReply;
 import com.dermacon.ankipdfeditor.ankiApi.response.function.NameLstReply;
+import com.dermacon.ankipdfeditor.ankiApi.response.function.NotesInfoReply;
 import com.dermacon.ankipdfeditor.data.card.Card;
 import com.dermacon.ankipdfeditor.data.card.CardStackBuilder;
 import com.dermacon.ankipdfeditor.data.card.CardStackFileFactory;
 import com.dermacon.ankipdfeditor.data.card.IncompleteSyntaxException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,10 +71,10 @@ public class AnkiConnector {
         CardStackBuilder builder = new CardStackBuilder();
         for(Long currId : reply.getResult()) {
             // todo
-//            for(Integer currId : reply.getResult()) {
-//            builder.addCard(new PostConnector(ANKI_API_PORT)
-//                    .jsonRequest(new NotesInfoRequest(currId))
-//                    .getResult());
+            NotesInfoReply response = new PostConnector(ANKI_API_PORT)
+                    .jsonRequest(new NotesInfoRequest(currId));
+//            String json = ((ArrayList<String>)response).get(0);
+//            builder.addCard(json);
             System.out.println(currId);
         }
 

@@ -7,8 +7,8 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 
 ### Programm specific
 * `z` / `Z`: turn next / previous page; Copy the current page tag to the default register (accessed via `p`)
-* `,c`: Append new card template to anki file
-* `,p`: Reload page tag, pastes the current page tag to cursor position
+* `]`: Append new card template to anki file
+* `[`: paste the current page tag to cursor position
 * *tab* / *shift* + *tab*: tab between fields
 
 ### vim default 
@@ -41,10 +41,9 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* update manual / Readme
 * new cards should be appended to stack not prepended
-* make images resize in anki
 * anki gui - fix html 
-* selected pdf overwriten with manual
 * update instructional gif
 * export option
     - pdf: generate beamer file -> use pandoc for pdf generation
@@ -60,3 +59,9 @@ input:
 * [session specfic .vimrc](https://superuser.com/questions/489930/using-a-session-specific-vimrc)
 * [vim-cheat-sheet](https://www.slideshare.net/alfrescoqa/vivimcheatsheetpdf)
 
+
+
+{"result": [{"noteId": 1571308945631, "tags": ["Betriebssysteme::Einf\u00fchrung"], "fields": {"Front": {"value": "<div>Charakterisieren Sie das BIOS und nennen Sie die wichtigsten Aufgaben. Wofuer steht die Abkuerzung ueberhaupt?</div>", "order": 0}, "Back": {"value": "<div><img src=betriebssysteme_skript_12.png></div>", "order": 1}}, "modelName": "Basic", "cards": [1571308945633]}], "error": null}
+
+
+fields": {"Front": {"value": "<div></div>"}}

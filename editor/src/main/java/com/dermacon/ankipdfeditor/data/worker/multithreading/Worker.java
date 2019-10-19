@@ -14,7 +14,9 @@ import java.util.function.DoubleToIntFunction;
 
 class Worker implements Runnable {
 
-    // QXGA resolution -> needs at least 192 dpi (calculator: http://dpi.lv/)
+    // QXGA resolution -> needs at least 192 dpi
+    // aspect ratio calculator: https://www.aspectratiocalculator.com/4-3.html
+    // dpi calculator: http://dpi.lv/
     private static final int DEFAULT_WIDTH = 2048;
     private static final int DEFAULT_HEIGHT = 1536;
 
