@@ -37,7 +37,7 @@ public class HtmlExporter extends Exporter {
     private static final String TAG_TEMPLATE = "<ul>%s<ul>";
     private static final String LST_BULLET_POINT = "<li>%s</li>";
 
-    public HtmlExporter(File deckDir) {
+    public HtmlExporter(String deckDir) {
         super(deckDir);
     }
 

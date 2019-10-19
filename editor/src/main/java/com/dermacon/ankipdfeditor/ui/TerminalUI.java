@@ -121,8 +121,8 @@ public class TerminalUI implements UserInterface {
     }
 
     private void generateExportFile(String deckname, Formating formating) throws IOException {
-        File deckDir = projectController.getProjectInfo().getDeckDir();
-        Exporter exporter = ExporterFactory.createExporter(deckDir, formating);
+        String exportDir = projectController.getProjectInfo().getExportDir();
+        Exporter exporter = ExporterFactory.createExporter(exportDir, formating);
         exporter.createOutput(deckname);
     }
 

@@ -109,7 +109,7 @@ public class InfoBuilder {
      */
     public ProjectInfo build() throws IOException {
         initProjectStructure();
-        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR,  currPage);
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR, EXPORT_DIR,  currPage);
     }
 
     private void initProjectStructure() throws IOException {

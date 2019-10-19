@@ -4,11 +4,11 @@ import java.io.File;
 
 public class ExporterFactory {
 
-    public static Exporter createExporter(File deckDir, Formating formating) {
+    public static Exporter createExporter(String exportDir, Formating formating) {
         Exporter output = null;
         switch (formating) {
             case HTML:
-                output = new HtmlExporter(deckDir);
+                output = new HtmlExporter(exportDir);
                 break;
             case PDF:
                 // todo
