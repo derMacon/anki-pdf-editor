@@ -1,0 +1,53 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700|Sansita+One);
+
+:root {
+  --white_100: #ffffff;
+  --white_95:  #f2f2f2;
+  --white_90:  #e6e6e6;
+  --white_85:  #d9d9d9;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  max-width: 90%;
+  margin: 0 auto;
+  font-size: calc(1rem + 0.25vh);
+  background-color: var(--white_90);
+}
+
+h1 {
+    font-family: "Sansita One", serif;
+    font-size: 2rem;
+    margin-bottom: 1vh;
+}
+
+.card {
+  max-width: 68%;
+  margin: 0 auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.card > * {
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  background-color: var(--white_100);
+
+  border: 5px solid var(--white_95);
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+
+  -webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.15);
+  -moz-box-shadow:    0px 0px 6px 0px rgba(0,0,0,0.15);
+  box-shadow:         0px 0px 6px 0px rgba(0,0,0,0.15);
+}
+
+.post-meta {
+  font-size: 1rem;
+  font-style: italic;
+  display: block;
+  margin-bottom: 4vh;
+}
+
+      

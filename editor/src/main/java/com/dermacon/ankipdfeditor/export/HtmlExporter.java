@@ -13,8 +13,7 @@ public class HtmlExporter extends Exporter {
                     + "  <head>\n"
                     + "    <meta charset=\"utf-8\">\n"
                     + "    <title>title</title>\n"
-                    + "    <link rel=\"stylesheet\" href=\"style.css\">\n"
-                    + "    <script src=\"script.js\"></script>\n"
+                    + "    <link rel=\"stylesheet\" href=\"styles.css\">\n"
                     + "  </head>\n"
                     + "  <body>\n"
                     + "    %s"
@@ -23,13 +22,13 @@ public class HtmlExporter extends Exporter {
 
     private static final String CARD_TEMPLATE =
             "<div class=card>"
-                    + "<div class=front>\n"
+                    + "<div class=\"front\">\n"
                     + "  %s\n"
                     + "</div>\n"
-                    + "<div class=back>\n"
+                    + "<div class=\"back\">\n"
                     + "  %s\n"
                     + "</div>\n"
-                    + "<div class=tags>\n"
+                    + "<div class=\"tags\">\n"
                     + "  %s\n"
                     + "</div>\n"
                     + "</div>\n";
@@ -50,7 +49,7 @@ public class HtmlExporter extends Exporter {
                     curr.getBackSide(),
                     createTagLst(curr.getTags())));
         }
-        return output.toString();
+        return String.format(FULL_HTML_TEMPLATE, output.toString());
     }
 
     private static String createTagLst(String[] tags) {

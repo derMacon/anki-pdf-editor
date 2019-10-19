@@ -29,6 +29,6 @@ public abstract class Exporter {
         System.out.println("path: " + rootDir + deckname + ".html");
 
         File file = new File(rootDir + deckname + ".html");
-        FileUtils.writeStringToFile(file, output);
+        FileUtils.writeStringToFile(file, output, true);
     }
 }
