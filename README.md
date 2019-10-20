@@ -44,6 +44,8 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* add card -> cannot open anki for some reason (no push / export possible)
+* new deck cannot add card.
 * html export after adding card not working, maybe sleep after sending cards to api...
 * update manual / Readme
 * anki gui - fix html 
