@@ -44,6 +44,7 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* CSS image tag has to overlay (left adjust, should be centered), add padding top / bottom
 * add card -> cannot open anki for some reason (no push / export possible)
 * new deck cannot add card.
 * html export after adding card not working, maybe sleep after sending cards to api...
