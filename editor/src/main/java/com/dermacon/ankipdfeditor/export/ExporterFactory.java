@@ -1,14 +1,16 @@
 package com.dermacon.ankipdfeditor.export;
 
+import com.dermacon.ankipdfeditor.data.project.ProjectInfo;
+
 import java.io.File;
 
 public class ExporterFactory {
 
-    public static Exporter createExporter(String exportDir, Formating formating) {
+    public static Exporter createExporter(ExportInfo info) {
         Exporter output = null;
-        switch (formating) {
+        switch (info.getFormating()) {
             case HTML:
-                output = new HtmlExporter(exportDir);
+                output = new HtmlExporter(info);
                 break;
             case PDF:
                 // todo

@@ -4,6 +4,8 @@ package com.dermacon.ankipdfeditor.ui;
 import com.dermacon.ankipdfeditor.FxmlApp;
 import com.dermacon.ankipdfeditor.data.project.AnkiConnector;
 import com.dermacon.ankipdfeditor.data.project.ProjectController;
+import com.dermacon.ankipdfeditor.data.project.ProjectInfo;
+import com.dermacon.ankipdfeditor.export.ExportInfo;
 import com.dermacon.ankipdfeditor.export.Exporter;
 import com.dermacon.ankipdfeditor.export.ExporterFactory;
 import com.dermacon.ankipdfeditor.export.Formating;
@@ -121,9 +123,17 @@ public class TerminalUI implements UserInterface {
     }
 
     private void generateExportFile(String deckname, Formating formating) throws IOException {
-        String exportDir = projectController.getProjectInfo().getExportDir();
-        Exporter exporter = ExporterFactory.createExporter(exportDir, formating);
-        exporter.createOutput(deckname);
+        ProjectInfo projectInfo = projectController.getProjectInfo();
+
+        ExportInfo exportInfo = new ExportInfo.ExportInfoBuilder()
+                .setDeckname(deckname)
+                .setMediaPath(projectInfo.getMediaDir())
+                .setExportPath(projectInfo.getExportDir())
+                .setFormating(formating)
+                .build();
+
+        Exporter exporter = ExporterFactory.createExporter(exportInfo);
+        exporter.createOutput();
     }
 
     private Formating formatSelection() {

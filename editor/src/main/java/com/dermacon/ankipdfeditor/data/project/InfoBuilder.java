@@ -36,7 +36,6 @@ public class InfoBuilder {
      * Directory where all property related files / directories are located
      */
     private static final String LAST_DOCS_DIR = System.getProperty("user.dir") + "/lastDocs/";
-
     /**
      * Directory where any rendered images will be located.
      */
@@ -74,6 +73,10 @@ public class InfoBuilder {
     private static final String MANUAL_RES_PATH = "/com/dermacon/ankipdfeditor/manual.pdf";
     private static final String VIMRC_RES_PATH = "/com/dermacon/ankipdfeditor/.vimrc";
 
+    // media directory
+    private static final String HOME_DIR = System.getProperty("user.home");
+    private static final String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
+
 
     /**
      * .anki file to which the user is actively writing to.
@@ -109,7 +112,7 @@ public class InfoBuilder {
      */
     public ProjectInfo build() throws IOException {
         initProjectStructure();
-        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR, EXPORT_DIR,  currPage);
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR, EXPORT_DIR, ANKI_IMG_PAGES, currPage);
     }
 
     private void initProjectStructure() throws IOException {

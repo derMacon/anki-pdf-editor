@@ -15,6 +15,7 @@ public class HtmlCardParser {
 
     private static final String TEMP_PDF_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/pdf/";
     private static final String TEMP_IMG_PAGES = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources/tempPages/png/";
+    // todo this should come from the projectinfo component
     private static final String HOME_DIR = System.getProperty("user.home");
     private static final String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
     private static final String HTML_LINE_FORMAT = "<div>%s</div>";

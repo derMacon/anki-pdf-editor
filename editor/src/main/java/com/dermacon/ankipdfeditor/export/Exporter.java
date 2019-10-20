@@ -2,63 +2,35 @@ package com.dermacon.ankipdfeditor.export;
 
 import com.dermacon.ankipdfeditor.data.card.Card;
 import com.dermacon.ankipdfeditor.data.project.AnkiConnector;
-import com.dermacon.ankipdfeditor.data.project.ProjectInfo;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Exporter {
 
-    private final ProjectInfo projectInfo;
-    protected List<Card> stack;
+    protected final ExportInfo exportInfo;
 
-    public Exporter(ProjectInfo projectInfo) {
-        this.projectInfo = projectInfo;
+    public Exporter(ExportInfo exportInfo) {
+        this.exportInfo = exportInfo;
     }
 
     public void createOutput() throws IOException {
-        String deckname = removeExtension(projectInfo.getDeckFile().getName());
-        stack = AnkiConnector.getCardsFromDeck(deckname);
-        copyImages();
-        String content = parseFormat();
+        String deckname = removeExtension(exportInfo.getDeckname());
+        List<Card> stack = AnkiConnector.getCardsFromDeck(deckname);
+        String content = parseFormat(stack);
         writeFile(deckname, content);
     }
 
-    abstract String parseFormat();
+    abstract String parseFormat(List<Card> stack);
 
     private void writeFile(String deckname, String output) throws IOException {
         System.out.println("todo file io:\n" + output);
-        System.out.println("path: " + projectInfo.getExportDir() + deckname + ".html");
+        System.out.println("path: " + exportInfo.getExportPath() + deckname + ".html");
 
-        File file = new File(projectInfo.getExportDir() + deckname + ".html");
+        File file = new File(exportInfo.getExportPath() + deckname + ".html");
         FileUtils.writeStringToFile(file, output, true);
-    }
-
-    private void copyImages() {
-        List<String> foundImages = new LinkedList<>();
-
-        for (Card card : stack) {
-            foundImages.addAll(extractImg(card.getFrontSide()));
-            foundImages.addAll(extractImg(card.getBackSide()));
-        }
-
-        for (String img : foundImages) {
-            copyImg(img);
-        }
-    }
-
-    private List<String> extractImg(String sideContent) {
-        // todo
-        System.out.println("extract img - WIP - Exporter.java");
-        return null;
-    }
-
-    private void copyImg(String imgName) {
-        // todo
-        System.out.println("copy img: " + imgName);
     }
 
     // todo duplicate from request

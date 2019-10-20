@@ -2,7 +2,6 @@ package com.dermacon.ankipdfeditor.export;
 
 import com.dermacon.ankipdfeditor.data.card.Card;
 
-import java.io.File;
 import java.util.List;
 
 public class HtmlExporter extends Exporter {
@@ -36,20 +35,29 @@ public class HtmlExporter extends Exporter {
     private static final String TAG_TEMPLATE = "<ul>%s<ul>";
     private static final String LST_BULLET_POINT = "<li>%s</li>";
 
-    public HtmlExporter(String deckDir) {
-        super(deckDir);
+    public HtmlExporter(ExportInfo exportInfo) {
+        super(exportInfo);
     }
 
     @Override
     String parseFormat(List<Card> stack) {
-        StringBuilder output = new StringBuilder();
+        StringBuilder temp = new StringBuilder();
         for(Card curr : stack) {
-            output.append(String.format(CARD_TEMPLATE,
+            temp.append(String.format(CARD_TEMPLATE,
                     curr.getFrontSide(),
                     curr.getBackSide(),
                     createTagLst(curr.getTags())));
         }
-        return String.format(FULL_HTML_TEMPLATE, output.toString());
+
+        String content = updateImages(temp.toString());
+        return String.format(FULL_HTML_TEMPLATE, content);
+    }
+
+    private String updateImages(String content) {
+        String regex = "<img src=[\"]?(.*?)[\"]?>";
+        return content
+                .replaceAll(regex, "<path=\"$1\">")
+                .replaceAll("<path=\"", "<img src=\"" + exportInfo.getMediaPath());
     }
 
     private static String createTagLst(String[] tags) {

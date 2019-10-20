@@ -26,6 +26,7 @@ public class ProjectInfo {
     private PDDocument pdfPDDoc;
     private String imgPath;
     private String exportPath;
+    private String mediaDir;
     private int currPage;
 
 
@@ -38,7 +39,7 @@ public class ProjectInfo {
      * @param currPage
      * @throws IOException
      */
-    ProjectInfo(File deck, File pdf, File projHistory, File sessionVimrc, String imgPath, String exportPath, int currPage) throws IOException {
+    ProjectInfo(File deck, File pdf, File projHistory, File sessionVimrc, String imgPath, String exportPath, String mediaDir, int currPage) throws IOException {
         this.deck = deck;
         this.pdf = pdf;
         this.pdfPDDoc = PDDocument.load(new File(pdf.getPath()));
@@ -46,6 +47,7 @@ public class ProjectInfo {
         this.sessionVimrc = sessionVimrc;
         this.imgPath = imgPath;
         this.exportPath = exportPath;
+        this.mediaDir = mediaDir;
         this.currPage = currPage;
     }
 
@@ -55,6 +57,10 @@ public class ProjectInfo {
 
     public String getExportDir() {
         return exportPath;
+    }
+
+    public String getMediaDir() {
+        return mediaDir;
     }
 
     public File getPdf() {
