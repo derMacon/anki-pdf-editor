@@ -25,12 +25,20 @@ public abstract class Exporter {
 
     abstract String parseFormat(List<Card> stack);
 
-    private void writeFile(String deckname, String output) throws IOException {
-        System.out.println("todo file io:\n" + output);
+    /**
+     * Writes the given content to a file with the name of the deck and the given format.
+     * Important: already existent files will be overwritten.
+     * @param deckname
+     * @param content
+     * @throws IOException
+     */
+    private void writeFile(String deckname, String content) throws IOException {
         System.out.println("path: " + exportInfo.getExportPath() + deckname + ".html");
-
         File file = new File(exportInfo.getExportPath() + deckname + ".html");
-        FileUtils.writeStringToFile(file, output, true);
+        if (file.exists() && !file.isDirectory()) {
+            FileUtils.forceDelete(file);
+        }
+        FileUtils.writeStringToFile(file, content);
     }
 
     // todo duplicate from request

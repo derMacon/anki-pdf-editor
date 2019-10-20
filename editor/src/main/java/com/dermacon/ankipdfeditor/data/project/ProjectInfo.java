@@ -55,6 +55,18 @@ public class ProjectInfo {
         return deck;
     }
 
+    public String getDeckName() {
+        return removeExtension(deck.getName());
+    }
+
+    protected static String removeExtension(String fullFileName) {
+        int idx = fullFileName.lastIndexOf('.');
+        if (idx > 0) {
+            fullFileName = fullFileName.substring(0, idx);
+        }
+        return fullFileName;
+    }
+
     public String getExportDir() {
         return exportPath;
     }
@@ -94,6 +106,10 @@ public class ProjectInfo {
 
     public void setCurrPage(int currPage) {
         this.currPage = currPage;
+    }
+
+    public void setExportPath(String exportPath) {
+        this.exportPath = exportPath;
     }
 
 

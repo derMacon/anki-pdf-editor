@@ -44,13 +44,33 @@ public class TerminalUI implements UserInterface {
     }
 
     @Override
-    public void exportStack() throws IOException {
+    public void exportAnyStack() throws IOException {
         String deck = deckSelection();
         Formating formatingChoice = formatSelection();
 
-        generateExportFile(deck, formatingChoice);
+        generateExport(deck, formatingChoice);
 
         System.out.println(TerminalLauncher.DELIMITER_MAIN + "export successful");
+    }
+
+    @Override
+    public void exportCurrStack() throws IOException {
+        String deck = projectController.getProjectInfo().getDeckName();
+        generateExport(deck, Formating.HTML);
+    }
+
+    private void generateExport(String deckname, Formating formating) throws IOException {
+        ProjectInfo projectInfo = projectController.getProjectInfo();
+
+        ExportInfo exportInfo = new ExportInfo.ExportInfoBuilder()
+                .setDeckname(deckname)
+                .setMediaPath(projectInfo.getMediaDir())
+                .setExportPath(projectInfo.getExportDir())
+                .setFormating(formating)
+                .build();
+
+        Exporter exporter = ExporterFactory.createExporter(exportInfo);
+        exporter.createOutput();
     }
 
     @Override
@@ -71,24 +91,33 @@ public class TerminalUI implements UserInterface {
     public void updateProjectInfo() throws IOException {
         System.out.print(
                 TerminalLauncher.DELIMITER_MAIN
-                + "type:\n"
-                + "  * 1: deck\n"
-                + "  * 2: pdf\n"
-                + TerminalLauncher.DELIMITER_SEC
-                + "input: "
+                        + "type:\n"
+                        + "  * 1: deck\n"
+                        + "  * 2: pdf\n"
+                        + "  * 3: export directory\n"
+                        + TerminalLauncher.DELIMITER_SEC
+                        + "input: "
         );
         Scanner scanner = new Scanner(System.in);
 
         String input = scanner.nextLine();
-        while (!input.matches("1|2")) {
+        while (!input.matches("1|2|3")) {
             System.out.print("try again: ");
             input = scanner.nextLine();
         }
 
-        if (input.equals("1")) {
-            chooseDeck();
-        } else {
-            projectController.setPdf(openFileChooser());
+        switch (Integer.parseInt(input)) {
+            case 1:
+                chooseDeck();
+                break;
+            case 2:
+                projectController.setPdf(openFileChooser("pdf"));
+                break;
+            case 3:
+                String dirPath = openDirectoryChooser().getPath();
+                System.out.println("set export path: " + dirPath);
+                projectController.getProjectInfo().setExportPath(dirPath);
+                break;
         }
     }
 
@@ -104,10 +133,10 @@ public class TerminalUI implements UserInterface {
         Application.launch(FXDeckChooser.class, new String[0]);
     }
 
-    private File openFileChooser() throws IOException {
+    private File openFileChooser(String filetype) throws IOException {
         JFileChooser chooser = new JFileChooser(projectController.getProjectInfo().getPdf());
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "PDF", "pdf");
+                filetype.toUpperCase(), filetype.toLowerCase());
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
         File output = null;
@@ -122,18 +151,25 @@ public class TerminalUI implements UserInterface {
         return output;
     }
 
-    private void generateExportFile(String deckname, Formating formating) throws IOException {
-        ProjectInfo projectInfo = projectController.getProjectInfo();
-
-        ExportInfo exportInfo = new ExportInfo.ExportInfoBuilder()
-                .setDeckname(deckname)
-                .setMediaPath(projectInfo.getMediaDir())
-                .setExportPath(projectInfo.getExportDir())
-                .setFormating(formating)
-                .build();
-
-        Exporter exporter = ExporterFactory.createExporter(exportInfo);
-        exporter.createOutput();
+    private File openDirectoryChooser() throws IOException {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("export directory selection");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        //
+        File output = null;
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+//            System.out.println("getCurrentDirectory(): "
+//                    +  chooser.getCurrentDirectory());
+//            System.out.println("getSelectedFile() : "
+//                    +  chooser.getSelectedFile());
+            output = chooser.getSelectedFile();
+        }
+        else {
+            throw new IOException("user aborted export dir selection process");
+        }
+        return output;
     }
 
     private Formating formatSelection() {
@@ -162,6 +198,11 @@ public class TerminalUI implements UserInterface {
         return deckname;
     }
 
+    /**
+     * Returns the available decknames in the users anki repository.
+     * @return
+     * @throws IOException
+     */
     private String[] displayOptions() throws IOException {
         StringBuilder deckCollection = new StringBuilder(TerminalLauncher.DELIMITER_MAIN + "deck selection:\n");
         String[] decknames = AnkiConnector.getDeckNames();

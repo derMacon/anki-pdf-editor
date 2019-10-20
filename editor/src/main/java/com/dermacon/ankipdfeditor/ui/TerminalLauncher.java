@@ -19,18 +19,19 @@ public class TerminalLauncher implements Runnable {
                     + DELIMITER_MAIN
                     + "type\n"
                     + "  - e to edit project properties\n"
-                    + "  - a to write new cards (with push)\n"
+                    + "  - a to write new cards (pushes to anki\n"
+                    + "      api and exports html automatically)\n"
+                    + "  - x to export a specified deck\n"
                     + "  - w to push to anki connect\n"
                     + "  - q to quit without pushing\n"
                     + "  - wq to push and exit\n"
-                    + "  - x to export a specified deck\n"
                     + DELIMITER_SEC
                     + "input: ";
 
     @Override
     public void run() {
         boolean keepRunning;
-        System.out.println("Anki-Editor - version 1.0\n");
+        System.out.println("Anki-Editor - version 1.1\n");
 
         try {
 
@@ -68,17 +69,22 @@ public class TerminalLauncher implements Runnable {
             ui.updateProjectInfo();
         }
 
-        if (choice.matches("wq|w|a")) {
+        if (choice.matches("a")) {
+            ui.exportAnyStack();
             ui.pushToAnki();
-            ui.saveProjHistory();
+
         }
 
-        if (choice.equals("q")) {
+        if (choice.matches("wq|w")) {
+            ui.pushToAnki();
+        }
+
+        if (choice.contains("q")) {
             ui.saveProjHistory();
         }
 
         if (choice.equals("x")) {
-            ui.exportStack();
+            ui.exportAnyStack();
         }
 
         // a shutdown is can only be prevented if the user
