@@ -36,6 +36,7 @@ public abstract class Exporter {
         System.out.println("path: " + exportInfo.getExportPath() + deckname + ".html");
         File file = new File(exportInfo.getExportPath() + deckname + ".html");
         if (file.exists() && !file.isDirectory()) {
+            System.out.println("deleted file: " + file);
             FileUtils.forceDelete(file);
         }
         FileUtils.writeStringToFile(file, content);

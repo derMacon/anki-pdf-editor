@@ -44,6 +44,7 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* html export after adding card not working, maybe sleep after sending cards to api...
 * update manual / Readme
 * anki gui - fix html 
 * update instructional gif

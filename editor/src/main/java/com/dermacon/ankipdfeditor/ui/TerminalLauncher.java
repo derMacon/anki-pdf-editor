@@ -63,16 +63,12 @@ public class TerminalLauncher implements Runnable {
         if (choice.equals("a")) {
             ui.openEditor();
             ui.openPdfViewer();
+            ui.exportCurrStack();
+            ui.pushToAnki();
         }
 
         if (choice.equals("e")) {
             ui.updateProjectInfo();
-        }
-
-        if (choice.matches("a")) {
-            ui.exportAnyStack();
-            ui.pushToAnki();
-
         }
 
         if (choice.matches("wq|w")) {

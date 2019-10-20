@@ -114,7 +114,7 @@ public class TerminalUI implements UserInterface {
                 projectController.setPdf(openFileChooser("pdf"));
                 break;
             case 3:
-                String dirPath = openDirectoryChooser().getPath();
+                String dirPath = openDirectoryChooser().getPath() + "/";
                 System.out.println("set export path: " + dirPath);
                 projectController.getProjectInfo().setExportPath(dirPath);
                 break;
@@ -151,6 +151,11 @@ public class TerminalUI implements UserInterface {
         return output;
     }
 
+    /**
+     * https://stackoverflow.com/questions/10083447/selecting-folder-destination-in-java
+     * @return
+     * @throws IOException
+     */
     private File openDirectoryChooser() throws IOException {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
@@ -178,7 +183,7 @@ public class TerminalUI implements UserInterface {
                 TerminalLauncher.DELIMITER_MAIN
                         + "format:\n"
                         + "  * 1: pdf (WIP)\n"
-                        + "  * 2: html (WIP)\n"
+                        + "  * 2: html\n"
                         + TerminalLauncher.DELIMITER_SEC
                         + "input: "
         );

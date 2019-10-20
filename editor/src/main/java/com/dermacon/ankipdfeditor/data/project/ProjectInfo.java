@@ -126,20 +126,23 @@ public class ProjectInfo {
     public String toString() {
         return "deck: " + deck.getName() + "\n"
                 + "pdf:  " + pdf.getName() + "\n"
-                + "page: " + currPage + "\n";
+                + "page: " + currPage + "\n"
+                + "exp:  " + exportPath + "\n";
     }
 
     public String toFormattedString() {
         String deckStr = "deck: " + deck.getName();
         String pdfStr = "pdf:  " + pdf.getName();
         String pageStr = "page: " + currPage;
+        String expStr = "export directory: " + exportPath + "\n";
 
         int lineLength = Integer.max(deckStr.length(), pdfStr.length()) + 4;
         return generateLine("", lineLength)
                 + generateLine(deckStr, lineLength)
                 + generateLine(pdfStr, lineLength)
                 + generateLine(pageStr, lineLength)
-                + generateLine("", lineLength);
+                + generateLine("", lineLength)
+                + expStr;
     }
 
     public static String generateLine(String originalLine, int lineLength) {

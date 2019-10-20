@@ -23,6 +23,10 @@ h1 {
     margin-bottom: 1vh;
 }
 
+img {
+    max-width: 100%;
+}
+
 .front {
     text-align: center;
 }
@@ -42,6 +46,7 @@ h1 {
     padding-bottom: 10px;
     padding-left:   10px;
 }
+
 
 .card {
     max-width: 68%;

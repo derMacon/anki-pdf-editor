@@ -84,6 +84,7 @@ public class InfoBuilder {
     private File deck = new File(DEFAULT_DECK);
     private File pdf = new File(DEFAULT_PDF);
     private int currPage = 1;
+    private String exportDir = EXPORT_DIR;
 
     /**
      * Initiates a new InfoBuilder instance with a given project
@@ -112,7 +113,7 @@ public class InfoBuilder {
      */
     public ProjectInfo build() throws IOException {
         initProjectStructure();
-        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR, EXPORT_DIR, ANKI_IMG_PAGES, currPage);
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR, exportDir, ANKI_IMG_PAGES, currPage);
     }
 
     private void initProjectStructure() throws IOException {
@@ -189,6 +190,10 @@ public class InfoBuilder {
         this.currPage = Integer.parseInt(currPage.trim());
     }
 
+    public void setExportDir(String path) {
+        this.exportDir = path;
+    }
+
     /**
      * parse /lastDocs/.projectHistory file
      *
@@ -197,7 +202,7 @@ public class InfoBuilder {
     public InfoBuilder parseHistoryFile() throws IOException {
         if (PROJ_HISTORY.exists()) {
             ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
-            int counter = 0, n_lines = 3;
+            int counter = 0, n_lines = 4;
             String line;
 
             while (counter < n_lines) {
@@ -209,6 +214,8 @@ public class InfoBuilder {
                         setPdf((line.split(":")[1].trim()));
                     } else if (line.startsWith("page")) {
                         setCurrPage(line.split(":")[1].trim());
+                    } else if (line.startsWith("exp")) {
+                        setExportDir(line.split(":")[1].trim());
                     } else if (!line.isEmpty()) {
                         throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
                     }
