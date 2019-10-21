@@ -3,6 +3,10 @@ package com.dermacon.ankipdfeditor.ankiApi.ankiCardModel;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Anki card model that will be used by the gson lib to parse the given json
+ * output from the anki connect addon / api.
+ */
 public class AnkiConnectCardModel {
     private Long noteId;
     private ArrayList<String> tags;
