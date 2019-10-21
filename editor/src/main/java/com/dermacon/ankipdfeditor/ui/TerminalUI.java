@@ -17,6 +17,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Terminal ui that processes the queries given by the terminalLauncher.
+ */
 public class TerminalUI implements UserInterface {
 
 //    private static final String NEW_TERMINAL_COMMAND = "xterm vim %s";
@@ -121,18 +124,32 @@ public class TerminalUI implements UserInterface {
         }
     }
 
+    /**
+     * Opens a user dialog in the terminal that makes it possible to select a
+     * deck.
+     * @throws IOException
+     */
     private void chooseDeck() throws IOException {
         String deckname = userSelection(displayOptions());
         projectController.setDeck(deckname + ".anki");
     }
 
     // todo maybe delete this
+
+    // todo delete this
     private void openDeckChooser(String[] decks) {
         FXDeckChooser.setDeckNames(decks);
         FXDeckChooser.setCallback(deckName -> projectController.setDeck(deckName + ".anki"));
         Application.launch(FXDeckChooser.class, new String[0]);
     }
 
+    /**
+     * Opens a awt.swing file chooser.
+     * @param filetype String containing the filetype which the user should
+     *                 be able to select.
+     * @return selected file instance.
+     * @throws IOException thrown if file io is not working properly
+     */
     private File openFileChooser(String filetype) throws IOException {
         JFileChooser chooser = new JFileChooser(projectController.getProjectInfo().getPdf());
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -221,6 +238,11 @@ public class TerminalUI implements UserInterface {
         return decknames;
     }
 
+    /**
+     * Takes a list of strings and lets the user select one of those
+     * @param decknames list of deck names
+     * @return one name of the list
+     */
     private String userSelection(String[] decknames) {
         Scanner scanner = new Scanner(System.in);
         int deckoption = Integer.parseInt(scanner.nextLine());

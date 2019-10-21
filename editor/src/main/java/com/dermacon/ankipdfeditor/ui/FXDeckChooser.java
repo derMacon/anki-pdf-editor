@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Chooser for the anki deck.
+ * // todo delete, not in use anymore due to the use of the terminal chooser.
+ */
 public class FXDeckChooser extends Application {
 
     public static void main(String[] args) {

@@ -49,6 +49,13 @@ public class TerminalLauncher implements Runnable {
         System.exit(0);
     }
 
+    /**
+     * Displays some options to the user and delegates the users selection to
+     * the given ui component.
+     * @param ui UserInterface that actually processes the users selection
+     * @return true if user should enter a new command.
+     * @throws IOException
+     */
     private boolean runQuery(UserInterface ui) throws IOException {
         boolean keepRunning;
 

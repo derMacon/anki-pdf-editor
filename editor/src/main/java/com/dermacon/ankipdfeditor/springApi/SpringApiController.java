@@ -11,8 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class SpringApiController {
 
     private static final String TAG_FORMAT = "<%s>";
+
+    /**
+     * Needed when an external user wants to alter the internal state (e.g.
+     * pageTurn) and the system needs to delegate the information to the gui.
+     */
     private static FXMLController controller;
 
+    /**
+     * Setter for the jfx controller.
+     * @param controller_
+     */
     public static void setJFXController(FXMLController controller_) {
         controller = controller_;
     }
