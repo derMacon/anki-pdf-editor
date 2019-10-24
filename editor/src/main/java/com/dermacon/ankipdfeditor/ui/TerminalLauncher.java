@@ -70,7 +70,7 @@ public class TerminalLauncher implements Runnable {
         if (choice.equals("a")) {
             ui.openEditor();
             ui.openPdfViewer();
-            ui.exportCurrStack();
+//            ui.exportCurrStack();
             ui.pushToAnki();
         }
 

@@ -44,6 +44,10 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* doppelte Dateiendungen bei generierten Bildern.
+* Check if multi line questions are transmitted correctly.
+* add bold / underlined / cursiv formatting options
+* cannot overwrite pdf...
 * why does the projectinfo component hold a current image instance.
 * terminal deck choose - new deck
 * ProjectController - setPdf(pdf) / setDeck(deck) should just upate its instance and not create a new one.

@@ -116,6 +116,7 @@ public class AnkiConnector {
     private static boolean deckExists(String deckname) {
         try {
             String[] res = getDeckNames();
+            deckname = deckname.replaceAll(".anki", "");
             return Arrays.stream(res).anyMatch(deckname::equals);
         } catch (IOException e) {
             return false;

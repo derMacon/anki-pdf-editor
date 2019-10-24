@@ -38,7 +38,7 @@ public class CardStackFileFactory {
         String editorOutput = FileUtils.readFileToString(deck, "UTF-8");
 
         editorOutput = editorOutput.trim();
-        String deckname = parseDeckname(editorOutput);
+        String deckname = parseDeckname(editorOutput).replaceAll(".anki", "");
         String[] arr = editorOutput.split("\n-+\n");
         List<Card> outputStack = new LinkedList<>();
         for(String cardBlock : arr) {
