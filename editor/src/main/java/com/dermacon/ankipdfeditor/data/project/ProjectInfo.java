@@ -114,7 +114,7 @@ public class ProjectInfo {
     }
 
     public String getImgPath(int pageNum) {
-        return imgPath + pdf.getName() + "_" + pageNum + ".png";
+        return imgPath + removeExtension(pdf.getName()) + "_" + pageNum + ".png";
     }
 
     public Image getCurrImg() {

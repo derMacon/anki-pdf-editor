@@ -232,6 +232,7 @@ public class TerminalUI implements UserInterface {
         for (int i = 0; i < decknames.length; i++) {
             deckCollection.append(String.format(deckname_format, i + 1, decknames[i]));
         }
+        deckCollection.append(String.format(deckname_format, decknames.length + 1, "create new deck"));
         deckCollection.append(TerminalLauncher.DELIMITER_SEC + "input: ");
         System.out.print(deckCollection);
 
@@ -246,10 +247,16 @@ public class TerminalUI implements UserInterface {
     private String userSelection(String[] decknames) {
         Scanner scanner = new Scanner(System.in);
         int deckoption = Integer.parseInt(scanner.nextLine());
-        while(deckoption <= 0 || deckoption > decknames.length) {
+        while(deckoption <= 0 || deckoption > decknames.length + 1) {
             System.out.print("try again\ninput: ");
             deckoption = Integer.parseInt(scanner.nextLine());
         }
+        // user wants to create a new deck
+        if (deckoption > decknames.length) {
+            System.out.print("type new deck name: ");
+            return scanner.nextLine();
+        }
         return decknames[deckoption - 1];
     }
+
 }

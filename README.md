@@ -44,7 +44,6 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
-* doppelte Dateiendungen bei generierten Bildern.
 * Check if multi line questions are transmitted correctly.
 * add bold / underlined / cursiv formatting options
 * cannot overwrite pdf...

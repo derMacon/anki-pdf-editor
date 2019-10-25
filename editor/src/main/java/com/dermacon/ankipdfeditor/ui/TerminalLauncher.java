@@ -76,6 +76,7 @@ public class TerminalLauncher implements Runnable {
 
         if (choice.equals("e")) {
             ui.updateProjectInfo();
+            ui.saveProjHistory();
         }
 
         if (choice.matches("wq|w")) {

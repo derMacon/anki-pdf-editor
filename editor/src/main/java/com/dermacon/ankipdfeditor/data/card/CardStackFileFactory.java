@@ -25,13 +25,18 @@ public class CardStackFileFactory {
     }
 
     /**
+     * Parses the deck file specified in the projectInfo component.
+     *
      * Syntax:
      * 1. comment: lines beginning with *
      * 2. front: [text]
      * 3. back: [text]
      * 4. tags: [multiple tags]
      * 5. delimiter: line beginning with -
-     * @return
+     *
+     * Generates a list of cards from the appropriate .anki file.
+     *
+     * @return list of cards from the appropriate .anki file
      */
     public List<Card> produceStack() throws IncompleteSyntaxException, IOException {
         File deck = projectInfo.getDeckFile();
@@ -81,7 +86,7 @@ public class CardStackFileFactory {
         return new Card(deckname,
                 imgParser.parseHtml(matcher.group(1).trim()),
                 imgParser.parseHtml(matcher.group(2).trim()),
-                matcher.group(3).trim().split(" ")
+                matcher.group(3).trim().split("( |\n)")
         );
     }
 

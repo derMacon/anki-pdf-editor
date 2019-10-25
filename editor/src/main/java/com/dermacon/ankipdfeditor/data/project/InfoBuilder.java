@@ -32,6 +32,10 @@ public class InfoBuilder {
                     + "*    plus tab                                  *\n"
                     + "************************************************\n\n";
 
+    private static final String FILE_DELIMITER = "-----------------";
+
+    private static final String CARD_TEMPLATE = "\nfront:\n\n\nback:\n\n\ntags:\n\n" + FILE_DELIMITER;
+
     /**
      * Directory where all property related files / directories are located
      */
@@ -257,14 +261,14 @@ public class InfoBuilder {
 
     /**
      * Creates a given deckfile in the project structure and initializes with the
-     * the given VIM_USAGE.
+     * the given VIM_USAGE and the template for the first card.
      * @param deckFile deckfile file that will be initialized.
      * @throws IOException thrown if the string content cannot be written to the specified file.
      */
     private void createDeckFile(File deckFile) throws IOException {
         int lineLength = VIM_USAGE.split("\n")[0].length();
         String deckDescription = formatDeckdescr(deckFile.getName(),lineLength);
-        FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription);
+        FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription + CARD_TEMPLATE);
     }
 
     /**
