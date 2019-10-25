@@ -32,11 +32,14 @@ public class InfoBuilder {
                     + "*    plus tab                                  *\n"
                     + "************************************************\n\n";
 
+    private static final String FILE_DELIMITER = "-----------------";
+
+    private static final String CARD_TEMPLATE = "\nfront:\n\n\nback:\n\n\ntags:\n\n" + FILE_DELIMITER;
+
     /**
      * Directory where all property related files / directories are located
      */
     private static final String LAST_DOCS_DIR = System.getProperty("user.dir") + "/lastDocs/";
-
     /**
      * Directory where any rendered images will be located.
      */
@@ -60,6 +63,11 @@ public class InfoBuilder {
      */
     private static final String CONFIG_DIR = LAST_DOCS_DIR + "config/";
 
+    /**
+     * Directory where all exported files will be saved to
+     */
+    private static final String EXPORT_DIR = LAST_DOCS_DIR + "export/";
+
     private static final File SESSION_VIMRC = new File(CONFIG_DIR + ".vimrc");
     private static final File PROJ_HISTORY = new File(LAST_DOCS_DIR + ".projHistory");
     private static final String DEFAULT_DECK = String.format(DECK_FILE, "TestDeck");
@@ -69,6 +77,10 @@ public class InfoBuilder {
     private static final String MANUAL_RES_PATH = "/com/dermacon/ankipdfeditor/manual.pdf";
     private static final String VIMRC_RES_PATH = "/com/dermacon/ankipdfeditor/.vimrc";
 
+    // media directory
+    private static final String HOME_DIR = System.getProperty("user.home");
+    private static final String ANKI_IMG_PAGES = HOME_DIR + "/.local/share/Anki2/User 1/collection.media/";
+
 
     /**
      * .anki file to which the user is actively writing to.
@@ -76,6 +88,7 @@ public class InfoBuilder {
     private File deck = new File(DEFAULT_DECK);
     private File pdf = new File(DEFAULT_PDF);
     private int currPage = 1;
+    private String exportDir = EXPORT_DIR;
 
     /**
      * Initiates a new InfoBuilder instance with a given project
@@ -87,7 +100,7 @@ public class InfoBuilder {
      * projectinfo instance.
      */
     public InfoBuilder copy(ProjectInfo oldInstance) {
-        this.deck = oldInstance.getDeck();
+        this.deck = oldInstance.getDeckFile();
         this.pdf = oldInstance.getPdf();
         this.currPage = oldInstance.getCurrPage();
 
@@ -104,15 +117,21 @@ public class InfoBuilder {
      */
     public ProjectInfo build() throws IOException {
         initProjectStructure();
-        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR,  currPage);
+        return new ProjectInfo(deck, pdf, PROJ_HISTORY, SESSION_VIMRC, IMG_TEMP_DIR, exportDir, ANKI_IMG_PAGES, currPage);
     }
 
+    /**
+     * Initializes the project structure using the /lastdocs/ directory.
+     * Copies the meta data to these newly created directories.
+     * @throws IOException exception that will be thrown if anki is not responsive.
+     */
     private void initProjectStructure() throws IOException {
         saveMkDir(LAST_DOCS_DIR);
         saveMkDir(DECK_DIR);
         saveMkDir(PDF_DIR);
         saveMkDir(IMG_TEMP_DIR);
         saveMkDir(CONFIG_DIR);
+        saveMkDir(EXPORT_DIR);
 
         copyResource(MANUAL_RES_PATH, DEFAULT_PDF);
         copyResource(VIMRC_RES_PATH, CONFIG_DIR + ".vimrc");
@@ -123,7 +142,10 @@ public class InfoBuilder {
         }
     }
 
-
+    /**
+     * Creates the directory at the specified directory if it's not already created
+     * @param path path to the directory that will be created.
+     */
     private void saveMkDir(String path) {
         File dir = new File(path);
         if (!dir.exists() || !dir.isDirectory()) {
@@ -143,6 +165,7 @@ public class InfoBuilder {
         FileUtils.copyInputStreamToFile(in, new File(targetPath));
     }
 
+    // todo maybe delete
     private void copyResource(File srcFile, File targetFile) throws IOException {
         if (((!targetFile.exists() || !targetFile.isDirectory()))
                 && !targetFile.equals(srcFile)) {
@@ -158,16 +181,28 @@ public class InfoBuilder {
      * @throws IOException
      */
     public InfoBuilder setPdf(File pdf) throws IOException {
-        return setPdf(pdf.getName());
+        setPdf(pdf.getName());
+        copyResource(pdf, this.pdf);
+        return this;
     }
 
-    public InfoBuilder setPdf(String pdfName) throws IOException {
+    /**
+     * Sets the file in the projectInfo component.
+     * @param pdfName name of the file
+     * @return current builder instance
+     */
+    public InfoBuilder setPdf(String pdfName) {
         File targetFile = new File(PDF_DIR + pdfName);
-//        copyResource(pdf, targetFile);
         this.pdf = targetFile;
         return this;
     }
 
+    /**
+     * Setter for the deck
+     * @param deckName deckname
+     * @return current builder instance
+     * @throws IOException thrown when the directory cannot be created.
+     */
     public InfoBuilder setDeck(String deckName) throws IOException {
         deck = new File(DECK_DIR + deckName);
         if (!deck.exists() && !deck.isDirectory()) {
@@ -176,19 +211,31 @@ public class InfoBuilder {
         return this;
     }
 
+    /**
+     * Setter for the current page
+     * @param currPage current page of the document
+     */
     public void setCurrPage(String currPage) {
         this.currPage = Integer.parseInt(currPage.trim());
     }
 
     /**
+     * Setter for the export path
+     * @param path path to export dir
+     */
+    public void setExportDir(String path) {
+        this.exportDir = path;
+    }
+
+    /**
      * parse /lastDocs/.projectHistory file
      *
-     * @throws IOException
+     * @throws IOException thrown if the project history cannot be read.
      */
     public InfoBuilder parseHistoryFile() throws IOException {
         if (PROJ_HISTORY.exists()) {
             ReversedLinesFileReader object = new ReversedLinesFileReader(PROJ_HISTORY);
-            int counter = 0, n_lines = 3;
+            int counter = 0, n_lines = 4;
             String line;
 
             while (counter < n_lines) {
@@ -200,6 +247,8 @@ public class InfoBuilder {
                         setPdf((line.split(":")[1].trim()));
                     } else if (line.startsWith("page")) {
                         setCurrPage(line.split(":")[1].trim());
+                    } else if (line.startsWith("exp")) {
+                        setExportDir(line.split(":")[1].trim());
                     } else if (!line.isEmpty()) {
                         throw new IOException("input line does not match pattern: " + line); // todo pattern to javadoc
                     }
@@ -211,12 +260,25 @@ public class InfoBuilder {
         return this;
     }
 
+    /**
+     * Creates a given deckfile in the project structure and initializes with the
+     * the given VIM_USAGE and the template for the first card.
+     * @param deckFile deckfile file that will be initialized.
+     * @throws IOException thrown if the string content cannot be written to the specified file.
+     */
     private void createDeckFile(File deckFile) throws IOException {
         int lineLength = VIM_USAGE.split("\n")[0].length();
         String deckDescription = formatDeckdescr(deckFile.getName(),lineLength);
-        FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription);
+        FileUtils.writeStringToFile(deckFile, VIM_USAGE + deckDescription + CARD_TEMPLATE);
     }
 
+    /**
+     * Puts a given string input in the middle of a new string and pre- / appends a delimiter
+     * to the it.
+     * @param input input that will be centered / formatted.
+     * @param lineLen total length of the output string.
+     * @return formatted string.
+     */
     private static String formatDeckdescr(String input, int lineLen) {
         char delimiter = '-';
         int inputLen = input.length() + 2;

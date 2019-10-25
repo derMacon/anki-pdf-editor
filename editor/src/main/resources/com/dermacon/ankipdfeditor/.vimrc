@@ -1,5 +1,5 @@
 " ----------------- Anki-Editor -------------------
-" * Version: 1.1
+" * Version: 1.2
 " * Author: github/dermacon
 " * Repo: anki-pdf-editor
 
@@ -13,7 +13,6 @@ noremap k gk
 :match Constant /\v(*)/
 :2match Keyword /\v(front:|back:|tags:)/
 
-
 " _______ commands _______
 
 " key: z or shift + z
@@ -21,15 +20,16 @@ noremap k gk
 :nmap z :let @" = system("curl -s http://localhost:8080/turnNextPage")<CR>
 :nmap Z :let @" = system("curl -s http://localhost:8080/turnPrevPage")<CR>
 
-" key: '['
+" key: ']'
 " prints the current page tag to the current cursor position
 let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
-:nmap [ "=system(apiUrl)<C-M>p
+:nmap ] "=system(apiUrl)<C-M>pA<CR>
+:inoremap <C-]> <Esc>"=system(apiUrl)<C-M>pA<CR>
 
-"key: ']'
+"key: '['
 " create a new card in the current file
 " copies the tags from the last card
-:nmap ] /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR><CR>
+:nmap [ /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR>
 \<CR><BS>back:<CR><CR>
 \<CR><BS>tags:<Esc>p?front:<CR>o
 
@@ -39,6 +39,18 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 :inoremap <Tab> <Esc>/:<CR>jI
 :nnoremap <Tab> /:<CR>j0
 
-:inoremap <S-Tab> <Esc>/:<CR>NNjI
-:nnoremap <S-Tab> /:<CR>NNj0
+:inoremap <S-Tab> <Esc>/:\n<CR>NNjI
+:nnoremap <S-Tab> /:\n<CR>NNj0
+
+" key: strg + b
+" wrap cursor in bold html tag
+:inoremap <C-B> <b></b><Esc>3hi
+
+" key: strg + k
+" wrap cursor in cursiv html tag
+:inoremap <C-K> <i></i><Esc>3hi
+
+" key: strg + u
+" wrap cursor in underlined html tag
+:inoremap <C-U> <u></u><Esc>3hi
 

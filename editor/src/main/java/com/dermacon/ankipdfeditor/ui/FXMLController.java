@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * JFX Controller for the pdf gui
+ */
 public class FXMLController implements Initializable {
 
     @FXML
@@ -36,31 +39,56 @@ public class FXMLController implements Initializable {
         updateGui();
     }
 
+    /**
+     * Sets width of the image view on the pane to fit its parent
+     * @param stage stage of the whole scene
+     */
     public void setImgVwResponsive(Stage stage) {
         imgVw_page.fitWidthProperty().bind(stage.widthProperty());
     }
 
+    /**
+     * Sets the project conroller so that this controller knows what to display.
+     * @param projectController projectcontroller holding the projectinfo
+     *                          component.
+     */
     public void setProjectController(ProjectController projectController) {
         this.projectController = projectController;
         lbl.setText(projectController.toString());
     }
 
+    // todo delete
     public int getCurrPage() {
         return this.projectController.getProjectInfo().getCurrPage();
     }
 
+    /**
+     * Turns to the next page of the displayed pdf in the imgView by getting
+     * the current page number and updating the gui.
+     * @return new page number
+     */
     public int turnNextPage() {
         int newPageNum = projectController.turnNextPage();
         updateGui();
         return newPageNum;
     }
 
+    /**
+     * Turns to the previous page of the displayed pdf in the imgView by
+     * getting
+     * the current page number and updating the gui.
+     * @return new page number
+     */
     public int turnPrevPage() {
         int newPageNum = projectController.turnPrevPage();
         updateGui();
         return newPageNum;
     }
 
+    /**
+     * Update the guis image view with the current image and the label with
+     * the current page number.
+     */
     private void updateGui() {
         Platform.runLater(() -> {
 

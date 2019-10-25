@@ -8,15 +8,15 @@ public class NotesInfoRequest extends FunctionalRequest {
             + "\"params\": {\"notes\": [%s]}"
             + "}";
 
-    private final int nodeId;
+    private final long nodeId;
 
-    public NotesInfoRequest(int nodeId) {
+    public NotesInfoRequest(Long nodeId) {
         this.nodeId = nodeId;
     }
 
     @Override
     public String toJson() {
-        return String.format(JSON_TEMPLATE, this.version);
+        return String.format(JSON_TEMPLATE, this.version, this.nodeId);
     }
 
 }

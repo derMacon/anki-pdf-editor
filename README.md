@@ -7,8 +7,8 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 
 ### Programm specific
 * `z` / `Z`: turn next / previous page; Copy the current page tag to the default register (accessed via `p`)
-* `,c`: Append new card template to anki file
-* `,p`: Reload page tag, pastes the current page tag to cursor position
+* `]`: Append new card template to anki file
+* `[`: paste the current page tag to cursor position
 * *tab* / *shift* + *tab*: tab between fields
 
 ### vim default 
@@ -23,6 +23,9 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 ## Usage
 * Download jar from release tab and execute via `java -jar ./path/to/jar`
 * Recommended: execute in the same directory to avoid initializing the project directories any where they should not be. 
+
+## Problems
+The user since anki connect does not provide an possibility to reschedule (set the due date) for new cards newly created cards maybe are not appended to the stack but put somewhere in the middle. To fix this the user has to reschedule old cards with a due date before the created cards. This problem only arises if the user switches between the gui variant and this editor since the anki api is able to save the current due date / id. 
 
 ### Top-level menu
 ```
@@ -41,15 +44,16 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
-* new cards should be appended to stack not prepended
-* make images resize in anki
-* anki gui - fix html 
-* selected pdf overwriten with manual
-* update instructional gif
+* why does the projectinfo component hold a current image instance.
+* CSS image tag has to overlay (left adjust, should be centered), add padding top / bottom
+* html export after adding card not working, maybe sleep after sending cards to api...
 * export option
     - pdf: generate beamer file -> use pandoc for pdf generation
     - html: can be used on a simple github pages website
-* deactivate debug when pushing to api
+* implement project history selection
+* update manual / Readme
+* anki gui - fix html 
+* update instructional gif
 * checkstyle
 
 ### Reminder

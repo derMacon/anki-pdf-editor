@@ -1,7 +1,7 @@
 package com.dermacon.ankipdfeditor.data.card;
 
 import com.dermacon.ankipdfeditor.data.project.ProjectInfo;
-import com.dermacon.ankipdfeditor.data.worker.parser.HtmlParser;
+import com.dermacon.ankipdfeditor.data.worker.parser.HtmlCardParser;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -17,28 +17,33 @@ import java.util.regex.Pattern;
 public class CardStackFileFactory {
 
     private ProjectInfo projectInfo;
-    private HtmlParser imgParser;
+    private HtmlCardParser imgParser;
 
     public CardStackFileFactory(ProjectInfo projectInfo) throws IOException {
         this.projectInfo = projectInfo;
-        this.imgParser = new HtmlParser(projectInfo.getPdf());
+        this.imgParser = new HtmlCardParser(projectInfo.getPdf());
     }
 
     /**
+     * Parses the deck file specified in the projectInfo component.
+     *
      * Syntax:
      * 1. comment: lines beginning with *
      * 2. front: [text]
      * 3. back: [text]
      * 4. tags: [multiple tags]
      * 5. delimiter: line beginning with -
-     * @return
+     *
+     * Generates a list of cards from the appropriate .anki file.
+     *
+     * @return list of cards from the appropriate .anki file
      */
     public List<Card> produceStack() throws IncompleteSyntaxException, IOException {
-        File deck = projectInfo.getDeck();
+        File deck = projectInfo.getDeckFile();
         String editorOutput = FileUtils.readFileToString(deck, "UTF-8");
 
         editorOutput = editorOutput.trim();
-        String deckname = parseDeckname(editorOutput);
+        String deckname = parseDeckname(editorOutput).replaceAll(".anki", "");
         String[] arr = editorOutput.split("\n-+\n");
         List<Card> outputStack = new LinkedList<>();
         for(String cardBlock : arr) {
@@ -81,7 +86,7 @@ public class CardStackFileFactory {
         return new Card(deckname,
                 imgParser.parseHtml(matcher.group(1).trim()),
                 imgParser.parseHtml(matcher.group(2).trim()),
-                matcher.group(3).trim().split(" ")
+                matcher.group(3).trim().split("( |\n)")
         );
     }
 

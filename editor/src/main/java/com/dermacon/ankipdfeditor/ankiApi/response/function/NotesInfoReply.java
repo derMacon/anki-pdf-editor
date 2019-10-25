@@ -1,17 +1,27 @@
 package com.dermacon.ankipdfeditor.ankiApi.response.function;
 
+import com.dermacon.ankipdfeditor.ankiApi.ankiCardModel.AnkiConnectWrapper;
 import com.dermacon.ankipdfeditor.ankiApi.response.AnkiReply;
+import com.dermacon.ankipdfeditor.ankiApi.ankiCardModel.AnkiConnectCardModel;
+
+import java.util.ArrayList;
 
 public class NotesInfoReply extends AnkiReply {
 
-    private Object result;
+    private ArrayList<AnkiConnectCardModel> result;
 
     // todo
-    public NotesInfoReply(Object result, String error) {
+    public NotesInfoReply(ArrayList<AnkiConnectCardModel> result, String error) {
         super(error);
+        this.result = result;
     }
 
-    public Object getResult() {
+    public ArrayList<AnkiConnectCardModel> getResult() {
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "res: " + result;
     }
 }
