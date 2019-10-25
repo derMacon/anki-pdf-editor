@@ -1,13 +1,14 @@
 package com.dermacon.ankipdfeditor.ankiApi.request.consumer;
 
-import com.dermacon.ankipdfeditor.ankiApi.request.AnkiRequest;
 import com.dermacon.ankipdfeditor.data.card.Card;
 import org.json.JSONArray;
+
+import java.util.List;
 
 /**
  * Anki request to push a card object to the anki api.
  */
-public class AddNoteAnkiRequest extends ConsumingRequest {
+public class AddNotesAnkiRequest extends ConsumingRequest {
 
     /**
      * Json template for the request.
@@ -19,7 +20,13 @@ public class AddNoteAnkiRequest extends ConsumingRequest {
             + "\"version\": %s,\n"
             + "\"params\": {\n"
             + "  \"notes\": [ \n"
-            + "    {\n"
+            + "    %s\n"
+            + "  ]\n"
+            + "}\n"
+            + "}";
+
+    private static final String NOTE_JSON =
+            "    {\n"
             + "      \"deckName\": \"%s\",\n"
             + "      \"modelName\": \"Basic\",\n"
             + "      \"fields\": {\n"
@@ -30,29 +37,38 @@ public class AddNoteAnkiRequest extends ConsumingRequest {
             + "        \"allowDuplicate\": false\n"
             + "      },\n"
             + "      \"tags\": %s\n"
-            + "    } \n"
-            + "  ]\n"
-            + "}\n"
-            + "}";
-
+            + "    },\n";
 
     /**
      * Card object that should be transmitted.
      */
-    private Card card;
+    private List<Card> cards;
 
     /**
      * Constructor.
-     * @param card card object to push to the anki api.
+     * @param cards card object to push to the anki api.
      */
-    public AddNoteAnkiRequest(final Card card) {
-        this.card = card;
+    public AddNotesAnkiRequest(final List<Card> cards) {
+        this.cards = cards;
     }
 
     @Override
     public String toJson() {
+        StringBuilder out = new StringBuilder();
+        for (Card card : this.cards) {
+            out.append(createArrayElement(card));
+        }
+        out.setLength(out.length() - 2); // delete last comma
+
         return String.format(JSON_TEMPLATE,
                 String.valueOf(this.version),
+                out.toString()
+        );
+    }
+
+
+    private String createArrayElement(Card card) {
+        return String.format(NOTE_JSON,
                 removeExtension(card.getDeckName()),
                 card.getFrontSide(),
                 card.getBackSide(),

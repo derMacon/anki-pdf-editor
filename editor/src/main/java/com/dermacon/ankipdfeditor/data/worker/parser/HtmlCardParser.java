@@ -73,7 +73,7 @@ public class HtmlCardParser {
     }
 
     private String generateImgHtmlTag(String side) {
-        return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>\n");
+        return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>");
     }
 
     /**

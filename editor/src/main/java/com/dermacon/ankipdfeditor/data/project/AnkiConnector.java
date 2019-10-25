@@ -1,10 +1,9 @@
 package com.dermacon.ankipdfeditor.data.project;
 
 import com.dermacon.ankipdfeditor.ankiApi.PostConnector;
-import com.dermacon.ankipdfeditor.ankiApi.request.consumer.AddNoteAnkiRequest;
+import com.dermacon.ankipdfeditor.ankiApi.request.consumer.AddNotesAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.ConsumingRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.consumer.CreateDeckAnkiRequest;
-import com.dermacon.ankipdfeditor.ankiApi.request.consumer.SyncAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.FindNotesRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.GetDecksAnkiRequest;
 import com.dermacon.ankipdfeditor.ankiApi.request.function.NotesInfoRequest;
@@ -19,7 +18,6 @@ import com.dermacon.ankipdfeditor.data.card.IncompleteSyntaxException;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -149,35 +147,43 @@ public class AnkiConnector {
      * @throws IOException thrown when the connection is nnt working as intended
      */
     private static void pushCard(List<Card> cardStack) throws IOException {
-        // not possible as stream since an exception will be thrown
-        // for some reason the postconnector instance is not reusable...
-        AnkiReply response;
-        List<Card> problematicCards = new LinkedList<>();
-        for(Card curr : cardStack) {
-            ConsumingRequest request = new AddNoteAnkiRequest(curr);
-            // todo delete debug
-            System.out.println("card: " + curr);
-            System.out.println(request.toJson());
-
-            response = new PostConnector(ANKI_API_PORT)
-                    .jsonRequest(request);
-            if (response.getError() != null) {
-                problematicCards.add(curr);
-            }
+        PostConnector connector = new PostConnector(ANKI_API_PORT);
+        ConsumingRequest request = new AddNotesAnkiRequest(cardStack);
+        AnkiReply reply = connector.jsonRequest(request);
+        if (reply.getError() != null) {
+            throw new IOException("cannot push addNoteRequest to anki api:\n"
+                    + reply.getError() + "\nrequest:\n" + request);
         }
 
-        if (problematicCards.isEmpty()) {
-            response = new PostConnector(ANKI_API_PORT)
-                    .jsonRequest(new SyncAnkiRequest());
-            if (response.getError() != null) {
-                throw new IOException("could not sync with anki api");
-            }
-        } else {
-            throw new IncompleteSyntaxException(
-                    "No sync with anki possible - the following cards were incorrect:\n"
-                            + problematicCards.toString()
-            );
-        }
+//        // not possible as stream since an exception will be thrown
+//        // for some reason the postconnector instance is not reusable...
+//        AnkiReply response;
+//        List<Card> problematicCards = new LinkedList<>();
+//        for(Card curr : cardStack) {
+//            ConsumingRequest request = new AddNoteAnkiRequest(curr);
+//            // todo delete debug
+//            System.out.println("card: " + curr);
+//            System.out.println(request.toJson());
+//
+//            response = new PostConnector(ANKI_API_PORT)
+//                    .jsonRequest(request);
+//            if (response.getError() != null) {
+//                problematicCards.add(curr);
+//            }
+//        }
+//
+//        if (problematicCards.isEmpty()) {
+//            response = new PostConnector(ANKI_API_PORT)
+//                    .jsonRequest(new SyncAnkiRequest());
+//            if (response.getError() != null) {
+//                throw new IOException("could not sync with anki api");
+//            }
+//        } else {
+//            throw new IncompleteSyntaxException(
+//                    "No sync with anki possible - the following cards were incorrect:\n"
+//                            + problematicCards.toString()
+//            );
+//        }
 
     }
 
