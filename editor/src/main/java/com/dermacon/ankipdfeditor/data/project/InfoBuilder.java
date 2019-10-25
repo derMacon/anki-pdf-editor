@@ -181,7 +181,9 @@ public class InfoBuilder {
      * @throws IOException
      */
     public InfoBuilder setPdf(File pdf) throws IOException {
-        return setPdf(pdf.getName());
+        setPdf(pdf.getName());
+        copyResource(pdf, this.pdf);
+        return this;
     }
 
     /**
@@ -191,7 +193,6 @@ public class InfoBuilder {
      */
     public InfoBuilder setPdf(String pdfName) {
         File targetFile = new File(PDF_DIR + pdfName);
-//        copyResource(pdf, targetFile);
         this.pdf = targetFile;
         return this;
     }

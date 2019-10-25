@@ -135,15 +135,6 @@ public class ProjectInfo {
     }
 
 
-    // todo check if needed
-//    public String toJson() {
-//        return String.format(JSON_TEMPLATE, deckPath, pdfPDDoc);
-//    }
-//
-//    public String toUrlParameters() {
-//        return String.format(URL_PARAMETER_TEMPLATE, deckPath, pdfPDDoc);
-//    }
-
     @Override
     public String toString() {
         return "deck: " + deck.getName() + "\n"
