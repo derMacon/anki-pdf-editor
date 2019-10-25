@@ -44,11 +44,8 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
-* Check if multi line questions are transmitted correctly.
-* add bold / underlined / cursiv formatting options
 * cannot overwrite pdf...
 * why does the projectinfo component hold a current image instance.
-* terminal deck choose - new deck
 * ProjectController - setPdf(pdf) / setDeck(deck) should just upate its instance and not create a new one.
 * CSS image tag has to overlay (left adjust, should be centered), add padding top / bottom
 * add card -> cannot open anki for some reason (no push / export possible)
@@ -60,7 +57,6 @@ input:
 * export option
     - pdf: generate beamer file -> use pandoc for pdf generation
     - html: can be used on a simple github pages website
-* deactivate debug when pushing to api
 * checkstyle
 
 ### Reminder

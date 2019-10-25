@@ -20,16 +20,16 @@ noremap k gk
 :nmap z :let @" = system("curl -s http://localhost:8080/turnNextPage")<CR>
 :nmap Z :let @" = system("curl -s http://localhost:8080/turnPrevPage")<CR>
 
-" key: '['
+" key: ']'
 " prints the current page tag to the current cursor position
 let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
-:nmap [ "=system(apiUrl)<C-M>p<CR>
-:inoremap <C-]> <Esc>]
+:nmap ] "=system(apiUrl)<C-M>pA<CR>
+:inoremap <C-]> <Esc>"=system(apiUrl)<C-M>pA<CR>
 
-"key: ']'
+"key: '['
 " create a new card in the current file
 " copies the tags from the last card
-:nmap ] /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR>
+:nmap [ /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR>
 \<CR><BS>back:<CR><CR>
 \<CR><BS>tags:<Esc>p?front:<CR>o
 
