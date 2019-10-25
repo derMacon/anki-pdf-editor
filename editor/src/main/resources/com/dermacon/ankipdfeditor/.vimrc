@@ -1,5 +1,5 @@
 " ----------------- Anki-Editor -------------------
-" * Version: 1.1
+" * Version: 1.2
 " * Author: github/dermacon
 " * Repo: anki-pdf-editor
 
@@ -12,7 +12,6 @@ noremap k gk
 :colorscheme elflord
 :match Constant /\v(*)/
 :2match Keyword /\v(front:|back:|tags:)/
-
 
 " _______ commands _______
 
@@ -30,7 +29,7 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 " create a new card in the current file
 " copies the tags from the last card
 :nmap ] /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR><CR>
-\<CR><BS>back:<CR><CR>
+\<CR><BS>back:<CR><CR><CR>
 \<CR><BS>tags:<Esc>p?front:<CR>o
 
 " key: tab / shift + tab
@@ -39,6 +38,18 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 :inoremap <Tab> <Esc>/:<CR>jI
 :nnoremap <Tab> /:<CR>j0
 
-:inoremap <S-Tab> <Esc>/:<CR>NNjI
-:nnoremap <S-Tab> /:<CR>NNj0
+:inoremap <S-Tab> <Esc>/:\n<CR>NNjI
+:nnoremap <S-Tab> /:\n<CR>NNj0
+
+" key: strg + b
+" wrap cursor in bold html tag
+:inoremap <C-B> <b></b><Esc>3hi
+
+" key: strg + i
+" wrap cursor in cursiv html tag
+:inoremap <C-I> <i></i><Esc>3hi
+
+" key: strg + u
+" wrap cursor in underlined html tag
+:inoremap <C-U> <u></u><Esc>3hi
 

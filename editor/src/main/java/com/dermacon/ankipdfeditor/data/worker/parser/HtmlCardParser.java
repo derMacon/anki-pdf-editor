@@ -46,12 +46,22 @@ public class HtmlCardParser {
         return pdfName;
     }
 
+    /**
+     * Parses a given card side to the html components.
+     * - Wraps whole lines in <div> - Tags
+     * - Wraps the costum image tags into html image tags
+     * - maps the escaped german umlaute to the appropriate representation
+     *
+     * @param side front- / back-side from an anki card
+     * @return html String
+     * @throws IOException
+     */
     public String parseHtml(String side) throws IOException {
         StringBuilder out = new StringBuilder();
         for (String line : side.split("\n")) {
             out.append(String.format(HTML_LINE_FORMAT, line));
         }
-        return parseImg(out.toString());
+        return mapGermanUmlaute(parseImg(out.toString()));
     }
 
     private String parseImg(String side) throws IOException {
@@ -59,11 +69,11 @@ public class HtmlCardParser {
         for (int curr : nums) {
             renderImageInTemp(curr);
         }
-        return mapGermanUmlaute(generateImgHtmlTag(side));
+        return generateImgHtmlTag(side);
     }
 
     private String generateImgHtmlTag(String side) {
-        return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>");
+        return side.replaceAll("<(\\d*)>", "<img src=" + pdfName + "_$1.png>\n");
     }
 
     /**
