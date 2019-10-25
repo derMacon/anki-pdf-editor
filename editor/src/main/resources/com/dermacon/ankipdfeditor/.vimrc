@@ -23,13 +23,14 @@ noremap k gk
 " key: '['
 " prints the current page tag to the current cursor position
 let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
-:nmap [ "=system(apiUrl)<C-M>p
+:nmap [ "=system(apiUrl)<C-M>p<CR>
+:inoremap <C-]> <Esc>]
 
 "key: ']'
 " create a new card in the current file
 " copies the tags from the last card
-:nmap ] /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR><CR>
-\<CR><BS>back:<CR><CR><CR>
+:nmap ] /---<CR>?tags<CR>jV/---<CR>y/---<CR>o<CR>front:<CR>
+\<CR><BS>back:<CR><CR>
 \<CR><BS>tags:<Esc>p?front:<CR>o
 
 " key: tab / shift + tab
@@ -45,9 +46,9 @@ let apiUrl = 'curl -s http://localhost:8080/getCurrPage'
 " wrap cursor in bold html tag
 :inoremap <C-B> <b></b><Esc>3hi
 
-" key: strg + i
+" key: strg + k
 " wrap cursor in cursiv html tag
-:inoremap <C-I> <i></i><Esc>3hi
+:inoremap <C-K> <i></i><Esc>3hi
 
 " key: strg + u
 " wrap cursor in underlined html tag
