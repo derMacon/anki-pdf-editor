@@ -10,6 +10,9 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * `]`: Append new card template to anki file
 * `[`: paste the current page tag to cursor position
 * *tab* / *shift* + *tab*: tab between fields
+* `strg` + `b`: bold html tags
+* `strg` + `u`: underlined html tags
+* `strg` + `k`: cursiv html tags
 
 ### vim default 
 ![vim-cheat-sheet](./otherDocs/manual-tex/img/vim-cheat-sheet.jpg)
@@ -22,10 +25,7 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 
 ## Usage
 * Download jar from release tab and execute via `java -jar ./path/to/jar`
-* Recommended: execute in the same directory to avoid initializing the project directories any where they should not be. 
-
-## Problems
-The user since anki connect does not provide an possibility to reschedule (set the due date) for new cards newly created cards maybe are not appended to the stack but put somewhere in the middle. To fix this the user has to reschedule old cards with a due date before the created cards. This problem only arises if the user switches between the gui variant and this editor since the anki api is able to save the current due date / id. 
+* Recommended: execute in the same directory as the `.jar` to avoid initializing the project directories anywhere they should not be. 
 
 ### Top-level menu
 ```
@@ -44,14 +44,26 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* pdf should be referenced directly without copying to the lastdocs dir
+* stay in edit mode after inserting img
+* quote german umlaute in tags
+* htlm listen as shortcut in vimrc
+* change currpage in projhistory when editing properties
+* add mechanism to add external images
+* delete linefeed after image tag
+* SZ in Umlaute aufnehmen
+* stay in normal mode when creating a new card.
+* page tag in insert mode not working
+* shutdown when target pdf not found -> just use standard manual pdf
 * why does the projectinfo component hold a current image instance.
+* html export copy img from anki media
 * CSS image tag has to overlay (left adjust, should be centered), add padding top / bottom
 * html export after adding card not working, maybe sleep after sending cards to api...
 * export option
     - pdf: generate beamer file -> use pandoc for pdf generation
     - html: can be used on a simple github pages website
 * implement project history selection
-* update manual / Readme
+* update manual / Readme (especially menu preview)
 * anki gui - fix html 
 * update instructional gif
 * checkstyle
@@ -63,4 +75,5 @@ input:
 * stop screenkey - `pkill -f screenkey`
 * [session specfic .vimrc](https://superuser.com/questions/489930/using-a-session-specific-vimrc)
 * [vim-cheat-sheet](https://www.slideshare.net/alfrescoqa/vivimcheatsheetpdf)
+* kill anki: `ps aux | grep anki` => `kill <pid>`
 

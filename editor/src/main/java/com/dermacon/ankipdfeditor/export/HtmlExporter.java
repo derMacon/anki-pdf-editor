@@ -111,7 +111,7 @@ public class HtmlExporter extends Exporter {
                     + "<div class=\"tags\">\n"
                     + "  %s\n"
                     + "</div>\n"
-                    + "</div>\n";
+                    + "</div>\n\n";
 
     private static final String TAG_TEMPLATE = "<ul>%s<ul>";
     private static final String LST_BULLET_POINT = "<li>%s</li>";
@@ -139,7 +139,7 @@ public class HtmlExporter extends Exporter {
         String regex = "<img src=[\"]?(.*?)[\"]?>";
         return content
                 .replaceAll(regex, "<path=\"$1\">")
-                .replaceAll("<path=\"", "<img src=\"" + exportInfo.getMediaPath());
+                .replaceAll("<path=\"", "<img src=\"./img/");
     }
 
     private static String createTagLst(String[] tags) {

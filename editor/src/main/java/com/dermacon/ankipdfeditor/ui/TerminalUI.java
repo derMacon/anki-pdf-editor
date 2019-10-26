@@ -68,7 +68,7 @@ public class TerminalUI implements UserInterface {
         ExportInfo exportInfo = new ExportInfo.ExportInfoBuilder()
                 .setDeckname(deckname)
                 .setMediaPath(projectInfo.getMediaDir())
-                .setExportPath(projectInfo.getExportDir())
+                .setExportRoot(projectInfo.getExportDir())
                 .setFormating(formating)
                 .build();
 
