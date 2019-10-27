@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage{tikz,lipsum,lmodern}
+\usepackage[most]{tcolorbox}
+
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+
+\begin{document}
+
+%----------------------------------------------------------
+\section{tags}
+
+\begin{tcolorbox}[colback=white!10!white,colframe=lightgray!75!black,
+  savelowerto=\jobname_ex.tex]
+  front side - question
+  \tcblower
+  back side - answer
+	\begin{center}
+		\includegraphics[width=\linewidth]{test}
+	\end{center}
+\end{tcolorbox}
+
+
+\clearpage
+
+%----------------------------------------------------------
+\end{document}
