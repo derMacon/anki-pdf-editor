@@ -1,8 +1,11 @@
 \documentclass{article}
 \usepackage{tikz,lipsum,lmodern}
 \usepackage[most]{tcolorbox}
-
+\usepackage[paperheight=10.75in,paperwidth=7.25in,margin=1in,heightrounded]{geometry}
 \usepackage{graphicx}
+\usepackage{blindtext}
+\usepackage{ragged2e}
+
 \graphicspath{ {./img/} }
 
 \begin{document}
@@ -12,16 +15,62 @@
 
 \begin{tcolorbox}[colback=white!10!white,colframe=lightgray!75!black,
   savelowerto=\jobname_ex.tex]
-  front side - question
+	
+	\begin{center}
+  	front side - question
+	\end{center}
+
   \tcblower
-  back side - answer
+
+
 	\begin{center}
 		\includegraphics[width=\linewidth]{test}
 	\end{center}
+
 \end{tcolorbox}
 
+\begin{tcolorbox}[colback=white!10!white,colframe=lightgray!75!black,
+  savelowerto=\jobname_ex.tex]
+	
+	\begin{center}
+  	front side - question
+	\end{center}
 
-\clearpage
+  \tcblower
+
+	
+	\justifying
+	back side - answer 
+
+	\begin{center}
+		\includegraphics[width=\linewidth]{test}
+	\end{center}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=white!10!white,colframe=lightgray!75!black,
+  savelowerto=\jobname_ex.tex]
+	
+	\begin{center}
+  	front side - question
+	\end{center}
+
+  \tcblower
+
+	
+	\justifying
+	back side - answer 
+
+	\begin{center}
+		\includegraphics[width=\linewidth]{test}
+	\end{center}
+
+\end{tcolorbox}
 
 %----------------------------------------------------------
+
+
+
+
+
 \end{document}
