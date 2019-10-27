@@ -21,11 +21,11 @@ public abstract class Exporter {
     }
 
     public void createOutput() throws IOException {
-        String deckname = removeExtension(exportInfo.getDeckname());
+        String deckname = exportInfo.getDeckname();
         List<Card> stack = AnkiConnector.getCardsFromDeck(deckname);
         copyImages(stack);
         String content = parseFormat(stack);
-        writeFile(deckname, content);
+        writeFile(content);
     }
 
     /**
@@ -74,13 +74,13 @@ public abstract class Exporter {
     /**
      * Writes the given content to a file with the name of the deck and the given format.
      * Important: already existent files will be overwritten.
-     * @param deckname
      * @param content
      * @throws IOException
      */
-    private void writeFile(String deckname, String content) throws IOException {
-        System.out.println("path: " + exportInfo.getExportDocPath() + deckname + ".html");
-        File file = new File(exportInfo.getExportDocPath() + deckname + ".html");
+    private void writeFile(String content) throws IOException {
+        String fileExtension = "." + exportInfo.getFormating().name().toLowerCase();
+        System.out.println("path: " + exportInfo.getExportDocPath() + exportInfo.getDeckname() + fileExtension);
+        File file = new File(exportInfo.getExportDocPath() + exportInfo.getDeckname() + fileExtension);
         if (file.exists() && !file.isDirectory()) {
             System.out.println("deleted file: " + file);
             FileUtils.forceDelete(file);
@@ -88,13 +88,5 @@ public abstract class Exporter {
         FileUtils.writeStringToFile(file, content);
     }
 
-    // todo duplicate from request
-    protected static String removeExtension(String fullFileName) {
-        int idx = fullFileName.lastIndexOf('.');
-        if (idx > 0) {
-            fullFileName = fullFileName.substring(0, idx);
-        }
-        return fullFileName;
-    }
 
 }

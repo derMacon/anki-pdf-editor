@@ -21,7 +21,7 @@ public class ExportInfo {
         private Formating formating;
 
         public ExportInfoBuilder setDeckname(String deckname) {
-            this.deckname = deckname;
+            this.deckname = removeExtension(deckname);
             return this;
         }
 
@@ -56,6 +56,15 @@ public class ExportInfo {
             if (!dir.exists() || !dir.isDirectory()) {
                 dir.mkdir();
             }
+        }
+
+        // todo duplicate from request
+        protected static String removeExtension(String fullFileName) {
+            int idx = fullFileName.lastIndexOf('.');
+            if (idx > 0) {
+                fullFileName = fullFileName.substring(0, idx);
+            }
+            return fullFileName;
         }
 
     }
