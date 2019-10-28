@@ -2,6 +2,7 @@ package com.dermacon.ankipdfeditor.export;
 
 import com.dermacon.ankipdfeditor.data.card.Card;
 
+import java.io.File;
 import java.util.List;
 
 public class TexExporter extends Exporter {
@@ -13,6 +14,7 @@ public class TexExporter extends Exporter {
             + "\\usepackage{graphicx}\n"
             + "\\usepackage{blindtext}\n"
             + "\\usepackage{ragged2e}\n"
+            + "\\usepackage[space]{grffile}\n"
             + "\n"
             + "\\graphicspath{ {./img/} }\n"
             + "\n"
@@ -35,7 +37,10 @@ public class TexExporter extends Exporter {
             + "\n"
             + "\\end{tcolorbox}\n";
 
-    private static final String IMG_TEMPLATE = "\\includegraphics[width=\\linewidth]{%s}\n";
+    private static final String IMG_TEMPLATE =
+            "\n  \\\\begin{center}\n"
+            + "    \\\\includegraphics[width=\\\\linewidth]{\\\\detokenize{%s}}\n"
+            + "  \\\\end{center}\n";
 
     public TexExporter(ExportInfo exportInfo) {
         super(exportInfo);
@@ -62,12 +67,21 @@ public class TexExporter extends Exporter {
 
     private String translateTags(String content) {
         return content.replaceAll("<div>", "")
-                .replaceAll("</div>", "\n");
+                .replaceAll("</div>", "\n\n")
+                .replaceAll("<br />", "")
+                .replaceAll("\\&nbsp;", "")
+                .replaceAll("\\&gt;", "")
+                .replaceAll(":\\\\", "")
+                .replaceAll("\\\\<", "")
+//                .replaceAll("\\\\([A-Za-z]*?)", "$1")
+                ;
+//                .replaceAll("\\\\", "");
     }
 
     // todo check if really necessary
     private String escapeTexChars(String content) {
         return content
+                .replaceAll("\\\\", "")
                 .replaceAll("&", "\\\\&")
                 .replaceAll("%", "\\\\%")
                 .replaceAll("\\$", "\\\\\\$")
@@ -77,14 +91,18 @@ public class TexExporter extends Exporter {
                 .replaceAll("}", "\\\\}")
                 .replaceAll("~", "\\\\~")
                 .replaceAll("\\^", "\\\\\\^")
-                .replaceAll("\\\\", "\\\\\\\\");
+                .replaceAll("ä", "\"a")
+                .replaceAll("ö", "\"o")
+                .replaceAll("ü", "\"u")
+                .replaceAll("Ä", "\"A")
+                .replaceAll("Ö", "\"O")
+                .replaceAll("Ü", "\"U");
     }
 
     private String updateImages(String content) {
-        String regex = "<img src=[\"]?(.*?)[\"]?>";
+        String regex = "<img src=[\"]?(.*?)[\"]?[ ]?/>";
         return content
-                .replaceAll(regex, "{{path=$1}}")
-                .replaceAll("\\{\\{path=", "  \\\\includegraphics[width=\\\\linewidth]{\\\\detokenize{")
+                .replaceAll(regex, String.format(IMG_TEMPLATE, exportInfo.getMediaPath() + "$1"))
                 .replaceAll(".png", "")
                 .replaceAll(".jpg", "");
     }

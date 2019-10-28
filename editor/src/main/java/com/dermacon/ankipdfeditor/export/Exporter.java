@@ -49,13 +49,17 @@ public abstract class Exporter {
 
     private Set<String> extractImg(String sideContent) {
         System.out.println("extract img - WIP - Exporter.java");
-        Pattern p = Pattern.compile("<img src=(.*?)>");
+        Pattern p = Pattern.compile("<img src=(.*?)/>");
         Matcher m = p.matcher(sideContent);
 
         Set<String> out = new HashSet<>();
         if (m.find()) {
             for (int i = 1; i <= m.groupCount(); i++) {
-                out.add(m.group(i).replaceAll("\"", ""));
+                out.add(m.group(i)
+                        .replaceAll("\"", "")
+                        .replaceAll("/", "")
+                        .replaceAll("\"", "")
+                        .trim());
             }
         }
 
@@ -63,6 +67,7 @@ public abstract class Exporter {
     }
 
     private void copyImg(String imgName) throws IOException {
+//        imgName = imgName.replaceAll("/", "").trim(); // name cannot contain '/'
         File src = new File(exportInfo.getMediaPath() + File.separator + imgName);
         File tar = new File(exportInfo.getExportImgPath() + imgName);
         System.out.println("copy " + src + " to " + tar);
