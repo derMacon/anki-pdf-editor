@@ -1,7 +1,10 @@
 package com.dermacon.ankipdfeditor.ankiApi.request;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
- * Transmittable anki request.
+ *
  */
 public abstract class AnkiRequest {
 
@@ -35,6 +38,7 @@ public abstract class AnkiRequest {
             fullFileName = fullFileName.substring(0, idx);
         }
         return fullFileName;
+
     }
 
 

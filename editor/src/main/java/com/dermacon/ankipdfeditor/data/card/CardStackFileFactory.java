@@ -46,7 +46,9 @@ public class CardStackFileFactory {
         String deckname = parseDeckname(editorOutput).replaceAll(".anki", "");
         String[] arr = editorOutput.split("\n-+\n");
         List<Card> outputStack = new LinkedList<>();
+        int errorIteration = 0;
         for(String cardBlock : arr) {
+            System.out.println(errorIteration++);
             outputStack.add(interpretCard(deckname, cardBlock));
         }
         return outputStack;

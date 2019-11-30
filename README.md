@@ -44,6 +44,12 @@ input:
 ![addNewCard](./otherDocs/instructional-gifs/addCard.gif)
 
 ### Todo
+* vim - append new card -> save current file in case it crashes
+* dont switch into insert mode when adding new image
+* dont switch into insert mode when tabbing between fields
+* multiple tags on one card not working at all (seen as one in browser)
+* go into normal mode when tabbing
+* page not set after adding new card
 * pdf should be referenced directly without copying to the lastdocs dir
 * stay in edit mode after inserting img
 * quote german umlaute in tags
