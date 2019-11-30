@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,7 +70,7 @@ public class HtmlCardParser {
     }
 
     private String parseImg(String side) throws IOException {
-        int[] nums = extractAllNumbers(side);
+        List<Integer> nums = extractAllNumbers(side);
         for (int curr : nums) {
             renderImageInTemp(curr);
         }
@@ -115,31 +117,17 @@ public class HtmlCardParser {
         ImageResizer.resizeImage(currPageImg.getPath(), currPageImg.getPath(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
-    public static int[] extractAllNumbers(String input) {
-        return Arrays.stream(input.replaceAll("[^0-9]+", " ")
-                .split(" "))
-                .filter(e -> e.length() > 0)
-                .mapToInt(Integer::parseInt)
-                .toArray();
+    public static List<Integer> extractAllNumbers(String input) {
+        String regex = "<([0-9]+?)>";
+        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(input);
 
-//        String regex = ".*(\\{([0-9])*?\\}.*)*.*";
-//        String regex = "(.*?\\{(.*?)\\}.*?)*?";
-//        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
-//        Matcher matcher = pattern.matcher(input);
-//
-//        if (!matcher.find()) {
-////            throw new IncompleteSyntaxException("one of the fields is empty:\n" + cardBlock);
-//        }
-//        String temp1 = matcher.group(0);
-//        String temp2 = matcher.group(1);
-//        String temp3 = matcher.group(2);
-////        String temp4 = matcher.group(3);
-//
-//        System.out.println("temp1: " + temp1);
-//        System.out.println("temp2: " + temp2);
-//        System.out.println("temp3: " + temp3);
-////        System.out.println("temp4: " + temp4);
-//        return null;
+        List<Integer> out = new LinkedList<>();
+        while (matcher.find()) {
+            out.add(Integer.valueOf(matcher.group(1)));
+        }
+
+        return out;
     }
 
 }
