@@ -25,7 +25,7 @@ All features can be used via shortcuts. For that the program opens a costum [.vi
 * Recommended: execute in the same directory to avoid initializing the project directories any where they should not be. 
 
 ## Problems
-The user since anki connect does not provide an possibility to reschedule (set the due date) for new cards newly created cards maybe are not appended to the stack but put somewhere in the middle. To fix this the user has to reschedule old cards with a due date before the created cards. This problem only arises if the user switches between the gui variant and this editor since the anki api is able to save the current due date / id. 
+Since anki connect does not provide an possibility to reschedule (set the due date) for new cards newly created cards maybe are not appended to the stack but put somewhere in the middle. To fix this the user has to reschedule old cards with a due date before the created cards. This problem only arises if the user switches between the gui variant and this editor since the anki api is able to save the current due date / id. 
 
 ### Top-level menu
 ```
